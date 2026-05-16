@@ -6,328 +6,955 @@
 <meta name="description" content="SQ Website — Professional Web Design & Development in Manchester, UK. Bespoke websites from £150. SEO-optimised, mobile-first, built to grow your business.">
 <title>SQ Website | Professional Web Design — Manchester, UK</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,700&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <style>
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════ */
 :root {
-  --gold: #C9A84C;
-  --gold-light: #F0D080;
-  --gold-dark: #8B6914;
-  --gold-glow: rgba(201,168,76,0.3);
-  --gold-subtle: rgba(201,168,76,0.08);
-  --bg: #080807;
-  --bg2: #0f0e0c;
-  --bg3: #141310;
-  --white: #F5F3EE;
-  --grey: #7a7870;
-  --border: rgba(201,168,76,0.18);
-  --card: rgba(255,255,255,0.025);
-  --radius: 3px;
+  --gold:        #C9A84C;
+  --gold-light:  #F2DC94;
+  --gold-bright: #FFE680;
+  --gold-dark:   #8B6914;
+  --gold-deep:   #5C4309;
+  --gold-glow:   rgba(201,168,76,0.35);
+  --gold-subtle: rgba(201,168,76,0.07);
+  --gold-border: rgba(201,168,76,0.2);
+  --bg:          #05050300;
+  --bg-solid:    #060604;
+  --bg2:         #0a0908;
+  --bg3:         #0e0d0b;
+  --white:       #F7F4EE;
+  --grey:        #726f67;
+  --grey-light:  #9b9890;
+  --radius:      2px;
+  --radius-lg:   6px;
 }
 
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;font-size:16px;}
-body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:none;}
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:16px; }
 
-/* CURSOR */
-#cur{width:10px;height:10px;background:var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:.08s;}
-#curR{width:32px;height:32px;border:1px solid var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.6;transition:width .2s,height .2s;}
-body:hover #cur{opacity:1;}
+body {
+  background:#060604;
+  color:var(--white);
+  font-family:'Outfit',sans-serif;
+  overflow-x:hidden;
+  cursor:none;
+}
 
-/* NOISE */
-body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9990;opacity:.5;}
+/* ───── CUSTOM CURSOR ───── */
+#cur-dot {
+  width:8px; height:8px;
+  background:var(--gold);
+  border-radius:50%;
+  position:fixed; top:0; left:0;
+  pointer-events:none; z-index:99999;
+  transform:translate(-50%,-50%);
+  transition:transform .12s, background .2s;
+  mix-blend-mode:difference;
+}
+#cur-ring {
+  width:36px; height:36px;
+  border:1.5px solid rgba(201,168,76,.65);
+  border-radius:50%;
+  position:fixed; top:0; left:0;
+  pointer-events:none; z-index:99998;
+  transform:translate(-50%,-50%);
+  transition:width .25s, height .25s, opacity .25s, border-color .25s;
+}
+body.cursor-hover #cur-dot { transform:translate(-50%,-50%) scale(2.5); }
+body.cursor-hover #cur-ring { width:50px; height:50px; border-color:var(--gold); }
 
-/* PROGRESS BAR */
-#prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold-dark),var(--gold-light));z-index:9997;width:0%;transition:width .1s;}
+/* ───── SCROLL PROGRESS ───── */
+#scroll-progress {
+  position:fixed; top:0; left:0; height:2px; z-index:9999;
+  background:linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold-bright));
+  width:0%; transition:width .08s linear;
+  box-shadow:0 0 12px var(--gold-glow);
+}
 
-/* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 5%;display:flex;align-items:center;justify-content:space-between;background:rgba(8,8,7,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:.4s;}
-nav.scrolled{padding:10px 5%;background:rgba(8,8,7,.98);}
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+#navbar {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  padding:22px 6%;
+  display:flex; align-items:center; justify-content:space-between;
+  transition: padding .4s, background .4s, backdrop-filter .4s, border-color .4s;
+  border-bottom:1px solid transparent;
+}
+#navbar.scrolled {
+  padding:12px 6%;
+  background:rgba(6,6,4,.93);
+  backdrop-filter:blur(24px);
+  border-color:var(--gold-border);
+}
 
-.logo-sq{
-  font-family:'Cormorant Garamond',serif;
-  font-size:3rem;
+/* SQ LOGO */
+.logo-sq {
+  font-family:'Playfair Display',serif;
+  font-size:2.8rem;
   font-weight:700;
-  background:linear-gradient(135deg,var(--gold-dark) 0%,var(--gold) 35%,var(--gold-light) 55%,var(--gold) 80%,var(--gold-dark) 100%);
+  text-decoration:none;
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  line-height:1;
+  letter-spacing:-.02em;
+}
+.logo-sq .sq-letter {
+  background: linear-gradient(
+    145deg,
+    var(--gold-deep) 0%,
+    var(--gold-dark) 18%,
+    var(--gold) 38%,
+    var(--gold-light) 55%,
+    var(--gold-bright) 62%,
+    var(--gold-light) 70%,
+    var(--gold) 82%,
+    var(--gold-dark) 100%
+  );
   background-size:300% 300%;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   background-clip:text;
-  animation:logoShimmer 3s ease-in-out infinite;
-  letter-spacing:.08em;
-  text-shadow:0 0 60px rgba(201,168,76,.4);
-  filter:drop-shadow(0 0 20px rgba(201,168,76,.35));
+  animation:logoShimmer 3.5s ease-in-out infinite;
+  filter:drop-shadow(0 0 18px rgba(201,168,76,.5));
+  position:relative;
 }
-@keyframes logoShimmer{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
-
-.nav-links{display:flex;gap:2rem;list-style:none;align-items:center;}
-.nav-links a{color:var(--grey);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;transition:.3s;position:relative;}
-.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:.3s;}
-.nav-links a:hover{color:var(--gold);}
-.nav-links a:hover::after{transform:scaleX(1);}
-.btn-nav{background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:var(--bg)!important;padding:9px 22px!important;border-radius:var(--radius);font-weight:700!important;letter-spacing:.08em!important;}
-.btn-nav::after{display:none!important;}
-.btn-nav:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--gold-glow);}
-
-/* WHATSAPP FLOAT */
-.wa-float{position:fixed;bottom:32px;right:32px;z-index:900;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.7rem;text-decoration:none;box-shadow:0 8px 28px rgba(37,211,102,.45);animation:waPulse 2.5s ease-in-out infinite;transition:.3s;}
-.wa-float:hover{transform:scale(1.1);}
-@keyframes waPulse{0%,100%{box-shadow:0 8px 28px rgba(37,211,102,.45);}50%{box-shadow:0 8px 48px rgba(37,211,102,.7);}}
-
-/* ── HERO ── */
-.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;padding:120px 5% 80px;overflow:hidden;}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 90% 70% at 50% 35%,rgba(201,168,76,.07) 0%,transparent 65%),linear-gradient(180deg,#080807 0%,#0a0908 100%);}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.035) 1px,transparent 1px);background-size:70px 70px;animation:gridP 10s ease-in-out infinite;}
-@keyframes gridP{0%,100%{opacity:.4;}50%{opacity:.9;}}
-
-.hero-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);padding:5px 18px;border-radius:100px;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;background:var(--gold-subtle);animation:fadeD .8s ease both;}
-.pulse-dot{width:7px;height:7px;background:var(--gold);border-radius:50%;animation:pd 2s ease infinite;}
-@keyframes pd{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.6);opacity:.4;}}
-@keyframes fadeD{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:translateY(0);}}
-@keyframes fadeU{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
-
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3.2rem,7.5vw,6.5rem);font-weight:700;line-height:1.04;margin-bottom:20px;animation:fadeU 1s ease .2s both;}
-.gold-grad{background:linear-gradient(135deg,var(--gold-dark) 0%,var(--gold) 40%,var(--gold-light) 65%,var(--gold) 100%);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimG 4s ease-in-out infinite;}
-@keyframes shimG{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
-
-.typer-wrap{font-size:1.05rem;color:var(--grey);margin-bottom:40px;animation:fadeU 1s ease .45s both;}
-.typer-prefix{color:rgba(245,243,238,.75);}
-.typer-txt{color:var(--gold);font-weight:600;border-right:2px solid var(--gold);padding-right:4px;animation:blink .75s step-end infinite;}
-@keyframes blink{0%,100%{border-color:var(--gold);}50%{border-color:transparent;}}
-
-.hero-sub{font-size:1.05rem;color:var(--grey);max-width:580px;margin:0 auto 44px;line-height:1.85;font-weight:300;animation:fadeU 1s ease .55s both;}
-
-.btn-gold{background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light));color:var(--bg);padding:15px 38px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border:none;border-radius:var(--radius);cursor:pointer;text-decoration:none;display:inline-block;transition:.3s;position:relative;overflow:hidden;}
-.btn-gold::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dark));opacity:0;transition:.3s;}
-.btn-gold:hover{transform:translateY(-3px);box-shadow:0 16px 40px var(--gold-glow);color:var(--bg);}
-.btn-gold:hover::before{opacity:1;}
-.btn-gold span{position:relative;z-index:1;}
-.btn-outl{background:transparent;color:var(--gold);padding:15px 38px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--gold);border-radius:var(--radius);cursor:pointer;text-decoration:none;display:inline-block;transition:.3s;}
-.btn-outl:hover{background:var(--gold-subtle);transform:translateY(-3px);box-shadow:0 8px 24px var(--gold-glow);color:var(--gold);}
-
-.hero-stats{display:flex;gap:50px;justify-content:center;flex-wrap:wrap;margin-top:70px;padding-top:50px;border-top:1px solid var(--border);animation:fadeU 1s ease .8s both;}
-.stat-n{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;line-height:1;}
-.stat-l{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--grey);margin-top:4px;}
-
-/* ── SECTIONS ── */
-section{padding:110px 5%;}
-.s-label{font-size:.7rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:12px;}
-.s-label::before{content:'';width:28px;height:1px;background:var(--gold);}
-.s-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4.2vw,3.4rem);font-weight:700;line-height:1.12;margin-bottom:16px;}
-.s-desc{color:var(--grey);font-size:.95rem;line-height:1.85;max-width:500px;font-weight:300;}
-
-/* ── SERVICES ── */
-.bg2{background:var(--bg2);}
-.bg3{background:var(--bg3);}
-.card-serv{background:var(--card);border:1px solid var(--border);padding:36px 28px;border-radius:var(--radius);position:relative;overflow:hidden;transition:.4s cubic-bezier(.4,0,.2,1);height:100%;}
-.card-serv::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:.5s;}
-.card-serv:hover{transform:translateY(-8px);border-color:rgba(201,168,76,.55);box-shadow:0 24px 60px rgba(0,0,0,.55),0 0 40px var(--gold-glow);}
-.card-serv:hover::before{transform:scaleX(1);}
-.serv-icon{width:52px;height:52px;background:linear-gradient(135deg,var(--gold-dark),var(--gold));border-radius:var(--radius);display:flex;align-items:center;justify-content:center;margin-bottom:24px;font-size:1.4rem;}
-.card-serv h3{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;margin-bottom:12px;}
-.card-serv p{color:var(--grey);font-size:.88rem;line-height:1.8;font-weight:300;}
-
-/* ── PRICING ── */
-.price-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:44px 32px;position:relative;overflow:hidden;transition:.4s;height:100%;}
-.price-card.featured{border-color:var(--gold);background:linear-gradient(160deg,rgba(201,168,76,.09) 0%,rgba(201,168,76,.02) 100%);box-shadow:0 0 60px rgba(201,168,76,.13);}
-.price-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.45),0 0 30px var(--gold-glow);}
-.pop-badge{position:absolute;top:20px;right:-32px;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:var(--bg);font-size:.62rem;font-weight:800;letter-spacing:.14em;padding:6px 48px;transform:rotate(45deg);}
-.price-tier{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
-.price-amt{font-family:'Cormorant Garamond',serif;font-size:3.8rem;font-weight:700;line-height:1;margin-bottom:4px;}
-.price-amt sup{font-size:1.4rem;vertical-align:top;margin-top:10px;display:inline-block;}
-.price-note{color:var(--grey);font-size:.8rem;margin-bottom:30px;}
-.price-features{list-style:none;margin-bottom:36px;}
-.price-features li{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.86rem;color:rgba(245,243,238,.82);line-height:1.5;}
-.price-features li::before{content:'✦';color:var(--gold);font-size:.6rem;flex-shrink:0;margin-top:3px;}
-.price-badge-new{display:inline-block;background:var(--gold-subtle);border:1px solid var(--border);border-radius:100px;color:var(--gold);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 10px;margin-left:8px;vertical-align:middle;}
-
-/* ── PORTFOLIO / EXAMPLES ── */
-.work-card{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);transition:.4s;position:relative;background:var(--card);}
-.work-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.55);}
-.work-thumb{width:100%;height:200px;overflow:hidden;position:relative;}
-.work-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s;filter:grayscale(20%);}
-.work-card:hover .work-thumb img{transform:scale(1.07);filter:grayscale(0%);}
-.work-badge{position:absolute;top:12px;left:12px;background:rgba(8,8,7,.82);border:1px solid var(--border);border-radius:100px;color:var(--gold);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;backdrop-filter:blur(8px);}
-.work-info{padding:22px;}
-.work-info h3{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;margin-bottom:8px;}
-.work-info p{color:var(--grey);font-size:.84rem;line-height:1.7;margin-bottom:14px;font-weight:300;}
-.tag{display:inline-block;padding:3px 10px;background:var(--gold-subtle);border:1px solid var(--border);border-radius:100px;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin:2px;}
-
-/* TEMPLATE NOTE */
-.template-note{background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(201,168,76,.04));border:1px solid rgba(201,168,76,.3);border-radius:var(--radius);padding:16px 20px;margin-top:16px;font-size:.82rem;color:rgba(245,243,238,.75);line-height:1.6;}
-.template-note strong{color:var(--gold);}
-
-/* ── PROCESS ── */
-.step-num{width:70px;height:70px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:var(--gold);background:var(--bg);position:relative;z-index:1;transition:.3s;}
-.process-step:hover .step-num{background:var(--gold);color:var(--bg);box-shadow:0 0 30px var(--gold-glow);}
-.process-step h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;margin-bottom:8px;}
-.process-step p{color:var(--grey);font-size:.85rem;line-height:1.75;font-weight:300;}
-.process-line{position:relative;}
-.process-line::before{content:'';position:absolute;top:35px;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold),transparent);opacity:.25;}
-
-/* ── TESTIMONIALS ── */
-.testi-card{background:var(--card);border:1px solid var(--border);padding:32px;border-radius:var(--radius);transition:.4s;position:relative;height:100%;}
-.testi-card::before{content:'"';font-family:'Cormorant Garamond',serif;font-size:5.5rem;line-height:1;color:var(--gold);opacity:.14;position:absolute;top:10px;left:20px;}
-.testi-card:hover{border-color:rgba(201,168,76,.4);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.3);}
-.stars{color:var(--gold);font-size:.85rem;letter-spacing:2px;margin-bottom:14px;}
-.testi-text{color:rgba(245,243,238,.72);font-size:.88rem;line-height:1.82;font-weight:300;margin-bottom:24px;font-style:italic;}
-.auth-av{width:42px;height:42px;background:linear-gradient(135deg,var(--gold-dark),var(--gold));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--bg);font-size:.9rem;flex-shrink:0;}
-
-/* ── ABOUT ── */
-.about-img-box{width:100%;aspect-ratio:4/5;background:linear-gradient(135deg,var(--bg2),var(--bg3));border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:linear-gradient(160deg,rgba(201,168,76,.07),rgba(201,168,76,.01));}
-.dev-init{width:110px;height:110px;background:linear-gradient(135deg,var(--gold-dark),var(--gold));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:3.2rem;font-weight:700;color:var(--bg);}
-.deco1{position:absolute;bottom:-14px;left:-14px;width:72px;height:72px;border:2px solid var(--gold);border-radius:2px;opacity:.35;}
-.deco2{position:absolute;top:-14px;right:-14px;width:44px;height:44px;border:1px solid var(--gold);border-radius:2px;opacity:.25;}
-.feat-icon{width:42px;height:42px;flex-shrink:0;background:var(--gold-subtle);border:1px solid var(--border);border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:1rem;}
-
-/* ── CONTACT ── */
-.contact-form{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:44px;}
-.form-control-sq{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius);padding:13px 16px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.9rem;transition:.3s;}
-.form-control-sq::placeholder{color:var(--grey);}
-.form-control-sq:focus{outline:none;border-color:var(--gold);background:rgba(201,168,76,.04);box-shadow:0 0 18px rgba(201,168,76,.08);}
-select.form-control-sq option{background:#1a1810;color:var(--white);}
-.form-label-sq{display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:7px;}
-.contact-icon-box{width:46px;height:46px;flex-shrink:0;background:var(--gold-subtle);border:1px solid var(--border);border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
-
-/* ── FAQ ── */
-.faq-btn{width:100%;background:none;border:none;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.92rem;font-weight:500;text-align:left;padding:22px 0;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:20px;transition:.3s;border-bottom:1px solid var(--border);}
-.faq-btn:hover{color:var(--gold);}
-.faq-icon-sq{width:26px;height:26px;flex-shrink:0;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--gold);transition:.3s;}
-.faq-item.open .faq-icon-sq{background:var(--gold);color:var(--bg);transform:rotate(45deg);}
-.faq-ans{max-height:0;overflow:hidden;transition:max-height .4s ease;}
-.faq-ans p{color:var(--grey);font-size:.88rem;line-height:1.82;font-weight:300;padding-bottom:22px;}
-
-/* ── CTA SECTION ── */
-.cta-wrap{position:relative;overflow:hidden;}
-.cta-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(201,168,76,.07) 0%,transparent 70%);}
-
-/* ── FOOTER ── */
-footer{background:#040403;border-top:1px solid var(--border);padding:80px 5% 40px;}
-.footer-logo{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light));background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimG 4s ease-in-out infinite;letter-spacing:.08em;filter:drop-shadow(0 0 12px rgba(201,168,76,.3));}
-.f-head{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
-.f-link{color:var(--grey);text-decoration:none;font-size:.86rem;transition:.2s;display:block;margin-bottom:8px;}
-.f-link:hover{color:var(--gold);}
-.footer-bottom{border-top:1px solid rgba(255,255,255,.05);padding-top:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-.footer-bottom p{color:var(--grey);font-size:.8rem;}
-.footer-bottom a{color:var(--gold);text-decoration:none;}
-
-/* REVEAL */
-.reveal{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .8s ease;}
-.reveal.visible{opacity:1;transform:translateY(0);}
-.rd1{transition-delay:.1s;}.rd2{transition-delay:.2s;}.rd3{transition-delay:.3s;}.rd4{transition-delay:.4s;}
-
-/* MOBILE */
-@media(max-width:991px){
-  .about-img-wrap{margin-bottom:40px;}
-  .process-line::before{display:none;}
-  .contact-form{padding:28px 20px;}
+@keyframes logoShimmer {
+  0%,100% { background-position:0% 50%; }
+  50%      { background-position:100% 50%; }
 }
-@media(max-width:768px){
-  section{padding:80px 5%;}
-  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:rgba(8,8,7,.98);padding:28px 5%;gap:20px;border-bottom:1px solid var(--border);}
-  .nav-links.open{display:flex;}
-  .hero-stats{gap:28px;}
+.logo-sq .sq-dot {
+  display:block; width:5px; height:5px;
+  background:var(--gold);
+  border-radius:50%;
+  margin-left:4px; margin-bottom:4px;
+  box-shadow:0 0 10px var(--gold), 0 0 24px rgba(201,168,76,.5);
+  animation:dotPulse 2s ease-in-out infinite;
+  flex-shrink:0;
+}
+@keyframes dotPulse {
+  0%,100% { transform:scale(1); box-shadow:0 0 10px var(--gold); }
+  50%      { transform:scale(1.6); box-shadow:0 0 20px var(--gold), 0 0 40px rgba(201,168,76,.4); }
+}
+
+.nav-links {
+  display:flex; gap:2.2rem; list-style:none; align-items:center;
+}
+.nav-links a {
+  color:var(--grey-light);
+  text-decoration:none;
+  font-size:.78rem;
+  font-weight:500;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  transition:color .3s;
+  position:relative;
+  padding-bottom:4px;
+}
+.nav-links a::after {
+  content:'';
+  position:absolute; bottom:0; left:0; right:0;
+  height:1px; background:var(--gold);
+  transform:scaleX(0); transform-origin:left;
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+.nav-links a:hover { color:var(--gold); }
+.nav-links a:hover::after { transform:scaleX(1); }
+
+.btn-nav {
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light)) !important;
+  color:var(--bg-solid) !important;
+  padding:9px 24px !important;
+  border-radius:var(--radius) !important;
+  font-weight:700 !important;
+  letter-spacing:.1em !important;
+  box-shadow:0 4px 20px rgba(201,168,76,.3);
+  transition:transform .3s, box-shadow .3s !important;
+}
+.btn-nav::after { display:none !important; }
+.btn-nav:hover { transform:translateY(-2px) !important; box-shadow:0 10px 32px rgba(201,168,76,.5) !important; }
+
+/* hamburger */
+.hamburger { display:none; flex-direction:column; gap:5px; border:none; background:none; cursor:pointer; }
+.hamburger span { display:block; width:24px; height:1.5px; background:var(--gold); transition:.3s; }
+@media(max-width:991px) { .hamburger { display:flex; } .nav-links { display:none; } }
+.nav-links.mobile-open {
+  display:flex; flex-direction:column; position:fixed; inset:0; top:0;
+  background:rgba(6,6,4,.98); backdrop-filter:blur(20px);
+  align-items:center; justify-content:center; gap:2.5rem; z-index:999;
+}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+.hero {
+  min-height:100vh;
+  display:flex; align-items:center; justify-content:center;
+  text-align:center;
+  position:relative;
+  padding:140px 6% 100px;
+  overflow:hidden;
+  background:#060604;
+}
+
+/* deep radial */
+.hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 30%, rgba(201,168,76,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 95%, rgba(201,168,76,.05) 0%, transparent 55%);
+  pointer-events:none;
+}
+
+/* fine grid */
+.hero-grid {
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(201,168,76,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,.04) 1px, transparent 1px);
+  background-size:80px 80px;
+  animation:gridBreath 8s ease-in-out infinite;
+}
+@keyframes gridBreath {
+  0%,100% { opacity:.3; }
+  50%      { opacity:.8; }
+}
+
+/* ── GOLDEN BUBBLES ── */
+#bubble-canvas {
+  position:absolute; inset:0;
+  pointer-events:none; z-index:1;
+}
+
+.hero-content { position:relative; z-index:3; max-width:940px; margin:0 auto; }
+
+/* badge */
+.hero-badge {
+  display:inline-flex; align-items:center; gap:9px;
+  border:1px solid var(--gold-border);
+  padding:7px 22px; border-radius:100px;
+  font-size:.7rem; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:32px;
+  background:var(--gold-subtle);
+  backdrop-filter:blur(10px);
+  animation:fadeDown .9s cubic-bezier(.4,0,.2,1) both;
+}
+.live-dot {
+  width:7px; height:7px;
+  background:var(--gold); border-radius:50%;
+  box-shadow:0 0 10px var(--gold);
+  animation:livePulse 1.8s ease-in-out infinite;
+}
+@keyframes livePulse {
+  0%,100% { transform:scale(1); opacity:1; }
+  50%      { transform:scale(1.7); opacity:.4; }
+}
+
+/* hero h1 */
+.hero h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3.4rem,7.5vw,6.8rem);
+  font-weight:900; line-height:1.01;
+  margin-bottom:24px;
+  animation:fadeUp 1s cubic-bezier(.4,0,.2,1) .15s both;
+  letter-spacing:-.02em;
+}
+.h1-line1 { color:var(--white); display:block; }
+.h1-line2 { display:block; }
+
+.gold-text {
+  background:linear-gradient(135deg,
+    var(--gold-dark) 0%,
+    var(--gold) 30%,
+    var(--gold-light) 55%,
+    var(--gold-bright) 65%,
+    var(--gold-light) 75%,
+    var(--gold) 90%,
+    var(--gold-dark) 100%
+  );
+  background-size:250% 250%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:goldShimmer 4s ease-in-out infinite;
+  filter:drop-shadow(0 0 28px rgba(201,168,76,.4));
+}
+@keyframes goldShimmer {
+  0%,100% { background-position:0% 50%; }
+  50%      { background-position:100% 50%; }
+}
+
+/* typer */
+.hero-typer {
+  font-size:1.1rem; color:var(--grey-light);
+  margin-bottom:42px;
+  animation:fadeUp 1s .35s both;
+}
+.typer-prefix { color:rgba(247,244,238,.75); }
+.typer-word {
+  color:var(--gold); font-weight:600;
+  border-right:2px solid var(--gold);
+  padding-right:3px;
+  animation:cursorBlink .8s step-end infinite;
+}
+@keyframes cursorBlink {
+  0%,100% { border-color:var(--gold); }
+  50%      { border-color:transparent; }
+}
+
+.hero-sub {
+  font-size:1.05rem; color:var(--grey-light);
+  max-width:560px; margin:0 auto 48px;
+  line-height:1.9; font-weight:300;
+  animation:fadeUp 1s .5s both;
+}
+
+/* CTA buttons */
+.hero-cta {
+  display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
+  animation:fadeUp 1s .65s both;
+}
+.btn-primary-gold {
+  background:linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+  color:var(--bg-solid);
+  padding:16px 42px;
+  font-family:'Outfit',sans-serif;
+  font-size:.8rem; font-weight:700;
+  letter-spacing:.16em; text-transform:uppercase;
+  border:none; border-radius:var(--radius);
+  cursor:pointer; text-decoration:none;
+  display:inline-block; position:relative; overflow:hidden;
+  transition:transform .3s, box-shadow .3s;
+  box-shadow:0 6px 28px rgba(201,168,76,.35);
+}
+.btn-primary-gold::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg, var(--gold-light), var(--gold-bright));
+  opacity:0; transition:opacity .3s;
+}
+.btn-primary-gold:hover { transform:translateY(-3px); box-shadow:0 18px 50px rgba(201,168,76,.55); color:var(--bg-solid); }
+.btn-primary-gold:hover::before { opacity:1; }
+.btn-primary-gold span { position:relative; z-index:1; }
+
+.btn-outline-gold {
+  background:transparent; color:var(--gold);
+  padding:16px 42px;
+  font-family:'Outfit',sans-serif;
+  font-size:.8rem; font-weight:600;
+  letter-spacing:.16em; text-transform:uppercase;
+  border:1px solid var(--gold-border); border-radius:var(--radius);
+  cursor:pointer; text-decoration:none; display:inline-block;
+  transition:all .3s; position:relative; overflow:hidden;
+  backdrop-filter:blur(8px);
+}
+.btn-outline-gold::before {
+  content:''; position:absolute; inset:0;
+  background:var(--gold-subtle); opacity:0; transition:opacity .3s;
+}
+.btn-outline-gold:hover {
+  color:var(--gold); border-color:rgba(201,168,76,.55);
+  transform:translateY(-3px);
+  box-shadow:0 10px 32px rgba(201,168,76,.2);
+}
+.btn-outline-gold:hover::before { opacity:1; }
+
+/* stats */
+.hero-stats {
+  display:flex; gap:56px; justify-content:center; flex-wrap:wrap;
+  margin-top:80px; padding-top:56px;
+  border-top:1px solid var(--gold-border);
+  animation:fadeUp 1s .85s both;
+}
+.stat-number {
+  font-family:'Playfair Display',serif;
+  font-size:3rem; font-weight:700; line-height:1;
+  background:linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text; display:block;
+}
+.stat-suffix {
+  font-family:'Playfair Display',serif; font-size:1.5rem;
+  background:linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.stat-label {
+  font-size:.7rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--grey); margin-top:6px; font-weight:400;
+}
+
+/* ═══════════════════════════════════════════
+   GENERAL SECTION
+═══════════════════════════════════════════ */
+section { padding:120px 6%; }
+.section-bg2 { background:var(--bg2); }
+.section-bg3 { background:var(--bg3); }
+
+.s-eyebrow {
+  display:flex; align-items:center; gap:14px;
+  font-size:.68rem; letter-spacing:.28em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:18px;
+}
+.s-eyebrow::before { content:''; width:32px; height:1px; background:linear-gradient(90deg,var(--gold),transparent); }
+
+.s-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.1rem,4.5vw,3.6rem);
+  font-weight:700; line-height:1.08; margin-bottom:18px;
+  letter-spacing:-.02em;
+}
+.s-body { color:var(--grey-light); font-size:.95rem; line-height:1.9; max-width:520px; font-weight:300; }
+
+/* divider ornament */
+.ornament {
+  display:flex; align-items:center; gap:16px;
+  margin-bottom:64px; justify-content:flex-start;
+}
+.ornament-line { height:1px; width:60px; background:linear-gradient(90deg,var(--gold),transparent); }
+.ornament-diamond {
+  width:6px; height:6px; background:var(--gold);
+  transform:rotate(45deg);
+  box-shadow:0 0 12px rgba(201,168,76,.6);
+}
+
+/* ═══════════════════════════════════════════
+   SERVICES
+═══════════════════════════════════════════ */
+.card-serv {
+  background:rgba(255,255,255,.022);
+  border:1px solid var(--gold-border);
+  padding:40px 30px; border-radius:var(--radius-lg);
+  position:relative; overflow:hidden;
+  transition:transform .45s cubic-bezier(.4,0,.2,1), box-shadow .45s, border-color .45s;
+  height:100%;
+}
+.card-serv::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform:scaleX(0); transform-origin:center;
+  transition:transform .5s cubic-bezier(.4,0,.2,1);
+}
+.card-serv::after {
+  content:'';
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 120%, rgba(201,168,76,.07), transparent);
+  opacity:0; transition:opacity .4s;
+}
+.card-serv:hover { transform:translateY(-10px); border-color:rgba(201,168,76,.45); box-shadow:0 28px 70px rgba(0,0,0,.55), 0 0 50px rgba(201,168,76,.12); }
+.card-serv:hover::before { transform:scaleX(1); }
+.card-serv:hover::after { opacity:1; }
+
+.serv-icon-wrap {
+  width:56px; height:56px;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+  border-radius:var(--radius);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.5rem; margin-bottom:26px;
+  box-shadow:0 8px 24px rgba(201,168,76,.25);
+  position:relative; z-index:1;
+}
+.card-serv h3 {
+  font-family:'Playfair Display',serif;
+  font-size:1.25rem; font-weight:600;
+  margin-bottom:14px; position:relative; z-index:1;
+}
+.card-serv p { color:var(--grey-light); font-size:.88rem; line-height:1.85; font-weight:300; position:relative; z-index:1; }
+
+/* ═══════════════════════════════════════════
+   PRICING
+═══════════════════════════════════════════ */
+.price-card {
+  background:rgba(255,255,255,.022);
+  border:1px solid var(--gold-border);
+  border-radius:var(--radius-lg);
+  padding:48px 34px; position:relative; overflow:hidden;
+  transition:transform .4s, box-shadow .4s;
+  height:100%;
+}
+.price-card.featured {
+  background:linear-gradient(160deg,rgba(201,168,76,.1),rgba(201,168,76,.025));
+  border-color:rgba(201,168,76,.45);
+  box-shadow:0 0 80px rgba(201,168,76,.1);
+}
+.price-card:hover { transform:translateY(-8px); box-shadow:0 24px 60px rgba(0,0,0,.45), 0 0 40px rgba(201,168,76,.13); }
+
+.pop-badge {
+  position:absolute; top:22px; right:-36px;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+  color:var(--bg-solid);
+  font-size:.6rem; font-weight:800; letter-spacing:.16em;
+  padding:7px 52px; transform:rotate(45deg);
+}
+.price-tier {
+  font-size:.7rem; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:12px;
+}
+.price-amount {
+  font-family:'Playfair Display',serif;
+  font-size:4rem; font-weight:700; line-height:1; margin-bottom:6px;
+}
+.price-amount sup { font-size:1.5rem; vertical-align:top; margin-top:12px; display:inline-block; }
+.price-note { color:var(--grey); font-size:.8rem; margin-bottom:32px; }
+.price-list { list-style:none; margin-bottom:36px; }
+.price-list li {
+  display:flex; align-items:flex-start; gap:11px;
+  padding:10px 0; border-bottom:1px solid rgba(255,255,255,.04);
+  font-size:.86rem; color:rgba(247,244,238,.82); line-height:1.6;
+}
+.price-list li::before { content:'◆'; color:var(--gold); font-size:.5rem; flex-shrink:0; margin-top:5px; }
+
+/* ═══════════════════════════════════════════
+   PORTFOLIO
+═══════════════════════════════════════════ */
+.work-card {
+  border-radius:var(--radius-lg); overflow:hidden;
+  border:1px solid var(--gold-border);
+  transition:transform .4s, box-shadow .4s, border-color .4s;
+  position:relative; background:rgba(255,255,255,.022); height:100%;
+}
+.work-card:hover { transform:translateY(-8px); box-shadow:0 24px 60px rgba(0,0,0,.55), 0 0 40px rgba(201,168,76,.1); border-color:rgba(201,168,76,.4); }
+.work-thumb { width:100%; height:210px; overflow:hidden; position:relative; }
+.work-thumb img { width:100%; height:100%; object-fit:cover; transition:transform .6s, filter .4s; filter:grayscale(25%) brightness(.9); }
+.work-card:hover .work-thumb img { transform:scale(1.08); filter:grayscale(0%) brightness(1); }
+.work-badge {
+  position:absolute; top:14px; left:14px;
+  background:rgba(6,6,4,.85); border:1px solid var(--gold-border);
+  border-radius:100px; color:var(--gold);
+  font-size:.64rem; letter-spacing:.14em; text-transform:uppercase;
+  padding:5px 14px; backdrop-filter:blur(10px);
+}
+.work-info { padding:26px; }
+.work-info h3 { font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:600; margin-bottom:10px; }
+.work-info p { color:var(--grey-light); font-size:.85rem; line-height:1.78; margin-bottom:16px; font-weight:300; }
+.tag {
+  display:inline-block; padding:3px 12px;
+  background:var(--gold-subtle); border:1px solid var(--gold-border);
+  border-radius:100px; font-size:.65rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--gold); margin:2px;
+}
+.template-note {
+  background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.03));
+  border:1px solid rgba(201,168,76,.22);
+  border-radius:var(--radius); padding:14px 18px;
+  margin-top:14px; font-size:.8rem;
+  color:rgba(247,244,238,.72); line-height:1.65;
+}
+.template-note strong { color:var(--gold); }
+
+/* ═══════════════════════════════════════════
+   PROCESS
+═══════════════════════════════════════════ */
+.step-circle {
+  width:76px; height:76px;
+  border:1.5px solid var(--gold);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto 28px;
+  font-family:'Playfair Display',serif; font-size:1.7rem; font-weight:700;
+  color:var(--gold); background:var(--bg-solid);
+  position:relative; z-index:1;
+  transition:background .35s, color .35s, box-shadow .35s;
+}
+.process-step:hover .step-circle {
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+  color:var(--bg-solid);
+  box-shadow:0 0 40px rgba(201,168,76,.45);
+}
+.process-step h3 { font-family:'Playfair Display',serif; font-size:1.12rem; font-weight:600; margin-bottom:10px; }
+.process-step p { color:var(--grey-light); font-size:.86rem; line-height:1.82; font-weight:300; }
+
+.process-connector {
+  position:relative; overflow:visible;
+}
+.process-connector::before {
+  content:'';
+  position:absolute; top:38px; left:calc(25% + 38px); right:calc(50%);
+  height:1px;
+  background:linear-gradient(90deg, rgba(201,168,76,.4), rgba(201,168,76,.1));
+  pointer-events:none;
+}
+@media(max-width:768px){ .process-connector::before { display:none; } }
+
+/* ═══════════════════════════════════════════
+   TESTIMONIALS
+═══════════════════════════════════════════ */
+.testi-card {
+  background:rgba(255,255,255,.022);
+  border:1px solid var(--gold-border);
+  padding:36px; border-radius:var(--radius-lg);
+  position:relative; height:100%;
+  transition:transform .4s, border-color .4s, box-shadow .4s;
+}
+.testi-card::before {
+  content:'"';
+  font-family:'Playfair Display',serif; font-size:7rem; line-height:.8;
+  color:var(--gold); opacity:.08;
+  position:absolute; top:14px; left:24px;
+  pointer-events:none;
+}
+.testi-card:hover { transform:translateY(-6px); border-color:rgba(201,168,76,.35); box-shadow:0 18px 50px rgba(0,0,0,.3); }
+.stars { color:var(--gold); letter-spacing:3px; margin-bottom:16px; font-size:.9rem; }
+.testi-text { color:rgba(247,244,238,.72); font-size:.89rem; line-height:1.9; font-weight:300; margin-bottom:26px; font-style:italic; }
+.avatar {
+  width:44px; height:44px;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-family:'Playfair Display',serif; font-weight:700;
+  color:var(--bg-solid); font-size:.95rem; flex-shrink:0;
+}
+
+/* ═══════════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════════ */
+.about-photo-box {
+  aspect-ratio:4/5;
+  background:linear-gradient(160deg,rgba(201,168,76,.08),rgba(201,168,76,.02));
+  border:1px solid var(--gold-border);
+  border-radius:var(--radius-lg); overflow:hidden;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:18px;
+  position:relative;
+}
+.about-photo-box::after {
+  content:'';
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse 60% 40% at 50% 40%, rgba(201,168,76,.05), transparent);
+}
+.about-initials {
+  width:120px; height:120px;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light));
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-family:'Playfair Display',serif; font-size:3.4rem; font-weight:700; color:var(--bg-solid);
+  box-shadow:0 16px 50px rgba(201,168,76,.35);
+  z-index:1;
+}
+.deco-corner-1 { position:absolute; bottom:-16px; left:-16px; width:80px; height:80px; border:2px solid rgba(201,168,76,.3); border-radius:2px; }
+.deco-corner-2 { position:absolute; top:-14px; right:-14px; width:50px; height:50px; border:1px solid rgba(201,168,76,.2); border-radius:2px; }
+
+.feat-row {
+  display:flex; gap:18px; align-items:flex-start; margin-bottom:28px;
+}
+.feat-icon {
+  width:46px; height:46px; flex-shrink:0;
+  background:var(--gold-subtle); border:1px solid var(--gold-border);
+  border-radius:var(--radius); display:flex; align-items:center; justify-content:center; font-size:1.1rem;
+}
+.feat-row h4 { font-size:.95rem; font-weight:600; margin-bottom:5px; }
+.feat-row p { color:var(--grey-light); font-size:.85rem; line-height:1.7; font-weight:300; margin:0; }
+
+/* ═══════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════ */
+.contact-form-wrap {
+  background:rgba(255,255,255,.022);
+  border:1px solid var(--gold-border);
+  border-radius:var(--radius-lg);
+  padding:50px;
+}
+.contact-form-wrap h3 { font-family:'Playfair Display',serif; font-size:1.7rem; font-weight:700; margin-bottom:30px; }
+
+.field-group { margin-bottom:20px; }
+.field-label { display:block; font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--grey); margin-bottom:8px; }
+.field-input {
+  width:100%;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--gold-border);
+  border-radius:var(--radius); padding:14px 18px;
+  color:var(--white); font-family:'Outfit',sans-serif; font-size:.9rem;
+  transition:border-color .3s, box-shadow .3s, background .3s;
+}
+.field-input::placeholder { color:var(--grey); }
+.field-input:focus { outline:none; border-color:var(--gold); background:rgba(201,168,76,.04); box-shadow:0 0 22px rgba(201,168,76,.1); }
+select.field-input option { background:#161410; color:var(--white); }
+
+.contact-detail {
+  display:flex; align-items:center; gap:16px; margin-bottom:28px;
+}
+.contact-icon {
+  width:48px; height:48px; flex-shrink:0;
+  background:var(--gold-subtle); border:1px solid var(--gold-border);
+  border-radius:var(--radius); display:flex; align-items:center; justify-content:center;
+  font-size:1.1rem;
+}
+.contact-detail .label { font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); margin-bottom:3px; }
+.contact-detail a, .contact-detail p { color:rgba(247,244,238,.8); font-size:.9rem; text-decoration:none; margin:0; transition:color .3s; }
+.contact-detail a:hover { color:var(--gold); }
+
+/* ═══════════════════════════════════════════
+   FAQ
+═══════════════════════════════════════════ */
+.faq-item { border-bottom:1px solid var(--gold-border); }
+.faq-btn {
+  width:100%; background:none; border:none;
+  color:var(--white); font-family:'Outfit',sans-serif; font-size:.93rem; font-weight:500;
+  text-align:left; padding:22px 0; cursor:pointer;
+  display:flex; align-items:center; justify-content:space-between; gap:20px;
+  transition:color .3s;
+}
+.faq-btn:hover { color:var(--gold); }
+.faq-icon {
+  width:28px; height:28px; flex-shrink:0;
+  border:1px solid var(--gold-border); border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--gold); font-size:.85rem; transition:all .35s;
+}
+.faq-item.open .faq-icon { background:var(--gold); color:var(--bg-solid); transform:rotate(45deg); border-color:var(--gold); }
+.faq-answer { max-height:0; overflow:hidden; transition:max-height .45s cubic-bezier(.4,0,.2,1); }
+.faq-answer p { color:var(--grey-light); font-size:.88rem; line-height:1.88; font-weight:300; padding-bottom:24px; }
+
+/* ═══════════════════════════════════════════
+   CTA BANNER
+═══════════════════════════════════════════ */
+.cta-section {
+  position:relative; overflow:hidden; text-align:center; padding:120px 6%;
+}
+.cta-section::before {
+  content:'';
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 50%, rgba(201,168,76,.08), transparent 65%);
+}
+.cta-section > * { position:relative; z-index:1; }
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer {
+  background:#040402;
+  border-top:1px solid var(--gold-border);
+  padding:90px 6% 44px;
+}
+.footer-logo {
+  font-family:'Playfair Display',serif;
+  font-size:2.6rem; font-weight:700;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light));
+  background-size:200%; -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text; animation:goldShimmer 4s ease-in-out infinite;
+  letter-spacing:-.01em;
+  filter:drop-shadow(0 0 12px rgba(201,168,76,.3));
+}
+.f-col-head { font-size:.68rem; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
+.f-link { color:var(--grey-light); text-decoration:none; font-size:.86rem; display:block; margin-bottom:10px; transition:color .25s; }
+.f-link:hover { color:var(--gold); }
+.footer-hr { border-top:1px solid rgba(255,255,255,.06); padding-top:30px; margin-top:60px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+.footer-hr p { color:var(--grey); font-size:.8rem; }
+.footer-hr a { color:var(--gold); text-decoration:none; }
+
+/* ═══════════════════════════════════════════
+   WHATSAPP FLOAT
+═══════════════════════════════════════════ */
+.wa-float {
+  position:fixed; bottom:34px; right:34px; z-index:900;
+  width:62px; height:62px; background:#25D366; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.7rem; text-decoration:none;
+  box-shadow:0 8px 32px rgba(37,211,102,.45);
+  animation:waPulse 2.8s ease-in-out infinite;
+  transition:transform .3s;
+}
+.wa-float:hover { transform:scale(1.1); }
+@keyframes waPulse {
+  0%,100% { box-shadow:0 8px 32px rgba(37,211,102,.45); }
+  50%      { box-shadow:0 8px 60px rgba(37,211,102,.75); }
+}
+
+/* ═══════════════════════════════════════════
+   REVEAL ANIMATIONS
+═══════════════════════════════════════════ */
+.reveal {
+  opacity:0; transform:translateY(40px);
+  transition:opacity .85s cubic-bezier(.4,0,.2,1), transform .85s cubic-bezier(.4,0,.2,1);
+}
+.reveal.visible { opacity:1; transform:translateY(0); }
+.rd1 { transition-delay:.12s; }
+.rd2 { transition-delay:.24s; }
+.rd3 { transition-delay:.36s; }
+.rd4 { transition-delay:.48s; }
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS (shared)
+═══════════════════════════════════════════ */
+@keyframes fadeDown { from { opacity:0; transform:translateY(-18px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeUp   { from { opacity:0; transform:translateY(30px); }  to { opacity:1; transform:translateY(0); } }
+
+/* noise overlay */
+body::after {
+  content:'';
+  position:fixed; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:9990; opacity:.35;
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media(max-width:991px) {
+  .hero-stats { gap:30px; }
+  .about-col-img { margin-bottom:48px; }
+  .contact-form-wrap { padding:32px 24px; }
+}
+@media(max-width:768px) {
+  section { padding:80px 5%; }
+  .hero-stats { gap:22px; }
+  footer { padding:60px 5% 32px; }
 }
 </style>
 </head>
 <body>
 
-<div id="cur"></div>
-<div id="curR"></div>
-<div id="prog"></div>
+<!-- CURSOR -->
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
+<!-- SCROLL PROGRESS -->
+<div id="scroll-progress"></div>
 
-<!-- NAV -->
+<!-- ═══ NAV ═══ -->
 <nav id="navbar">
-  <a href="#home" class="logo-sq text-decoration-none">SQ</a>
+  <a href="#home" class="logo-sq text-decoration-none">
+    <span class="sq-letter">SQ</span><span class="sq-dot"></span>
+  </a>
+
   <ul class="nav-links" id="navLinks">
     <li><a href="#services">Services</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#portfolio">Portfolio</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#faq">FAQ</a></li>
     <li><a href="#booking" class="btn-nav">Book Now</a></li>
+    <li class="d-none d-md-none" id="navClose" style="cursor:pointer;color:var(--gold);font-size:1.4rem;">✕</li>
   </ul>
-  <button class="d-flex d-lg-none flex-column gap-2 border-0 bg-transparent p-1" id="hamburger">
-    <span style="width:24px;height:2px;background:var(--gold);display:block;transition:.3s;"></span>
-    <span style="width:24px;height:2px;background:var(--gold);display:block;transition:.3s;"></span>
-    <span style="width:24px;height:2px;background:var(--gold);display:block;transition:.3s;"></span>
+
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
   </button>
 </nav>
 
-<!-- WHATSAPP FLOAT -->
+<!-- ═══ WHATSAPP ═══ -->
 <a class="wa-float" href="https://wa.me/447919978462?text=Hi%20Mohammed%2C%20I%27m%20interested%20in%20a%20website%20from%20SQ%20Website." target="_blank" title="Chat on WhatsApp">
-  <i class="bi bi-whatsapp" style="color:#fff;font-size:1.6rem;"></i>
+  <i class="bi bi-whatsapp" style="color:#fff;font-size:1.65rem;"></i>
 </a>
 
-<!-- HERO -->
+<!-- ═══ HERO ═══ -->
 <section class="hero" id="home">
-  <div class="hero-bg"></div>
   <div class="hero-grid"></div>
-  <div class="hero-content position-relative" style="z-index:2;max-width:900px;margin:0 auto;">
-    <div class="hero-badge"><span class="pulse-dot"></span>Manchester's Premier Web Design Studio</div>
+  <canvas id="bubble-canvas"></canvas>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="live-dot"></span>
+      Manchester's Premier Web Design Studio
+    </div>
+
     <h1>
-      Websites That<br>
-      <span class="gold-grad">Command Attention.</span>
+      <span class="h1-line1">Websites That</span>
+      <span class="h1-line2 gold-text">Command Attention.</span>
     </h1>
-    <div class="typer-wrap">
-      <span class="typer-prefix">We build websites for </span><span class="typer-txt" id="typerTxt"></span>
+
+    <p class="hero-typer">
+      <span class="typer-prefix">We build websites for </span><span class="typer-word" id="typerEl">Driving Schools</span>
+    </p>
+
+    <p class="hero-sub">
+      From sleek single-page sites to fully SEO-optimised multi-page platforms — we craft digital experiences that convert visitors into loyal customers. Based in Manchester, UK.
+    </p>
+
+    <div class="hero-cta">
+      <a href="#booking" class="btn-primary-gold"><span>Start Your Project</span></a>
+      <a href="#portfolio" class="btn-outline-gold">View Our Work</a>
     </div>
-    <p class="hero-sub">From sleek single-page sites to fully SEO-optimised multi-page platforms — we craft digital experiences that convert visitors into loyal customers. Based in Manchester, UK.</p>
-    <div class="d-flex gap-3 justify-content-center flex-wrap" style="animation:fadeU 1s ease .65s both;">
-      <a href="#booking" class="btn-gold"><span>Start Your Project</span></a>
-      <a href="#portfolio" class="btn-outl">View Our Work</a>
-    </div>
+
     <div class="hero-stats">
       <div class="text-center">
-        <span class="stat-n" data-target="50">0</span>
-        <span class="stat-l">Websites Delivered</span>
+        <span class="stat-number" data-target="50">0</span><span class="stat-suffix">+</span>
+        <div class="stat-label">Websites Delivered</div>
       </div>
       <div class="text-center">
-        <span class="stat-n" data-target="100">0</span>
-        <span class="stat-l">% Client Satisfaction</span>
+        <span class="stat-number" data-target="100">0</span><span class="stat-suffix">%</span>
+        <div class="stat-label">Client Satisfaction</div>
       </div>
       <div class="text-center">
-        <span class="stat-n" data-target="5">0</span>
-        <span class="stat-l">Years Experience</span>
+        <span class="stat-number" data-target="5">0</span><span class="stat-suffix">+</span>
+        <div class="stat-label">Years Experience</div>
       </div>
       <div class="text-center">
-        <span class="stat-n" data-target="48">0</span>
-        <span class="stat-l">Hour Turnaround</span>
+        <span class="stat-number" data-target="48">0</span><span class="stat-suffix">h</span>
+        <div class="stat-label">Hour Turnaround</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SERVICES -->
-<section class="bg2" id="services">
-  <div class="s-label">What We Do</div>
-  <h2 class="s-title">Services Built to<br><span class="gold-grad">Grow Your Business</span></h2>
-  <p class="s-desc mb-5">Everything under one roof — design, development, branding, and optimisation.</p>
+<!-- ═══ SERVICES ═══ -->
+<section class="section-bg2" id="services">
+  <div class="s-eyebrow reveal">What We Do</div>
+  <h2 class="s-title reveal">Services Built to<br><span class="gold-text">Grow Your Business</span></h2>
+  <div class="ornament reveal"><div class="ornament-line"></div><div class="ornament-diamond"></div><div class="ornament-line" style="background:linear-gradient(270deg,var(--gold),transparent)"></div></div>
+
   <div class="row g-4">
-    <div class="col-md-6 col-lg-4 reveal"><div class="card-serv"><div class="serv-icon">🎨</div><h3>Custom Web Design</h3><p>Pixel-perfect, bespoke designs tailored to your brand identity. No templates forced on you — every site is crafted from scratch to stand out and convert.</p></div></div>
-    <div class="col-md-6 col-lg-4 reveal rd1"><div class="card-serv"><div class="serv-icon">🔍</div><h3>SEO Optimisation</h3><p>Rank higher on Google and attract organic traffic. We handle keyword research, on-page SEO, schema markup, Google Analytics, and Search Console setup.</p></div></div>
-    <div class="col-md-6 col-lg-4 reveal rd2"><div class="card-serv"><div class="serv-icon">🚗</div><h3>Driving Instructor Sites</h3><p>Specialist sites with online booking, lesson packages, and local SEO to attract learners in your area. We know this niche inside out.</p></div></div>
-    <div class="col-md-6 col-lg-4 reveal"><div class="card-serv"><div class="serv-icon">🏢</div><h3>Business Websites</h3><p>Professional multi-page websites for any industry — retail, hospitality, healthcare, trades, and more. Built to impress and built to convert.</p></div></div>
-    <div class="col-md-6 col-lg-4 reveal rd1"><div class="card-serv"><div class="serv-icon">🎭</div><h3>Logo & Brand Identity</h3><p>We help new businesses create a powerful brand from scratch — logo design, colour palettes, typography, and brand guidelines for a cohesive identity.</p></div></div>
-    <div class="col-md-6 col-lg-4 reveal rd2"><div class="card-serv"><div class="serv-icon">📱</div><h3>Mobile-First Development</h3><p>Every website we build is fully responsive and blazing fast on all devices — flawless experience whether on desktop, tablet, or smartphone.</p></div></div>
+    <div class="col-md-6 col-lg-4 reveal">
+      <div class="card-serv">
+        <div class="serv-icon-wrap">🎨</div>
+        <h3>Custom Web Design</h3>
+        <p>Pixel-perfect bespoke designs tailored to your brand identity. No templates forced on you — every site is crafted from scratch to stand out and convert.</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4 reveal rd1">
+      <div class="card-serv">
+        <div class="serv-icon-wrap">🔍</div>
+        <h3>SEO Optimisation</h3>
+        <p>Rank higher on Google and attract organic traffic. We handle keyword research, on-page SEO, schema markup, Google Analytics, and Search Console setup.</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4 reveal rd2">
+      <div class="card-serv">
+        <div class="serv-icon-wrap">🚗</div>
+        <h3>Driving Instructor Sites</h3>
+        <p>Specialist sites with online booking, lesson packages, and local SEO to attract learners in your area. We know this niche inside out.</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4 reveal">
+      <div class="card-serv">
+        <div class="serv-icon-wrap">🏢</div>
+        <h3>Business Websites</h3>
+        <p>Professional multi-page websites for any industry — retail, hospitality, healthcare, trades, and more. Built to impress and built to convert.</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4 reveal rd1">
+      <div class="card-serv">
+        <div class="serv-icon-wrap">🎭</div>
+        <h3>Logo & Brand Identity</h3>
+        <p>We help new businesses create a powerful brand from scratch — logo design, colour palettes, typography, and brand guidelines for a cohesive identity.</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4 reveal rd2">
+      <div class="card-serv">
+        <div class="serv-icon-wrap">📱</div>
+        <h3>Mobile-First Development</h3>
+        <p>Every website we build is fully responsive and blazing fast on all devices — flawless experience whether on desktop, tablet, or smartphone.</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- PRICING -->
+<!-- ═══ PRICING ═══ -->
 <section id="pricing">
-  <div class="s-label">Transparent Pricing</div>
-  <h2 class="s-title">Simple Packages,<br><span class="gold-grad">No Hidden Fees</span></h2>
-  <p class="s-desc mb-5">One-time payments. No confusing subscriptions. Choose what's right for your business.</p>
+  <div class="s-eyebrow reveal">Transparent Pricing</div>
+  <h2 class="s-title reveal">Simple Packages,<br><span class="gold-text">No Hidden Fees</span></h2>
+  <p class="s-body mb-5 reveal">One-time payments. No confusing subscriptions. Choose what's right for your business.</p>
+
   <div class="row g-4 align-items-stretch">
 
-    <!-- £150 -->
     <div class="col-lg-3 col-md-6 reveal">
       <div class="price-card h-100">
         <div class="price-tier">Essential</div>
-        <div class="price-amt"><sup>£</sup>150</div>
+        <div class="price-amount"><sup>£</sup>150</div>
         <div class="price-note mb-4">One-time · Perfect for solo traders</div>
-        <ul class="price-features">
+        <ul class="price-list">
           <li>Single-page website</li>
           <li>Online booking / appointment system</li>
           <li>Full contact info & Google Maps</li>
@@ -336,17 +963,16 @@ footer{background:#040403;border-top:1px solid var(--border);padding:80px 5% 40p
           <li>Fast loading & performance optimised</li>
           <li>1 month free support</li>
         </ul>
-        <a href="#booking" class="btn-outl d-block text-center mt-auto">Get Started</a>
+        <a href="#booking" class="btn-outline-gold d-block text-center mt-auto">Get Started</a>
       </div>
     </div>
 
-    <!-- £300 -->
     <div class="col-lg-3 col-md-6 reveal rd1">
       <div class="price-card h-100">
         <div class="price-tier">Professional</div>
-        <div class="price-amt"><sup>£</sup>300</div>
+        <div class="price-amount"><sup>£</sup>300</div>
         <div class="price-note mb-4">One-time · Grow your online presence</div>
-        <ul class="price-features">
+        <ul class="price-list">
           <li>3–5 fully designed pages</li>
           <li>On-page SEO for every page</li>
           <li>Keyword research & page targeting</li>
@@ -355,21 +981,19 @@ footer{background:#040403;border-top:1px solid var(--border);padding:80px 5% 40p
           <li>Google Maps & social links</li>
           <li>Mobile-first responsive build</li>
           <li>Speed & performance optimised</li>
-          <li>Basic marketing copy support</li>
           <li>2 months free support</li>
         </ul>
-        <a href="#booking" class="btn-outl d-block text-center mt-auto">Get Started</a>
+        <a href="#booking" class="btn-outline-gold d-block text-center mt-auto">Get Started</a>
       </div>
     </div>
 
-    <!-- £450 FEATURED -->
     <div class="col-lg-3 col-md-6 reveal rd2">
       <div class="price-card featured h-100">
         <div class="pop-badge">BEST VALUE</div>
         <div class="price-tier">SEO Pro</div>
-        <div class="price-amt"><sup>£</sup>450</div>
+        <div class="price-amount"><sup>£</sup>450</div>
         <div class="price-note mb-4">One-time · Dominate Google</div>
-        <ul class="price-features">
+        <ul class="price-list">
           <li>Everything in Professional</li>
           <li>Full technical SEO audit & fix</li>
           <li>Google Search Console setup</li>
@@ -379,47 +1003,45 @@ footer{background:#040403;border-top:1px solid var(--border);padding:80px 5% 40p
           <li>Advanced meta & keyword strategy</li>
           <li>3 months free priority support</li>
         </ul>
-        <a href="#booking" class="btn-gold d-block text-center mt-auto"><span>Get Started</span></a>
+        <a href="#booking" class="btn-primary-gold d-block text-center mt-auto"><span>Get Started</span></a>
       </div>
     </div>
 
-    <!-- £600 NEW BIZ -->
     <div class="col-lg-3 col-md-6 reveal rd3">
-      <div class="price-card featured h-100" style="border-color:rgba(201,168,76,.6);">
-        <div class="pop-badge" style="background:linear-gradient(135deg,#6a4800,var(--gold));">NEW BIZ</div>
-        <div class="price-tier">Business Launch <span class="price-badge-new">New</span></div>
-        <div class="price-amt"><sup>£</sup>600</div>
+      <div class="price-card featured h-100" style="border-color:rgba(201,168,76,.55);">
+        <div class="pop-badge" style="background:linear-gradient(135deg,#5c3a00,var(--gold));">NEW BIZ</div>
+        <div class="price-tier">Business Launch</div>
+        <div class="price-amount"><sup>£</sup>600</div>
         <div class="price-note mb-4">One-time · Complete brand & web launch</div>
-        <ul class="price-features">
+        <ul class="price-list">
           <li>Everything in SEO Pro</li>
           <li>Custom logo design (multiple concepts)</li>
           <li>Brand identity — colours, fonts, style guide</li>
           <li>Business naming & slogan suggestions</li>
           <li>Social media profile setup</li>
-          <li>3 months hands-on consultation & guidance</li>
+          <li>3 months hands-on consultation</li>
           <li>Marketing strategy starter plan</li>
           <li>Email & WhatsApp support for 3 months</li>
         </ul>
-        <a href="#booking" class="btn-gold d-block text-center mt-auto"><span>Get Started</span></a>
+        <a href="#booking" class="btn-primary-gold d-block text-center mt-auto"><span>Get Started</span></a>
       </div>
     </div>
 
   </div>
-  <p class="text-center mt-4" style="color:var(--grey);font-size:.82rem;">All prices are one-time payments. No monthly fees unless you choose optional maintenance. <a href="#booking" style="color:var(--gold);">Have a custom requirement? Let's talk →</a></p>
+  <p class="text-center mt-4 reveal" style="color:var(--grey);font-size:.82rem;">All prices are one-time payments. No monthly fees unless you choose optional maintenance. <a href="#booking" style="color:var(--gold);">Have a custom requirement? Let's talk →</a></p>
 </section>
 
-<!-- PORTFOLIO / EXAMPLES -->
-<section class="bg2" id="portfolio">
-  <div class="s-label">Our Work</div>
-  <h2 class="s-title">Built With<br><span class="gold-grad">Purpose & Precision</span></h2>
-  <p class="s-desc mb-5">Real websites created by Mohammed Abbas — your project will be crafted to the same standard.</p>
-  <div class="row g-4">
+<!-- ═══ PORTFOLIO ═══ -->
+<section class="section-bg2" id="portfolio">
+  <div class="s-eyebrow reveal">Our Work</div>
+  <h2 class="s-title reveal">Built With<br><span class="gold-text">Purpose & Precision</span></h2>
+  <div class="ornament reveal"><div class="ornament-line"></div><div class="ornament-diamond"></div><div class="ornament-line" style="background:linear-gradient(270deg,var(--gold),transparent)"></div></div>
 
-    <!-- DriveSQ -->
+  <div class="row g-4">
     <div class="col-lg-4 col-md-6 reveal">
       <div class="work-card">
         <div class="work-thumb">
-          <img src="https://i.postimg.cc/vHTbRtw3/cineevent-pic.jpg" alt="DriveSQ Driving School Website" onerror="this.parentNode.innerHTML='<div style=\'width:100%;height:200px;background:linear-gradient(135deg,#1a1205,#2d1f07);display:flex;align-items:center;justify-content:center;font-size:3rem;\'>🚗</div>'">
+          <img src="https://i.postimg.cc/vHTbRtw3/cineevent-pic.jpg" alt="DriveSQ Driving School Website" onerror="this.parentNode.innerHTML='<div style=\'width:100%;height:210px;background:linear-gradient(135deg,#1a1205,#2d1f07);display:flex;align-items:center;justify-content:center;font-size:3.5rem;\'>🚗</div>'">
           <div class="work-badge">Live Website</div>
         </div>
         <div class="work-info">
@@ -427,37 +1049,38 @@ footer{background:#040403;border-top:1px solid var(--border);padding:80px 5% 40p
           <p>A fully SEO-optimised professional driving school website with online booking, lesson packages, instructor profiles, and local keyword targeting for Manchester.</p>
           <span class="tag">Driving</span><span class="tag">SEO</span><span class="tag">Booking System</span>
           <div class="template-note">
-            <strong>✦ Client Website</strong> — This is a real business website built by Mohammed Abbas for a Manchester-based driving school. A prime example of a fully functional, SEO-ranked professional website.
+            <strong>✦ Client Website</strong> — A real business site built by Mohammed Abbas for a Manchester driving school. Fully functional, SEO-ranked, and live.
           </div>
-          <a href="https://www.drivesq.co.uk" target="_blank" class="btn-outl d-inline-block mt-3" style="font-size:.78rem;padding:10px 20px;">Visit drivesq.co.uk →</a>
+          <a href="https://www.drivesq.co.uk" target="_blank" class="btn-outline-gold d-inline-block mt-3" style="font-size:.78rem;padding:10px 22px;">Visit drivesq.co.uk →</a>
         </div>
       </div>
     </div>
 
-    <!-- CineEvents -->
     <div class="col-lg-4 col-md-6 reveal rd1">
       <div class="work-card">
         <div class="work-thumb">
-          <img src="https://i.postimg.cc/SNdq31PK/pic4-cineevent.jpg" alt="CineEvents Photography Website Template">
+          <img src="https://i.postimg.cc/SNdq31PK/pic4-cineevent.jpg" alt="CineEvents Photography Website">
           <div class="work-badge">Template Example</div>
         </div>
         <div class="work-info">
           <h3>CineEvents — Luxury Wedding & Photography</h3>
-          <p>A stunning luxury wedding photography & cinematography website template built by Mohammed Abbas. Features gallery animations, smooth scrolling, pricing packages, and a booking form.</p>
+          <p>A stunning luxury wedding photography & cinematography website featuring gallery animations, smooth scrolling, pricing packages, and a booking form.</p>
           <span class="tag">Photography</span><span class="tag">Animation</span><span class="tag">Luxury</span>
           <div class="template-note">
-            <strong>✦ Design Template</strong> — This website was designed and built by Mohammed Abbas as a showcase template. It demonstrates the level of UI design, typography animations, scroll effects, and social media integration your website can have. This exact template (or a custom variation) is available for your business.
+            <strong>✦ Design Template</strong> — Built by Mohammed Abbas as a showcase template. It demonstrates the exact level of UI design, typography animations, and scroll effects your website can have.
           </div>
-          <a href="https://mqabbas.github.io/CINEEVENTS-WEBSITE/" target="_blank" class="btn-outl d-inline-block mt-3" style="font-size:.78rem;padding:10px 20px;">View Template Live →</a>
+          <a href="https://mqabbas.github.io/CINEEVENTS-WEBSITE/" target="_blank" class="btn-outline-gold d-inline-block mt-3" style="font-size:.78rem;padding:10px 22px;">View Template Live →</a>
         </div>
       </div>
     </div>
 
-    <!-- Generic Business -->
     <div class="col-lg-4 col-md-6 reveal rd2">
       <div class="work-card">
         <div class="work-thumb">
-          <div style="width:100%;height:200px;background:linear-gradient(135deg,#050d1a,#071526);display:flex;align-items:center;justify-content:center;font-size:3rem;">🏢</div>
+          <div style="width:100%;height:210px;background:linear-gradient(135deg,#050d1a,#071526,#0a1a30);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;">
+            <div style="font-size:3.5rem;">🏢</div>
+            <div style="font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);opacity:.6;">Your Brand Here</div>
+          </div>
         </div>
         <div class="work-info">
           <h3>Your Business Could Be Next</h3>
@@ -466,109 +1089,114 @@ footer{background:#040403;border-top:1px solid var(--border);padding:80px 5% 40p
           <div class="template-note">
             <strong>✦ Fully Custom</strong> — Every website we build is tailored to your brand. No generic templates. We study your business and build something that truly represents you.
           </div>
-          <a href="#booking" class="btn-gold d-inline-block mt-3" style="font-size:.78rem;padding:10px 20px;"><span>Start Your Project →</span></a>
+          <a href="#booking" class="btn-primary-gold d-inline-block mt-3" style="font-size:.78rem;padding:10px 22px;"><span>Start Your Project →</span></a>
         </div>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- ABOUT -->
-<section class="bg3" id="about">
+<!-- ═══ ABOUT ═══ -->
+<section class="section-bg3" id="about">
   <div class="row align-items-center g-5">
-    <div class="col-lg-5 reveal">
+    <div class="col-lg-5 about-col-img reveal">
       <div class="position-relative">
-        <div class="about-img-box">
-          <div class="dev-init">MA</div>
-          <div class="text-center">
-            <div style="font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;">Mohammed Abbas</div>
-            <div style="color:var(--gold);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;">Lead Developer & Founder</div>
-            <div style="color:var(--grey);font-size:.8rem;margin-top:6px;">Manchester, UK</div>
+        <div class="about-photo-box">
+          <div class="about-initials">MA</div>
+          <div class="text-center" style="z-index:1;">
+            <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;">Mohammed Abbas</div>
+            <div style="color:var(--gold);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;margin-top:4px;">Lead Developer & Founder</div>
+            <div style="color:var(--grey);font-size:.82rem;margin-top:6px;">Manchester, UK</div>
           </div>
-          <div style="display:flex;gap:16px;margin-top:8px;">
-            <a href="https://wa.me/447919978462" target="_blank" style="color:#25D366;font-size:1.4rem;text-decoration:none;"><i class="bi bi-whatsapp"></i></a>
-            <a href="https://mqabbas.github.io/CINEEVENTS-WEBSITE/" target="_blank" style="color:var(--gold);font-size:1.4rem;text-decoration:none;"><i class="bi bi-globe"></i></a>
+          <div style="display:flex;gap:18px;z-index:1;">
+            <a href="https://wa.me/447919978462" target="_blank" style="color:#25D366;font-size:1.5rem;text-decoration:none;transition:.3s;"><i class="bi bi-whatsapp"></i></a>
+            <a href="https://mqabbas.github.io/CINEEVENTS-WEBSITE/" target="_blank" style="color:var(--gold);font-size:1.5rem;text-decoration:none;transition:.3s;"><i class="bi bi-globe2"></i></a>
           </div>
         </div>
-        <div class="deco1"></div>
-        <div class="deco2"></div>
+        <div class="deco-corner-1"></div>
+        <div class="deco-corner-2"></div>
       </div>
     </div>
+
     <div class="col-lg-7 reveal rd1">
-      <div class="s-label">Meet the Developer</div>
-      <h2 class="s-title">Expert Craftsmanship<br><span class="gold-grad">Behind Every Site</span></h2>
-      <p class="s-desc mb-4">Mohammed Abbas is the founder and sole developer at SQ Website. Based in Manchester, he brings years of hands-on experience building professional websites for businesses across the UK, combining technical excellence with creative vision on every project.</p>
-      <div class="d-flex gap-3 mb-3">
+      <div class="s-eyebrow">Meet the Developer</div>
+      <h2 class="s-title">Expert Craftsmanship<br><span class="gold-text">Behind Every Site</span></h2>
+      <p class="s-body mb-5">Mohammed Abbas is the founder and sole developer at SQ Website. Based in Manchester, he brings years of hands-on experience building professional websites for businesses across the UK, combining technical excellence with creative vision on every project.</p>
+
+      <div class="feat-row">
         <div class="feat-icon">🏆</div>
         <div>
-          <h4 style="font-size:.95rem;font-weight:600;margin-bottom:3px;">Proven Track Record</h4>
-          <p style="color:var(--grey);font-size:.85rem;line-height:1.65;font-weight:300;">Dozens of successful projects delivered on time and within budget across multiple industries in the UK.</p>
+          <h4>Proven Track Record</h4>
+          <p>Dozens of successful projects delivered on time and within budget across multiple industries in the UK.</p>
         </div>
       </div>
-      <div class="d-flex gap-3 mb-3">
+      <div class="feat-row">
         <div class="feat-icon">🎭</div>
         <div>
-          <h4 style="font-size:.95rem;font-weight:600;margin-bottom:3px;">Logo & Brand Design</h4>
-          <p style="color:var(--grey);font-size:.85rem;line-height:1.65;font-weight:300;">We help new businesses launch with a full brand identity — logo, colours, typography, and more, so your business looks professional from day one.</p>
+          <h4>Logo & Brand Design</h4>
+          <p>We help new businesses launch with a full brand identity — logo, colours, typography, and more, so you look professional from day one.</p>
         </div>
       </div>
-      <div class="d-flex gap-3 mb-4">
+      <div class="feat-row">
         <div class="feat-icon">🔧</div>
         <div>
-          <h4 style="font-size:.95rem;font-weight:600;margin-bottom:3px;">Full-Stack Development</h4>
-          <p style="color:var(--grey);font-size:.85rem;line-height:1.65;font-weight:300;">From front-end design to back-end functionality — Mohammed handles every aspect of your website personally, with no outsourcing.</p>
+          <h4>Full-Stack Development</h4>
+          <p>From front-end design to back-end functionality — Mohammed handles every aspect of your website personally, with no outsourcing.</p>
         </div>
       </div>
-      <div class="d-flex gap-3 flex-wrap">
-        <a href="https://www.drivesq.co.uk" target="_blank" class="btn-outl" style="font-size:.8rem;padding:12px 24px;">drivesq.co.uk ↗</a>
-        <a href="https://mqabbas.github.io/CINEEVENTS-WEBSITE/" target="_blank" class="btn-outl" style="font-size:.8rem;padding:12px 24px;">CineEvents Template ↗</a>
-        <a href="https://wa.me/447919978462" target="_blank" class="btn-gold" style="font-size:.8rem;padding:12px 24px;"><span><i class="bi bi-whatsapp me-1"></i>WhatsApp Mohammed</span></a>
+
+      <div class="d-flex gap-3 flex-wrap mt-2">
+        <a href="https://www.drivesq.co.uk" target="_blank" class="btn-outline-gold" style="font-size:.8rem;padding:12px 24px;">drivesq.co.uk ↗</a>
+        <a href="https://mqabbas.github.io/CINEEVENTS-WEBSITE/" target="_blank" class="btn-outline-gold" style="font-size:.8rem;padding:12px 24px;">CineEvents ↗</a>
+        <a href="https://wa.me/447919978462" target="_blank" class="btn-primary-gold" style="font-size:.8rem;padding:12px 24px;"><span><i class="bi bi-whatsapp me-1"></i>WhatsApp Mohammed</span></a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PROCESS -->
+<!-- ═══ PROCESS ═══ -->
 <section id="process">
-  <div class="s-label text-center" style="justify-content:center;">How It Works</div>
-  <h2 class="s-title text-center">Our Simple<br><span class="gold-grad">4-Step Process</span></h2>
-  <div class="row g-4 mt-4 process-line text-center">
+  <div class="s-eyebrow text-center justify-content-center reveal">How It Works</div>
+  <h2 class="s-title text-center reveal">Our Simple<br><span class="gold-text">4-Step Process</span></h2>
+  <div class="row g-4 mt-4 text-center">
     <div class="col-md-3 process-step reveal">
-      <div class="step-num">01</div>
+      <div class="step-circle">01</div>
       <h3>Discovery Call</h3>
-      <p>We discuss your business goals, target audience, and your vision for your website over a free consultation.</p>
+      <p>We discuss your business goals, target audience, and vision for your website over a free consultation.</p>
     </div>
     <div class="col-md-3 process-step reveal rd1">
-      <div class="step-num">02</div>
+      <div class="step-circle">02</div>
       <h3>Design & Build</h3>
       <p>Mohammed crafts a custom design and builds your site from the ground up with precision and care.</p>
     </div>
     <div class="col-md-3 process-step reveal rd2">
-      <div class="step-num">03</div>
+      <div class="step-circle">03</div>
       <h3>Review & Refine</h3>
-      <p>You review the site and request changes — we refine until you are completely satisfied.</p>
+      <p>You review the site and request changes — we refine until you're completely satisfied.</p>
     </div>
     <div class="col-md-3 process-step reveal rd3">
-      <div class="step-num">04</div>
+      <div class="step-circle">04</div>
       <h3>Launch & Support</h3>
-      <p>Your site goes live. We handle setup and provide ongoing support throughout your included support period.</p>
+      <p>Your site goes live. We handle setup and provide ongoing support throughout your support period.</p>
     </div>
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
-<section class="bg3" id="testimonials">
-  <div class="s-label">Client Reviews</div>
-  <h2 class="s-title">What Our<br><span class="gold-grad">Clients Say</span></h2>
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="section-bg3" id="testimonials">
+  <div class="s-eyebrow reveal">Client Reviews</div>
+  <h2 class="s-title reveal">What Our<br><span class="gold-text">Clients Say</span></h2>
   <div class="row g-4 mt-2">
     <div class="col-md-4 reveal">
       <div class="testi-card">
         <div class="stars">★★★★★</div>
         <p class="testi-text">Mohammed built us the most professional driving school website we could have imagined. Enquiries went up significantly within weeks of going live. Absolutely top service!</p>
         <div class="d-flex align-items-center gap-3">
-          <div class="auth-av">JS</div>
-          <div><div style="font-weight:600;font-size:.9rem;">James S.</div><div style="color:var(--grey);font-size:.78rem;">Driving Instructor, Manchester</div></div>
+          <div class="avatar">JS</div>
+          <div>
+            <div style="font-weight:600;font-size:.92rem;">James S.</div>
+            <div style="color:var(--grey);font-size:.78rem;">Driving Instructor, Manchester</div>
+          </div>
         </div>
       </div>
     </div>
@@ -577,8 +1205,11 @@ footer{background:#040403;border-top:1px solid var(--border);padding:80px 5% 40p
         <div class="stars">★★★★★</div>
         <p class="testi-text">Fast, professional, and the results speak for themselves — we're now on the first page of Google for our local area. The SEO package was absolutely worth every penny.</p>
         <div class="d-flex align-items-center gap-3">
-          <div class="auth-av">PK</div>
-          <div><div style="font-weight:600;font-size:.9rem;">Priya K.</div><div style="color:var(--grey);font-size:.78rem;">Salon Owner, Birmingham</div></div>
+          <div class="avatar">PK</div>
+          <div>
+            <div style="font-weight:600;font-size:.92rem;">Priya K.</div>
+            <div style="color:var(--grey);font-size:.78rem;">Salon Owner, Birmingham</div>
+          </div>
         </div>
       </div>
     </div>
@@ -587,71 +1218,99 @@ footer{background:#040403;border-top:1px solid var(--border);padding:80px 5% 40p
         <div class="stars">★★★★★</div>
         <p class="testi-text">I had a tight budget and Mohammed delivered a stunning website that looks like it cost thousands. Clear communication, launched on time, and it's brought in real business.</p>
         <div class="d-flex align-items-center gap-3">
-          <div class="auth-av">TW</div>
-          <div><div style="font-weight:600;font-size:.9rem;">Tom W.</div><div style="color:var(--grey);font-size:.78rem;">Plumber, Leeds</div></div>
+          <div class="avatar">TW</div>
+          <div>
+            <div style="font-weight:600;font-size:.92rem;">Tom W.</div>
+            <div style="color:var(--grey);font-size:.78rem;">Plumber, Leeds</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT / BOOKING -->
+<!-- ═══ CONTACT / BOOKING ═══ -->
 <section id="booking">
-  <div class="s-label">Get In Touch</div>
-  <h2 class="s-title">Let's Build<br><span class="gold-grad">Your Website</span></h2>
+  <div class="s-eyebrow reveal">Get In Touch</div>
+  <h2 class="s-title reveal">Let's Build<br><span class="gold-text">Your Website</span></h2>
   <div class="row g-5 mt-2">
+
     <div class="col-lg-5 reveal">
-      <p class="s-desc mb-5">Ready to get started? Fill in the form and Mohammed will be in touch within 24 hours to discuss your project — or reach out directly via WhatsApp for a faster response.</p>
-      <div class="d-flex align-items-center gap-3 mb-4">
-        <div class="contact-icon-box"><i class="bi bi-telephone-fill" style="color:var(--gold);"></i></div>
-        <div><div style="font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:2px;">Phone</div><a href="tel:07919978462" style="color:rgba(245,243,238,.8);text-decoration:none;font-size:.9rem;">07919 978 462</a></div>
+      <p class="s-body mb-5">Ready to get started? Fill in the form and Mohammed will be in touch within 24 hours — or reach out directly via WhatsApp for a faster response.</p>
+
+      <div class="contact-detail">
+        <div class="contact-icon"><i class="bi bi-telephone-fill" style="color:var(--gold);"></i></div>
+        <div>
+          <div class="label">Phone</div>
+          <a href="tel:07919978462">07919 978 462</a>
+        </div>
       </div>
-      <div class="d-flex align-items-center gap-3 mb-4">
-        <div class="contact-icon-box" style="background:#25D366;border-color:#25D366;"><i class="bi bi-whatsapp" style="color:#fff;"></i></div>
-        <div><div style="font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:2px;">WhatsApp</div><a href="https://wa.me/447919978462?text=Hi%20Mohammed%2C%20I%27m%20interested%20in%20a%20website." target="_blank" style="color:rgba(245,243,238,.8);text-decoration:none;font-size:.9rem;">Message us on WhatsApp →</a></div>
+      <div class="contact-detail">
+        <div class="contact-icon" style="background:#25D366;border-color:#25D366;"><i class="bi bi-whatsapp" style="color:#fff;"></i></div>
+        <div>
+          <div class="label">WhatsApp</div>
+          <a href="https://wa.me/447919978462?text=Hi%20Mohammed%2C%20I%27m%20interested%20in%20a%20website." target="_blank">Message us on WhatsApp →</a>
+        </div>
       </div>
-      <div class="d-flex align-items-center gap-3 mb-4">
-        <div class="contact-icon-box"><i class="bi bi-person-fill" style="color:var(--gold);"></i></div>
-        <div><div style="font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:2px;">Developer</div><p style="color:rgba(245,243,238,.8);font-size:.9rem;margin:0;">Mohammed Abbas</p></div>
+      <div class="contact-detail">
+        <div class="contact-icon"><i class="bi bi-person-fill" style="color:var(--gold);"></i></div>
+        <div>
+          <div class="label">Developer</div>
+          <p>Mohammed Abbas</p>
+        </div>
       </div>
-      <div class="d-flex align-items-center gap-3 mb-4">
-        <div class="contact-icon-box"><i class="bi bi-geo-alt-fill" style="color:var(--gold);"></i></div>
-        <div><div style="font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:2px;">Location</div><p style="color:rgba(245,243,238,.8);font-size:.9rem;margin:0;">Manchester, UK — Serving UK-wide</p></div>
+      <div class="contact-detail">
+        <div class="contact-icon"><i class="bi bi-geo-alt-fill" style="color:var(--gold);"></i></div>
+        <div>
+          <div class="label">Location</div>
+          <p>Manchester, UK — Serving UK-wide</p>
+        </div>
       </div>
-      <div class="d-flex align-items-center gap-3 mb-4">
-        <div class="contact-icon-box"><i class="bi bi-clock-fill" style="color:var(--gold);"></i></div>
-        <div><div style="font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:2px;">Response Time</div><p style="color:rgba(245,243,238,.8);font-size:.9rem;margin:0;">Within 24 hours</p></div>
+      <div class="contact-detail">
+        <div class="contact-icon"><i class="bi bi-clock-fill" style="color:var(--gold);"></i></div>
+        <div>
+          <div class="label">Response Time</div>
+          <p>Within 24 hours</p>
+        </div>
       </div>
-      <div class="d-flex align-items-center gap-3">
-        <div class="contact-icon-box"><i class="bi bi-globe" style="color:var(--gold);"></i></div>
-        <div><div style="font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:2px;">Example Work</div><a href="https://www.drivesq.co.uk" target="_blank" style="color:rgba(245,243,238,.8);text-decoration:none;font-size:.9rem;">www.drivesq.co.uk ↗</a></div>
+      <div class="contact-detail">
+        <div class="contact-icon"><i class="bi bi-globe" style="color:var(--gold);"></i></div>
+        <div>
+          <div class="label">Example Work</div>
+          <a href="https://www.drivesq.co.uk" target="_blank">www.drivesq.co.uk ↗</a>
+        </div>
       </div>
     </div>
+
     <div class="col-lg-7 reveal rd1" id="contact">
-      <div class="contact-form" id="formWrap">
-        <div style="font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:700;margin-bottom:28px;">Book a Free Consultation</div>
+      <div class="contact-form-wrap">
+        <h3>Book a Free Consultation</h3>
         <form id="enquiryForm" action="https://formspree.io/f/xvgjdapp" method="POST">
-          <div class="row g-3 mb-3">
+          <div class="row g-3">
             <div class="col-6">
-              <label class="form-label-sq">First Name *</label>
-              <input type="text" name="first_name" class="form-control-sq" placeholder="John" required>
+              <div class="field-group">
+                <label class="field-label">First Name *</label>
+                <input type="text" name="first_name" class="field-input" placeholder="John" required>
+              </div>
             </div>
             <div class="col-6">
-              <label class="form-label-sq">Last Name *</label>
-              <input type="text" name="last_name" class="form-control-sq" placeholder="Smith" required>
+              <div class="field-group">
+                <label class="field-label">Last Name *</label>
+                <input type="text" name="last_name" class="field-input" placeholder="Smith" required>
+              </div>
             </div>
           </div>
-          <div class="mb-3">
-            <label class="form-label-sq">Email Address *</label>
-            <input type="email" name="email" class="form-control-sq" placeholder="john@example.com" required>
+          <div class="field-group">
+            <label class="field-label">Email Address *</label>
+            <input type="email" name="email" class="field-input" placeholder="john@example.com" required>
           </div>
-          <div class="mb-3">
-            <label class="form-label-sq">Phone / WhatsApp</label>
-            <input type="tel" name="phone" class="form-control-sq" placeholder="07XXX XXX XXX">
+          <div class="field-group">
+            <label class="field-label">Phone / WhatsApp</label>
+            <input type="tel" name="phone" class="field-input" placeholder="07XXX XXX XXX">
           </div>
-          <div class="mb-3">
-            <label class="form-label-sq">Website Package *</label>
-            <select name="package" class="form-control-sq" required>
+          <div class="field-group">
+            <label class="field-label">Website Package *</label>
+            <select name="package" class="field-input" required>
               <option value="">Select a package...</option>
               <option value="essential">Essential — Single Page (£150)</option>
               <option value="professional">Professional — 3-5 Pages (£300)</option>
@@ -660,9 +1319,9 @@ footer{background:#040403;border-top:1px solid var(--border);padding:80px 5% 40p
               <option value="unsure">Not sure yet — I'd like advice</option>
             </select>
           </div>
-          <div class="mb-3">
-            <label class="form-label-sq">Business Type</label>
-            <select name="business_type" class="form-control-sq">
+          <div class="field-group">
+            <label class="field-label">Business Type</label>
+            <select name="business_type" class="field-input">
               <option value="">What type of business?</option>
               <option value="driving">Driving Instructor / School</option>
               <option value="retail">Retail / Shop</option>
@@ -674,18 +1333,18 @@ footer{background:#040403;border-top:1px solid var(--border);padding:80px 5% 40p
               <option value="other">Other</option>
             </select>
           </div>
-          <div class="mb-4">
-            <label class="form-label-sq">Tell us about your project</label>
-            <textarea name="message" class="form-control-sq" rows="4" placeholder="Describe your business and what you need from your website..."></textarea>
+          <div class="field-group">
+            <label class="field-label">Tell us about your project</label>
+            <textarea name="message" class="field-input" rows="4" placeholder="Describe your business and what you need from your website..."></textarea>
           </div>
-          <button type="submit" class="btn-gold w-100" style="padding:16px;font-size:.85rem;">
+          <button type="submit" class="btn-primary-gold w-100" style="padding:18px;font-size:.85rem;border:none;">
             <span><i class="bi bi-send me-2"></i>Send My Enquiry</span>
           </button>
-          <p class="text-center mt-3" style="color:var(--grey);font-size:.78rem;">Or message us directly on <a href="https://wa.me/447919978462" target="_blank" style="color:#25D366;"><i class="bi bi-whatsapp"></i> WhatsApp: 07919 978 462</a></p>
-          <div id="formSuccess" style="display:none;text-align:center;padding:32px 0;">
-            <div style="font-size:2.5rem;margin-bottom:16px;">✦</div>
-            <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--gold);margin-bottom:8px;">Enquiry Received!</h3>
-            <p style="color:var(--grey);line-height:1.8;">Thank you for reaching out. Mohammed will be in touch within 24 hours to discuss your project.</p>
+          <p class="text-center mt-3" style="color:var(--grey);font-size:.78rem;">Or message directly on <a href="https://wa.me/447919978462" target="_blank" style="color:#25D366;"><i class="bi bi-whatsapp"></i> WhatsApp: 07919 978 462</a></p>
+          <div id="formSuccess" style="display:none;text-align:center;padding:36px 0;">
+            <div style="font-size:2.8rem;margin-bottom:16px;color:var(--gold);">◆</div>
+            <h3 style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);margin-bottom:10px;">Enquiry Received!</h3>
+            <p style="color:var(--grey-light);line-height:1.85;">Thank you for reaching out. Mohammed will be in touch within 24 hours to discuss your project.</p>
             <p style="margin-top:12px;font-size:.88rem;color:var(--grey);">Or call/WhatsApp: <a href="tel:07919978462" style="color:var(--gold);">07919 978 462</a></p>
           </div>
         </form>
@@ -694,72 +1353,70 @@ footer{background:#040403;border-top:1px solid var(--border);padding:80px 5% 40p
   </div>
 </section>
 
-<!-- FAQ -->
-<section class="bg2" id="faq">
-  <div class="s-label">FAQ</div>
-  <h2 class="s-title">Common<br><span class="gold-grad">Questions</span></h2>
-  <div class="mt-5" style="max-width:760px;">
+<!-- ═══ FAQ ═══ -->
+<section class="section-bg2" id="faq">
+  <div class="s-eyebrow reveal">FAQ</div>
+  <h2 class="s-title reveal">Common<br><span class="gold-text">Questions</span></h2>
+  <div class="mt-5 reveal" style="max-width:780px;">
     <div class="faq-item">
-      <button class="faq-btn" onclick="toggleFaq(this)">How long does it take to build my website?<span class="faq-icon-sq">+</span></button>
-      <div class="faq-ans"><p>Most websites are completed within 5–10 working days. If you need it sooner, ask about our express 48-hour delivery option. We always provide a clear timeline at the start of the project.</p></div>
+      <button class="faq-btn" onclick="toggleFaq(this)">How long does it take to build my website? <span class="faq-icon">+</span></button>
+      <div class="faq-answer"><p>Most websites are completed within 5–10 working days. If you need it sooner, ask about our express 48-hour delivery option. We always provide a clear timeline at the start of the project.</p></div>
     </div>
     <div class="faq-item">
-      <button class="faq-btn" onclick="toggleFaq(this)">What's included in the Business Launch package?<span class="faq-icon-sq">+</span></button>
-      <div class="faq-ans"><p>The £600 Business Launch package is designed for new businesses starting from scratch. You get a full SEO Pro website plus custom logo design (multiple concepts), brand identity (colours, fonts, style guide), business naming and slogan suggestions, social media profile setup, and 3 months of hands-on consultation and support to help your business grow.</p></div>
+      <button class="faq-btn" onclick="toggleFaq(this)">What's included in the Business Launch package? <span class="faq-icon">+</span></button>
+      <div class="faq-answer"><p>The £600 Business Launch package is designed for new businesses starting from scratch. You get a full SEO Pro website plus custom logo design (multiple concepts), brand identity, business naming and slogan suggestions, social media profile setup, and 3 months of hands-on consultation and support.</p></div>
     </div>
     <div class="faq-item">
-      <button class="faq-btn" onclick="toggleFaq(this)">Do I need to provide any content or images?<span class="faq-icon-sq">+</span></button>
-      <div class="faq-ans"><p>If you have content and images, great — we'll use them. If not, no problem at all. We can source professional stock images and help write compelling copy for your business at no extra cost.</p></div>
+      <button class="faq-btn" onclick="toggleFaq(this)">Do I need to provide any content or images? <span class="faq-icon">+</span></button>
+      <div class="faq-answer"><p>If you have content and images, great — we'll use them. If not, no problem. We can source professional stock images and help write compelling copy for your business at no extra cost.</p></div>
     </div>
     <div class="faq-item">
-      <button class="faq-btn" onclick="toggleFaq(this)">Can I edit my website myself after it's built?<span class="faq-icon-sq">+</span></button>
-      <div class="faq-ans"><p>Yes. We can build your site on a user-friendly CMS so you can make changes yourself. Alternatively, you can request updates directly from Mohammed — small edits are handled free of charge within your support period.</p></div>
+      <button class="faq-btn" onclick="toggleFaq(this)">Can I edit my website myself after it's built? <span class="faq-icon">+</span></button>
+      <div class="faq-answer"><p>Yes. We can build your site on a user-friendly CMS so you can make changes yourself. Alternatively, you can request updates directly from Mohammed — small edits are handled free within your support period.</p></div>
     </div>
     <div class="faq-item">
-      <button class="faq-btn" onclick="toggleFaq(this)">How do I pay? Are there any ongoing fees?<span class="faq-icon-sq">+</span></button>
-      <div class="faq-ans"><p>All packages are one-time payments — no monthly subscriptions or hidden fees. You'll be responsible for your hosting and domain costs (typically £5–15/month through a provider of your choice), but we help you set everything up. Optional monthly maintenance packages are available after your support period ends.</p></div>
+      <button class="faq-btn" onclick="toggleFaq(this)">How do I pay? Are there any ongoing fees? <span class="faq-icon">+</span></button>
+      <div class="faq-answer"><p>All packages are one-time payments — no monthly subscriptions or hidden fees. You'll be responsible for hosting and domain costs (typically £5–15/month), but we help you set everything up. Optional monthly maintenance is available after your support period.</p></div>
     </div>
     <div class="faq-item">
-      <button class="faq-btn" onclick="toggleFaq(this)">Can you redesign an existing website?<span class="faq-icon-sq">+</span></button>
-      <div class="faq-ans"><p>Absolutely. We frequently redesign outdated or underperforming websites. Get in touch and we'll assess what's needed and provide a tailored quote based on your existing site and goals.</p></div>
+      <button class="faq-btn" onclick="toggleFaq(this)">Can you redesign an existing website? <span class="faq-icon">+</span></button>
+      <div class="faq-answer"><p>Absolutely. We frequently redesign outdated or underperforming websites. Get in touch and we'll assess what's needed and provide a tailored quote based on your existing site and goals.</p></div>
     </div>
     <div class="faq-item">
-      <button class="faq-btn" onclick="toggleFaq(this)">Can I see examples before I commit?<span class="faq-icon-sq">+</span></button>
-      <div class="faq-ans"><p>Yes! You can view our live examples right now — visit <a href="https://www.drivesq.co.uk" target="_blank" style="color:var(--gold);">drivesq.co.uk</a> to see a client website, and <a href="https://mqabbas.github.io/CINEEVENTS-WEBSITE/" target="_blank" style="color:var(--gold);">our CineEvents template</a> to see the level of design, animations, and user experience we create. These show the quality and style you can expect.</p></div>
+      <button class="faq-btn" onclick="toggleFaq(this)">Can I see examples before I commit? <span class="faq-icon">+</span></button>
+      <div class="faq-answer"><p>Yes! Visit <a href="https://www.drivesq.co.uk" target="_blank" style="color:var(--gold);">drivesq.co.uk</a> for a live client website, and our <a href="https://mqabbas.github.io/CINEEVENTS-WEBSITE/" target="_blank" style="color:var(--gold);">CineEvents template</a> to see the level of design, animations, and user experience we create.</p></div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-wrap text-center">
-  <div class="position-relative" style="z-index:1;">
-    <div class="s-label justify-content-center">Ready to Begin?</div>
-    <h2 class="s-title reveal">Your Dream Website<br><span class="gold-grad">Starts Today</span></h2>
-    <p class="s-desc reveal mx-auto text-center mb-5" style="max-width:500px;">Don't let your competitors get ahead. A professional website is the best investment you can make for your business.</p>
-    <div class="reveal d-flex gap-3 justify-content-center flex-wrap">
-      <a href="#booking" class="btn-gold"><span>Book Free Consultation</span></a>
-      <a href="https://wa.me/447919978462?text=Hi%20Mohammed%2C%20I%27d%20like%20a%20website%20quote." target="_blank" class="btn-outl"><i class="bi bi-whatsapp me-2"></i>WhatsApp Us</a>
-      <a href="tel:07919978462" class="btn-outl"><i class="bi bi-telephone me-2"></i>07919 978 462</a>
-    </div>
+<!-- ═══ CTA ═══ -->
+<section class="cta-section">
+  <div class="s-eyebrow justify-content-center reveal">Ready to Begin?</div>
+  <h2 class="s-title reveal">Your Dream Website<br><span class="gold-text">Starts Today</span></h2>
+  <p class="s-body mx-auto text-center mb-5 reveal" style="max-width:500px;">Don't let your competitors get ahead. A professional website is the best investment you can make for your business.</p>
+  <div class="reveal d-flex gap-3 justify-content-center flex-wrap">
+    <a href="#booking" class="btn-primary-gold"><span>Book Free Consultation</span></a>
+    <a href="https://wa.me/447919978462?text=Hi%20Mohammed%2C%20I%27d%20like%20a%20website%20quote." target="_blank" class="btn-outline-gold"><i class="bi bi-whatsapp me-2"></i>WhatsApp Us</a>
+    <a href="tel:07919978462" class="btn-outline-gold"><i class="bi bi-telephone me-2"></i>07919 978 462</a>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ═══ FOOTER ═══ -->
 <footer>
-  <div class="row g-5 mb-5">
+  <div class="row g-5 mb-2">
     <div class="col-lg-4">
       <div class="footer-logo mb-3">SQ</div>
-      <p style="color:var(--grey);font-size:.85rem;line-height:1.8;max-width:280px;">Professional web design and development for businesses across the UK. From £150 — no hidden fees, no monthly charges.</p>
-      <p style="color:var(--grey);font-size:.8rem;margin-top:12px;">Developer: <span style="color:var(--gold);">Mohammed Abbas</span></p>
+      <p style="color:var(--grey-light);font-size:.86rem;line-height:1.85;max-width:290px;">Professional web design and development for businesses across the UK. From £150 — no hidden fees, no monthly charges.</p>
+      <p style="color:var(--grey);font-size:.8rem;margin-top:14px;">Developer: <span style="color:var(--gold);">Mohammed Abbas</span></p>
       <p style="color:var(--grey);font-size:.8rem;">Based in Manchester, UK</p>
-      <div class="d-flex gap-3 mt-3">
+      <div class="d-flex gap-3 mt-4">
         <a href="https://wa.me/447919978462" target="_blank" style="color:#25D366;font-size:1.4rem;"><i class="bi bi-whatsapp"></i></a>
         <a href="https://www.drivesq.co.uk" target="_blank" style="color:var(--gold);font-size:1.4rem;"><i class="bi bi-globe2"></i></a>
         <a href="https://mqabbas.github.io/CINEEVENTS-WEBSITE/" target="_blank" style="color:var(--gold);font-size:1.4rem;"><i class="bi bi-camera"></i></a>
       </div>
     </div>
     <div class="col-lg-2 col-6">
-      <div class="f-head">Services</div>
+      <div class="f-col-head">Services</div>
       <a href="#services" class="f-link">Custom Web Design</a>
       <a href="#services" class="f-link">SEO Optimisation</a>
       <a href="#services" class="f-link">Driving Instructor Sites</a>
@@ -767,7 +1424,7 @@ footer{background:#040403;border-top:1px solid var(--border);padding:80px 5% 40p
       <a href="#services" class="f-link">Business Websites</a>
     </div>
     <div class="col-lg-2 col-6">
-      <div class="f-head">Quick Links</div>
+      <div class="f-col-head">Quick Links</div>
       <a href="#pricing" class="f-link">Pricing</a>
       <a href="#portfolio" class="f-link">Portfolio</a>
       <a href="#about" class="f-link">About Mohammed</a>
@@ -775,7 +1432,7 @@ footer{background:#040403;border-top:1px solid var(--border);padding:80px 5% 40p
       <a href="#booking" class="f-link">Book Now</a>
     </div>
     <div class="col-lg-4">
-      <div class="f-head">Contact</div>
+      <div class="f-col-head">Contact</div>
       <a href="tel:07919978462" class="f-link"><i class="bi bi-telephone me-2"></i>07919 978 462</a>
       <a href="https://wa.me/447919978462" target="_blank" class="f-link"><i class="bi bi-whatsapp me-2" style="color:#25D366;"></i>WhatsApp: 07919 978 462</a>
       <a href="https://www.drivesq.co.uk" target="_blank" class="f-link"><i class="bi bi-globe me-2"></i>drivesq.co.uk</a>
@@ -783,7 +1440,7 @@ footer{background:#040403;border-top:1px solid var(--border);padding:80px 5% 40p
       <a href="#booking" class="f-link"><i class="bi bi-calendar-check me-2"></i>Book Consultation</a>
     </div>
   </div>
-  <div class="footer-bottom">
+  <div class="footer-hr">
     <p>© 2025 SQ Website. All rights reserved. Built by <a href="#about">Mohammed Abbas</a>.</p>
     <p>Web Design · SEO · Branding · Manchester, UK</p>
   </div>
@@ -791,75 +1448,265 @@ footer{background:#040403;border-top:1px solid var(--border);padding:80px 5% 40p
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-// CURSOR
-const cur = document.getElementById('cur');
-const curR = document.getElementById('curR');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
-function animR(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(animR);}animR();
-document.querySelectorAll('a,button,.card-serv,.price-card,.work-card,.testi-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.style.transform='translate(-50%,-50%) scale(2.2)';curR.style.width='44px';curR.style.height='44px';});
-  el.addEventListener('mouseleave',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';curR.style.width='32px';curR.style.height='32px';});
+/* ══════════════════════════════════
+   CURSOR
+══════════════════════════════════ */
+const curDot = document.getElementById('cur-dot');
+const curRing = document.getElementById('cur-ring');
+let mx=0,my=0,rx=window.innerWidth/2,ry=window.innerHeight/2;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  curDot.style.left = mx+'px'; curDot.style.top = my+'px';
+});
+(function animRing() {
+  rx += (mx-rx)*.12; ry += (my-ry)*.12;
+  curRing.style.left = rx+'px'; curRing.style.top = ry+'px';
+  requestAnimationFrame(animRing);
+})();
+
+document.querySelectorAll('a,button,.card-serv,.price-card,.work-card,.testi-card,.process-step').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
 });
 
-// PROGRESS
-window.addEventListener('scroll',()=>{
-  const pct=(window.scrollY/(document.body.scrollHeight-window.innerHeight))*100;
-  document.getElementById('prog').style.width=pct+'%';
-  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
+/* ══════════════════════════════════
+   GOLDEN BUBBLE CANVAS
+══════════════════════════════════ */
+(function initBubbles() {
+  const canvas = document.getElementById('bubble-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, bubbles = [];
+
+  function resize() {
+    const hero = canvas.parentElement;
+    W = canvas.width  = hero.offsetWidth;
+    H = canvas.height = hero.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Gold palette
+  const goldColors = [
+    'rgba(201,168,76,',
+    'rgba(240,208,128,',
+    'rgba(255,230,128,',
+    'rgba(139,105,20,',
+    'rgba(218,185,90,',
+  ];
+
+  class Bubble {
+    constructor() { this.reset(true); }
+
+    reset(init=false) {
+      this.x  = Math.random() * W;
+      this.y  = init ? Math.random() * H : H + 30;
+      this.r  = 2 + Math.random() * 14;
+      this.vx = (Math.random() - .5) * .45;
+      this.vy = -(0.4 + Math.random() * 1.1);
+      this.alpha = 0;
+      this.maxAlpha = 0.1 + Math.random() * 0.28;
+      this.fadeIn  = true;
+      this.fadeOut = false;
+      this.color = goldColors[Math.floor(Math.random() * goldColors.length)];
+      this.wobble = Math.random() * Math.PI * 2;
+      this.wobbleSpeed = 0.02 + Math.random() * 0.03;
+      this.wobbleAmp = 0.3 + Math.random() * 0.7;
+      // inner glow bubble style
+      this.hasInner = Math.random() > .55;
+    }
+
+    update() {
+      this.wobble += this.wobbleSpeed;
+      this.x += this.vx + Math.sin(this.wobble) * this.wobbleAmp;
+      this.y += this.vy;
+
+      if (this.fadeIn) {
+        this.alpha += 0.008;
+        if (this.alpha >= this.maxAlpha) { this.alpha = this.maxAlpha; this.fadeIn = false; }
+      }
+      if (this.y < H * 0.35 && !this.fadeOut) { this.fadeOut = true; }
+      if (this.fadeOut) { this.alpha -= 0.006; }
+      if (this.alpha <= 0 || this.y < -40) { this.reset(); }
+    }
+
+    draw() {
+      ctx.save();
+      ctx.globalAlpha = this.alpha;
+
+      // outer glow
+      const glowR = this.r * 2.8;
+      const grd = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, glowR);
+      grd.addColorStop(0,   this.color + (this.alpha * 1.2).toFixed(3) + ')');
+      grd.addColorStop(0.5, this.color + (this.alpha * 0.5).toFixed(3) + ')');
+      grd.addColorStop(1,   this.color + '0)');
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, glowR, 0, Math.PI*2);
+      ctx.fillStyle = grd;
+      ctx.fill();
+
+      // bubble body
+      const brd = ctx.createRadialGradient(
+        this.x - this.r*.3, this.y - this.r*.3, this.r*.05,
+        this.x, this.y, this.r
+      );
+      brd.addColorStop(0,   this.color + Math.min(this.alpha*3.5,1).toFixed(3) + ')');
+      brd.addColorStop(0.6, this.color + Math.min(this.alpha*1.8,1).toFixed(3) + ')');
+      brd.addColorStop(1,   this.color + Math.min(this.alpha*0.4,1).toFixed(3) + ')');
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+      ctx.fillStyle = brd;
+      ctx.fill();
+
+      // rim highlight
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+      ctx.strokeStyle = this.color + Math.min(this.alpha*2.5,.65).toFixed(3) + ')';
+      ctx.lineWidth = .6;
+      ctx.stroke();
+
+      // specular dot
+      if (this.hasInner && this.r > 4) {
+        ctx.beginPath();
+        ctx.arc(this.x - this.r*.28, this.y - this.r*.28, this.r*.18, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(255,248,200,' + Math.min(this.alpha*4,.7).toFixed(3) + ')';
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+  }
+
+  // create bubbles
+  const COUNT = 65;
+  for (let i=0; i<COUNT; i++) bubbles.push(new Bubble());
+
+  function animBubbles() {
+    ctx.clearRect(0,0,W,H);
+    // slight occasional add
+    if (bubbles.length < COUNT && Math.random() < .04) bubbles.push(new Bubble());
+    bubbles.forEach(b => { b.update(); b.draw(); });
+    requestAnimationFrame(animBubbles);
+  }
+  animBubbles();
+})();
+
+/* ══════════════════════════════════
+   SCROLL: progress + nav
+══════════════════════════════════ */
+const prog = document.getElementById('scroll-progress');
+const navbar = document.getElementById('navbar');
+
+window.addEventListener('scroll', () => {
+  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  prog.style.width = pct + '%';
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+}, {passive:true});
+
+/* ══════════════════════════════════
+   HAMBURGER / MOBILE NAV
+══════════════════════════════════ */
+const hamburger = document.getElementById('hamburger');
+const navLinks  = document.getElementById('navLinks');
+
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('mobile-open');
+  hamburger.classList.toggle('open');
+});
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    navLinks.classList.remove('mobile-open');
+    hamburger.classList.remove('open');
+  });
 });
 
-// HAMBURGER
-document.getElementById('hamburger').addEventListener('click',()=>{
-  document.getElementById('navLinks').classList.toggle('open');
-});
+/* ══════════════════════════════════
+   TYPER
+══════════════════════════════════ */
+const words = ['Driving Schools','Local Businesses','Retail Shops','Restaurants','Tradespeople','New Startups','Any Business'];
+let wIdx=0, cIdx=0, deleting=false;
+const tyEl = document.getElementById('typerEl');
 
-// TYPER
-const words=['Driving Instructors','Local Businesses','Retail Shops','Restaurants','Tradespeople','New Startups','Any Business'];
-let wi=0,ci=0,del=false;
-const tyEl=document.getElementById('typerTxt');
-function type(){
-  const w=words[wi];
-  tyEl.textContent=del?w.slice(0,ci--):w.slice(0,ci++);
-  if(!del&&ci>w.length){del=true;setTimeout(type,1400);return;}
-  if(del&&ci<0){del=false;wi=(wi+1)%words.length;ci=0;}
-  setTimeout(type,del?48:88);
-}type();
+function typeStep() {
+  const w = words[wIdx];
+  tyEl.textContent = deleting ? w.slice(0,cIdx--) : w.slice(0,cIdx++);
+  if (!deleting && cIdx > w.length) { deleting=true; setTimeout(typeStep,1600); return; }
+  if (deleting && cIdx < 0) { deleting=false; wIdx=(wIdx+1)%words.length; cIdx=0; }
+  setTimeout(typeStep, deleting ? 46 : 90);
+}
+typeStep();
 
-// REVEAL
-const reveals=document.querySelectorAll('.reveal');
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.08,rootMargin:'0px 0px -50px 0px'});
-reveals.forEach(r=>obs.observe(r));
+/* ══════════════════════════════════
+   REVEAL ON SCROLL
+══════════════════════════════════ */
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold:.08, rootMargin:'0px 0px -60px 0px' });
 
-// COUNTERS
-function animCount(el,target){let cur=0;const step=target/55;const iv=setInterval(()=>{cur+=step;if(cur>=target){el.textContent=target;clearInterval(iv);return;}el.textContent=Math.floor(cur);},22);}
-const sObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('.stat-n').forEach(el=>animCount(el,parseInt(el.dataset.target)));sObs.disconnect();}});},{threshold:.3});
-const statEl=document.querySelector('.hero-stats');if(statEl)sObs.observe(statEl);
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-// FAQ
-function toggleFaq(btn){
-  const item=btn.closest('.faq-item');
-  const isOpen=item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(i=>{i.classList.remove('open');i.querySelector('.faq-ans').style.maxHeight='0';});
-  if(!isOpen){item.classList.add('open');const ans=item.querySelector('.faq-ans');ans.style.maxHeight=ans.scrollHeight+'px';}
+/* ══════════════════════════════════
+   STAT COUNTERS
+══════════════════════════════════ */
+function animateCounter(el, target) {
+  let cur=0; const step=target/60;
+  const iv = setInterval(()=>{
+    cur+=step;
+    if(cur>=target){el.textContent=target;clearInterval(iv);return;}
+    el.textContent=Math.floor(cur);
+  },18);
 }
 
-// FORM — Formspree AJAX
-document.getElementById('enquiryForm').addEventListener('submit',async function(e){
+const statsObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      document.querySelectorAll('.stat-number').forEach(el => {
+        animateCounter(el, parseInt(el.dataset.target));
+      });
+      statsObserver.disconnect();
+    }
+  });
+}, {threshold:.4});
+const heroStats = document.querySelector('.hero-stats');
+if(heroStats) statsObserver.observe(heroStats);
+
+/* ══════════════════════════════════
+   FAQ
+══════════════════════════════════ */
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.faq-answer').style.maxHeight='0';
+  });
+  if(!isOpen){
+    item.classList.add('open');
+    const ans = item.querySelector('.faq-answer');
+    ans.style.maxHeight = ans.scrollHeight + 'px';
+  }
+}
+
+/* ══════════════════════════════════
+   FORM (Formspree AJAX)
+══════════════════════════════════ */
+document.getElementById('enquiryForm').addEventListener('submit', async function(e){
   e.preventDefault();
-  const btn=this.querySelector('button[type=submit]');
-  btn.innerHTML='<span>Sending...</span>';
+  const btn = this.querySelector('button[type=submit]');
+  btn.innerHTML='<span>Sending…</span>';
   btn.disabled=true;
-  const data=new FormData(this);
   try{
-    const res=await fetch('https://formspree.io/f/xvgjdapp',{method:'POST',body:data,headers:{Accept:'application/json'}});
+    const res = await fetch('https://formspree.io/f/xvgjdapp',{
+      method:'POST', body:new FormData(this), headers:{Accept:'application/json'}
+    });
     if(res.ok){
       document.getElementById('formSuccess').style.display='block';
       this.style.display='none';
     } else {
-      btn.innerHTML='<span>Error — Try Again</span>';btn.disabled=false;
+      btn.innerHTML='<span>Error — Please try again</span>'; btn.disabled=false;
     }
-  }catch{btn.innerHTML='<span>Error — Try Again</span>';btn.disabled=false;}
+  } catch {
+    btn.innerHTML='<span>Error — Please try again</span>'; btn.disabled=false;
+  }
 });
 </script>
 </body>
