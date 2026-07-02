@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Case Study: How Mohammed Abbas designed and built DriveSQ, a fully SEO-optimised driving school website for a Manchester client — from discovery to launch.">
+<title>Case Study: DriveSQ — How I Built It | SQ Website</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,700&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS (shared with homepage)
+═══════════════════════════════════════════ */
+:root {
+  --gold:        #C9A84C;
+  --gold-light:  #F2DC94;
+  --gold-bright: #FFE680;
+  --gold-dark:   #8B6914;
+  --gold-deep:   #5C4309;
+  --gold-glow:   rgba(201,168,76,0.35);
+  --gold-subtle: rgba(201,168,76,0.07);
+  --gold-border: rgba(201,168,76,0.2);
+  --bg-solid:    #060604;
+  --bg2:         #0a0908;
+  --bg3:         #0e0d0b;
+  --white:       #F7F4EE;
+  --grey:        #726f67;
+  --grey-light:  #9b9890;
+  --radius:      2px;
+  --radius-lg:   6px;
+}
+
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:16px; }
+
+body {
+  background:#060604;
+  color:var(--white);
+  font-family:'Outfit',sans-serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ───── CUSTOM CURSOR ───── */
+#cur-dot {
+  width:8px; height:8px;
+  background:var(--gold);
+  border-radius:50%;
+  position:fixed; top:0; left:0;
+  pointer-events:none; z-index:99999;
+  transform:translate(-50%,-50%);
+  transition:transform .12s, background .2s;
+  mix-blend-mode:difference;
+}
+#cur-ring {
+  width:36px; height:36px;
+  border:1.5px solid rgba(201,168,76,.65);
+  border-radius:50%;
+  position:fixed; top:0; left:0;
+  pointer-events:none; z-index:99998;
+  transform:translate(-50%,-50%);
+  transition:width .25s, height .25s, opacity .25s, border-color .25s;
+}
+body.cursor-hover #cur-dot { transform:translate(-50%,-50%) scale(2.5); }
+body.cursor-hover #cur-ring { width:50px; height:50px; border-color:var(--gold); }
+
+/* ───── SCROLL PROGRESS ───── */
+#scroll-progress {
+  position:fixed; top:0; left:0; height:2px; z-index:9999;
+  background:linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold-bright));
+  width:0%; transition:width .08s linear;
+  box-shadow:0 0 12px var(--gold-glow);
+}
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+#navbar {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  padding:22px 6%;
+  display:flex; align-items:center; justify-content:space-between;
+  transition: padding .4s, background .4s, backdrop-filter .4s, border-color .4s;
+  border-bottom:1px solid transparent;
+}
+#navbar.scrolled {
+  padding:12px 6%;
+  background:rgba(6,6,4,.93);
+  backdrop-filter:blur(24px);
+  border-color:var(--gold-border);
+}
+
+.logo-sq {
+  font-family:'Playfair Display',serif;
+  font-size:2.8rem;
+  font-weight:700;
+  text-decoration:none;
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  line-height:1;
+  letter-spacing:-.02em;
+}
+.logo-sq .sq-letter {
+  background: linear-gradient(145deg, var(--gold-deep) 0%, var(--gold-dark) 18%, var(--gold) 38%, var(--gold-light) 55%, var(--gold-bright) 62%, var(--gold-light) 70%, var(--gold) 82%, var(--gold-dark) 100%);
+  background-size:300% 300%;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation:logoShimmer 3.5s ease-in-out infinite;
+  filter:drop-shadow(0 0 18px rgba(201,168,76,.5));
+  position:relative;
+}
+@keyframes logoShimmer { 0%,100% { background-position:0% 50%; } 50% { background-position:100% 50%; } }
+.logo-sq .sq-dot {
+  display:block; width:5px; height:5px; background:var(--gold); border-radius:50%;
+  margin-left:4px; margin-bottom:4px;
+  box-shadow:0 0 10px var(--gold), 0 0 24px rgba(201,168,76,.5);
+  animation:dotPulse 2s ease-in-out infinite; flex-shrink:0;
+}
+@keyframes dotPulse { 0%,100% { transform:scale(1); box-shadow:0 0 10px var(--gold); } 50% { transform:scale(1.6); box-shadow:0 0 20px var(--gold), 0 0 40px rgba(201,168,76,.4); } }
+
+.nav-links { display:flex; gap:2.2rem; list-style:none; align-items:center; }
+.nav-links a {
+  color:var(--grey-light); text-decoration:none; font-size:.78rem; font-weight:500;
+  letter-spacing:.14em; text-transform:uppercase; transition:color .3s; position:relative; padding-bottom:4px;
+}
+.nav-links a::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:1px; background:var(--gold);
+  transform:scaleX(0); transform-origin:left; transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+.nav-links a:hover { color:var(--gold); }
+.nav-links a:hover::after { transform:scaleX(1); }
+
+.btn-nav {
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light)) !important;
+  color:var(--bg-solid) !important; padding:9px 24px !important; border-radius:var(--radius) !important;
+  font-weight:700 !important; letter-spacing:.1em !important;
+  box-shadow:0 4px 20px rgba(201,168,76,.3); transition:transform .3s, box-shadow .3s !important;
+}
+.btn-nav::after { display:none !important; }
+.btn-nav:hover { transform:translateY(-2px) !important; box-shadow:0 10px 32px rgba(201,168,76,.5) !important; }
+
+.hamburger { display:none; flex-direction:column; gap:5px; border:none; background:none; cursor:pointer; }
+.hamburger span { display:block; width:24px; height:1.5px; background:var(--gold); transition:.3s; }
+@media(max-width:991px) { .hamburger { display:flex; } .nav-links { display:none; } }
+.nav-links.mobile-open {
+  display:flex; flex-direction:column; position:fixed; inset:0; top:0;
+  background:rgba(6,6,4,.98); backdrop-filter:blur(20px);
+  align-items:center; justify-content:center; gap:2.5rem; z-index:999;
+}
+
+/* ═══════════════════════════════════════════
+   PAGE HERO
+═══════════════════════════════════════════ */
+.case-hero {
+  min-height:78vh; display:flex; align-items:center; justify-content:center;
+  text-align:center; position:relative; padding:150px 6% 90px; overflow:hidden; background:#060604;
+}
+.case-hero::before {
+  content:''; position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 20%, rgba(201,168,76,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 95%, rgba(201,168,76,.05) 0%, transparent 55%);
+  pointer-events:none;
+}
+.case-hero-grid {
+  position:absolute; inset:0;
+  background-image:linear-gradient(rgba(201,168,76,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,.04) 1px, transparent 1px);
+  background-size:80px 80px; animation:gridBreath 8s ease-in-out infinite;
+}
+@keyframes gridBreath { 0%,100% { opacity:.3; } 50% { opacity:.8; } }
+.case-hero-content { position:relative; z-index:3; max-width:880px; margin:0 auto; }
+
+.hero-badge {
+  display:inline-flex; align-items:center; gap:9px; border:1px solid var(--gold-border);
+  padding:7px 22px; border-radius:100px; font-size:.7rem; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:32px; background:var(--gold-subtle); backdrop-filter:blur(10px);
+  animation:fadeDown .9s cubic-bezier(.4,0,.2,1) both;
+}
+.live-dot { width:7px; height:7px; background:var(--gold); border-radius:50%; box-shadow:0 0 10px var(--gold); animation:livePulse 1.8s ease-in-out infinite; }
+@keyframes livePulse { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(1.7); opacity:.4; } }
+
+.case-hero h1 {
+  font-family:'Playfair Display',serif; font-size:clamp(2.6rem,6.2vw,5.2rem);
+  font-weight:900; line-height:1.05; margin-bottom:22px;
+  animation:fadeUp 1s cubic-bezier(.4,0,.2,1) .15s both; letter-spacing:-.02em;
+}
+.h1-line1 { color:var(--white); display:block; }
+.h1-line2 { display:block; }
+
+.gold-text {
+  background:linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 30%, var(--gold-light) 55%, var(--gold-bright) 65%, var(--gold-light) 75%, var(--gold) 90%, var(--gold-dark) 100%);
+  background-size:250% 250%;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation:goldShimmer 4s ease-in-out infinite;
+  filter:drop-shadow(0 0 28px rgba(201,168,76,.4));
+}
+@keyframes goldShimmer { 0%,100% { background-position:0% 50%; } 50% { background-position:100% 50%; } }
+
+.hero-sub {
+  font-size:1.05rem; color:var(--grey-light); max-width:620px; margin:0 auto 44px;
+  line-height:1.9; font-weight:300; animation:fadeUp 1s .5s both;
+}
+.hero-cta { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; animation:fadeUp 1s .65s both; }
+
+.btn-primary-gold {
+  background:linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+  color:var(--bg-solid); padding:16px 42px; font-family:'Outfit',sans-serif; font-size:.8rem; font-weight:700;
+  letter-spacing:.16em; text-transform:uppercase; border:none; border-radius:var(--radius);
+  cursor:pointer; text-decoration:none; display:inline-block; position:relative; overflow:hidden;
+  transition:transform .3s, box-shadow .3s; box-shadow:0 6px 28px rgba(201,168,76,.35);
+}
+.btn-primary-gold::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg, var(--gold-light), var(--gold-bright)); opacity:0; transition:opacity .3s; }
+.btn-primary-gold:hover { transform:translateY(-3px); box-shadow:0 18px 50px rgba(201,168,76,.55); color:var(--bg-solid); }
+.btn-primary-gold:hover::before { opacity:1; }
+.btn-primary-gold span { position:relative; z-index:1; }
+
+.btn-outline-gold {
+  background:transparent; color:var(--gold); padding:16px 42px; font-family:'Outfit',sans-serif;
+  font-size:.8rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase;
+  border:1px solid var(--gold-border); border-radius:var(--radius); cursor:pointer; text-decoration:none;
+  display:inline-block; transition:all .3s; position:relative; overflow:hidden; backdrop-filter:blur(8px);
+}
+.btn-outline-gold::before { content:''; position:absolute; inset:0; background:var(--gold-subtle); opacity:0; transition:opacity .3s; }
+.btn-outline-gold:hover { color:var(--gold); border-color:rgba(201,168,76,.55); transform:translateY(-3px); box-shadow:0 10px 32px rgba(201,168,76,.2); }
+.btn-outline-gold:hover::before { opacity:1; }
+
+/* ─ META STRIP ─ */
+.meta-strip {
+  display:flex; flex-wrap:wrap; gap:0; justify-content:center;
+  margin-top:74px; padding-top:46px; border-top:1px solid var(--gold-border);
+  animation:fadeUp 1s .85s both;
+}
+.meta-item { padding:0 30px; text-align:center; border-right:1px solid rgba(255,255,255,.06); }
+.meta-item:last-child { border-right:none; }
+.meta-label { font-size:.64rem; letter-spacing:.18em; text-transform:uppercase; color:var(--grey); margin-bottom:8px; }
+.meta-value { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:600; color:var(--white); }
+.meta-value a { color:var(--gold); text-decoration:none; }
+.meta-value a:hover { text-decoration:underline; }
+@media(max-width:768px){ .meta-item { padding:10px 18px; border-right:none; border-bottom:1px solid rgba(255,255,255,.06); flex:1 1 45%; } }
+
+/* ═══════════════════════════════════════════
+   GENERAL SECTION
+═══════════════════════════════════════════ */
+section { padding:120px 6%; }
+.section-bg2 { background:var(--bg2); }
+.section-bg3 { background:var(--bg3); }
+
+.s-eyebrow {
+  display:flex; align-items:center; gap:14px; font-size:.68rem; letter-spacing:.28em;
+  text-transform:uppercase; color:var(--gold); margin-bottom:18px;
+}
+.s-eyebrow::before { content:''; width:32px; height:1px; background:linear-gradient(90deg,var(--gold),transparent); }
+
+.s-title {
+  font-family:'Playfair Display',serif; font-size:clamp(2.1rem,4.5vw,3.6rem);
+  font-weight:700; line-height:1.08; margin-bottom:18px; letter-spacing:-.02em;
+}
+.s-body { color:var(--grey-light); font-size:.97rem; line-height:1.95; max-width:640px; font-weight:300; }
+.s-body + .s-body { margin-top:18px; }
+
+.ornament { display:flex; align-items:center; gap:16px; margin-bottom:64px; justify-content:flex-start; }
+.ornament-line { height:1px; width:60px; background:linear-gradient(90deg,var(--gold),transparent); }
+.ornament-diamond { width:6px; height:6px; background:var(--gold); transform:rotate(45deg); box-shadow:0 0 12px rgba(201,168,76,.6); }
+
+/* ═══════════════════════════════════════════
+   OVERVIEW SPLIT
+═══════════════════════════════════════════ */
+.overview-figure {
+  border:1px solid var(--gold-border); border-radius:var(--radius-lg); overflow:hidden;
+  background:rgba(255,255,255,.022); position:relative;
+}
+.overview-figure img { width:100%; display:block; }
+.overview-figure .work-badge {
+  position:absolute; top:16px; left:16px; background:rgba(6,6,4,.85); border:1px solid var(--gold-border);
+  border-radius:100px; color:var(--gold); font-size:.64rem; letter-spacing:.14em; text-transform:uppercase;
+  padding:6px 16px; backdrop-filter:blur(10px);
+}
+.deco-corner-1 { position:absolute; bottom:-16px; left:-16px; width:80px; height:80px; border:2px solid rgba(201,168,76,.3); border-radius:2px; z-index:-1; }
+.deco-corner-2 { position:absolute; top:-14px; right:-14px; width:50px; height:50px; border:1px solid rgba(201,168,76,.2); border-radius:2px; z-index:-1; }
+
+/* ═══════════════════════════════════════════
+   CHALLENGE / SOLUTION / RESULT
+═══════════════════════════════════════════ */
+.card-serv {
+  background:rgba(255,255,255,.022); border:1px solid var(--gold-border); padding:40px 30px;
+  border-radius:var(--radius-lg); position:relative; overflow:hidden; height:100%;
+  transition:transform .45s cubic-bezier(.4,0,.2,1), box-shadow .45s, border-color .45s;
+}
+.card-serv::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform:scaleX(0); transform-origin:center; transition:transform .5s cubic-bezier(.4,0,.2,1);
+}
+.card-serv:hover { transform:translateY(-10px); border-color:rgba(201,168,76,.45); box-shadow:0 28px 70px rgba(0,0,0,.55), 0 0 50px rgba(201,168,76,.12); }
+.card-serv:hover::before { transform:scaleX(1); }
+.serv-icon-wrap {
+  width:56px; height:56px; background:linear-gradient(135deg,var(--gold-dark),var(--gold)); border-radius:var(--radius);
+  display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin-bottom:26px;
+  box-shadow:0 8px 24px rgba(201,168,76,.25);
+}
+.card-serv h3 { font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:600; margin-bottom:14px; }
+.card-serv p { color:var(--grey-light); font-size:.88rem; line-height:1.85; font-weight:300; }
+.card-serv .step-tag { font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:10px; display:block; }
+
+/* ═══════════════════════════════════════════
+   PROCESS TIMELINE
+═══════════════════════════════════════════ */
+.timeline { max-width:820px; margin:0 auto; position:relative; }
+.timeline::before {
+  content:''; position:absolute; left:37px; top:10px; bottom:10px; width:1px;
+  background:linear-gradient(180deg, var(--gold), rgba(201,168,76,.08));
+}
+.t-item { display:flex; gap:28px; margin-bottom:56px; position:relative; }
+.t-item:last-child { margin-bottom:0; }
+.t-num {
+  width:76px; height:76px; flex-shrink:0; border:1.5px solid var(--gold); border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif;
+  font-size:1.5rem; font-weight:700; color:var(--gold); background:var(--bg-solid); position:relative; z-index:1;
+  transition:background .35s, color .35s, box-shadow .35s;
+}
+.t-item:hover .t-num { background:linear-gradient(135deg,var(--gold-dark),var(--gold)); color:var(--bg-solid); box-shadow:0 0 40px rgba(201,168,76,.45); }
+.t-content { padding-top:10px; }
+.t-content .t-label { font-size:.66rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+.t-content h3 { font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:600; margin-bottom:10px; }
+.t-content p { color:var(--grey-light); font-size:.9rem; line-height:1.9; font-weight:300; max-width:560px; }
+@media(max-width:576px){ .timeline::before{ left:29px; } .t-num{ width:60px; height:60px; font-size:1.15rem; } .t-item{ gap:18px; } }
+
+/* ═══════════════════════════════════════════
+   TECH STACK
+═══════════════════════════════════════════ */
+.tech-chip {
+  display:flex; align-items:center; gap:12px; background:rgba(255,255,255,.022); border:1px solid var(--gold-border);
+  border-radius:var(--radius-lg); padding:18px 20px; transition:transform .3s, border-color .3s, box-shadow .3s; height:100%;
+}
+.tech-chip:hover { transform:translateY(-4px); border-color:rgba(201,168,76,.4); box-shadow:0 14px 34px rgba(0,0,0,.35); }
+.tech-chip i { font-size:1.3rem; color:var(--gold); flex-shrink:0; }
+.tech-chip span { font-size:.86rem; color:rgba(247,244,238,.85); font-weight:400; }
+
+/* ═══════════════════════════════════════════
+   FEATURES
+═══════════════════════════════════════════ */
+.feat-row { display:flex; gap:18px; align-items:flex-start; margin-bottom:28px; }
+.feat-icon {
+  width:46px; height:46px; flex-shrink:0; background:var(--gold-subtle); border:1px solid var(--gold-border);
+  border-radius:var(--radius); display:flex; align-items:center; justify-content:center; font-size:1.1rem;
+}
+.feat-row h4 { font-size:.95rem; font-weight:600; margin-bottom:5px; }
+.feat-row p { color:var(--grey-light); font-size:.85rem; line-height:1.7; font-weight:300; margin:0; }
+
+/* ═══════════════════════════════════════════
+   PORTALS
+═══════════════════════════════════════════ */
+.portal-card {
+  background:rgba(255,255,255,.022); border:1px solid var(--gold-border); border-radius:var(--radius-lg);
+  padding:42px 36px; height:100%; position:relative; overflow:hidden;
+  transition:transform .4s, box-shadow .4s, border-color .4s;
+}
+.portal-card:hover { transform:translateY(-8px); border-color:rgba(201,168,76,.4); box-shadow:0 24px 60px rgba(0,0,0,.45), 0 0 40px rgba(201,168,76,.1); }
+.portal-icon-wrap {
+  width:60px; height:60px; background:linear-gradient(135deg,var(--gold-dark),var(--gold)); border-radius:var(--radius);
+  display:flex; align-items:center; justify-content:center; font-size:1.6rem; margin-bottom:24px;
+  box-shadow:0 8px 24px rgba(201,168,76,.25);
+}
+.portal-card h3 { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; margin-bottom:6px; }
+.portal-tag { font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:22px; display:block; }
+.portal-list { list-style:none; margin-bottom:0; }
+.portal-list li {
+  display:flex; align-items:flex-start; gap:11px; padding:9px 0;
+  border-bottom:1px solid rgba(255,255,255,.04); font-size:.87rem; color:rgba(247,244,238,.82); line-height:1.65;
+}
+.portal-list li:last-child { border-bottom:none; }
+.portal-list li::before { content:'◆'; color:var(--gold); font-size:.5rem; flex-shrink:0; margin-top:5px; }
+.portal-built-with { margin-top:24px; display:flex; gap:8px; flex-wrap:wrap; }
+.portal-built-with span {
+  display:inline-block; padding:5px 14px; background:var(--gold-subtle); border:1px solid var(--gold-border);
+  border-radius:100px; font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gold);
+}
+
+/* ═══════════════════════════════════════════
+   SEO CHECKLIST
+═══════════════════════════════════════════ */
+.check-list { list-style:none; }
+.check-list li {
+  display:flex; align-items:flex-start; gap:12px; padding:11px 0;
+  border-bottom:1px solid rgba(255,255,255,.05); font-size:.88rem; color:rgba(247,244,238,.82); line-height:1.6;
+}
+.check-list li i { color:var(--gold); font-size:.95rem; margin-top:2px; flex-shrink:0; }
+
+/* ═══════════════════════════════════════════
+   RESULTS STATS
+═══════════════════════════════════════════ */
+.results-bar {
+  display:flex; gap:56px; justify-content:center; flex-wrap:wrap; padding:64px 6%;
+  border-top:1px solid var(--gold-border); border-bottom:1px solid var(--gold-border);
+}
+.stat-number {
+  font-family:'Playfair Display',serif; font-size:3rem; font-weight:700; line-height:1;
+  background:linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; display:block;
+}
+.stat-suffix {
+  font-family:'Playfair Display',serif; font-size:1.5rem;
+  background:linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.stat-label { font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--grey); margin-top:6px; font-weight:400; }
+
+/* ═══════════════════════════════════════════
+   TESTIMONIAL
+═══════════════════════════════════════════ */
+.testi-card {
+  background:rgba(255,255,255,.022); border:1px solid var(--gold-border); padding:44px;
+  border-radius:var(--radius-lg); position:relative; max-width:720px; margin:0 auto;
+  transition:transform .4s, border-color .4s, box-shadow .4s;
+}
+.testi-card::before {
+  content:'"'; font-family:'Playfair Display',serif; font-size:7rem; line-height:.8; color:var(--gold);
+  opacity:.08; position:absolute; top:14px; left:24px; pointer-events:none;
+}
+.stars { color:var(--gold); letter-spacing:3px; margin-bottom:16px; font-size:.95rem; }
+.testi-text { color:rgba(247,244,238,.78); font-size:1rem; line-height:1.95; font-weight:300; margin-bottom:26px; font-style:italic; }
+.avatar {
+  width:48px; height:48px; background:linear-gradient(135deg,var(--gold-dark),var(--gold)); border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-weight:700;
+  color:var(--bg-solid); font-size:1rem; flex-shrink:0;
+}
+
+/* ═══════════════════════════════════════════
+   CTA BANNER
+═══════════════════════════════════════════ */
+.cta-section { position:relative; overflow:hidden; text-align:center; padding:120px 6%; }
+.cta-section::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 70% 60% at 50% 50%, rgba(201,168,76,.08), transparent 65%); }
+.cta-section > * { position:relative; z-index:1; }
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer { background:#040402; border-top:1px solid var(--gold-border); padding:90px 6% 44px; }
+.footer-logo {
+  font-family:'Playfair Display',serif; font-size:2.6rem; font-weight:700;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light));
+  background-size:200%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation:goldShimmer 4s ease-in-out infinite; letter-spacing:-.01em; filter:drop-shadow(0 0 12px rgba(201,168,76,.3));
+}
+.f-col-head { font-size:.68rem; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
+.f-link { color:var(--grey-light); text-decoration:none; font-size:.86rem; display:block; margin-bottom:10px; transition:color .25s; }
+.f-link:hover { color:var(--gold); }
+.footer-hr { border-top:1px solid rgba(255,255,255,.06); padding-top:30px; margin-top:60px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+.footer-hr p { color:var(--grey); font-size:.8rem; }
+.footer-hr a { color:var(--gold); text-decoration:none; }
+
+/* ═══════════════════════════════════════════
+   WHATSAPP FLOAT
+═══════════════════════════════════════════ */
+.wa-float {
+  position:fixed; bottom:34px; right:34px; z-index:900; width:62px; height:62px; background:#25D366;
+  border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.7rem;
+  text-decoration:none; box-shadow:0 8px 32px rgba(37,211,102,.45); animation:waPulse 2.8s ease-in-out infinite; transition:transform .3s;
+}
+.wa-float:hover { transform:scale(1.1); }
+@keyframes waPulse { 0%,100% { box-shadow:0 8px 32px rgba(37,211,102,.45); } 50% { box-shadow:0 8px 60px rgba(37,211,102,.75); } }
+
+/* ═══════════════════════════════════════════
+   REVEAL / SHARED ANIMATIONS
+═══════════════════════════════════════════ */
+.reveal { opacity:0; transform:translateY(40px); transition:opacity .85s cubic-bezier(.4,0,.2,1), transform .85s cubic-bezier(.4,0,.2,1); }
+.reveal.visible { opacity:1; transform:translateY(0); }
+.rd1 { transition-delay:.12s; } .rd2 { transition-delay:.24s; } .rd3 { transition-delay:.36s; } .rd4 { transition-delay:.48s; }
+
+@keyframes fadeDown { from { opacity:0; transform:translateY(-18px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeUp   { from { opacity:0; transform:translateY(30px); }  to { opacity:1; transform:translateY(0); } }
+
+body::after {
+  content:''; position:fixed; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:9990; opacity:.35;
+}
+
+@media(max-width:768px) {
+  section { padding:80px 5%; }
+  footer { padding:60px 5% 32px; }
+  .results-bar { gap:26px; padding:48px 5%; }
+}
+</style>
+</head>
+<body>
+
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
+<div id="scroll-progress"></div>
+
+<!-- ═══ NAV ═══ -->
+<nav id="navbar">
+  <a href="index.html" class="logo-sq text-decoration-none">
+    <span class="sq-letter">SQ</span><span class="sq-dot"></span>
+  </a>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#pricing">Pricing</a></li>
+    <li><a href="index.html#portfolio">Portfolio</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#booking" class="btn-nav">Book Now</a></li>
+  </ul>
+
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<a class="wa-float" href="https://wa.me/447919978462?text=Hi%20Mohammed%2C%20I%20saw%20the%20DriveSQ%20case%20study%20and%20I%27m%20interested%20in%20a%20website." target="_blank" title="Chat on WhatsApp">
+  <i class="bi bi-whatsapp" style="color:#fff;font-size:1.65rem;"></i>
+</a>
+
+<!-- ═══ HERO ═══ -->
+<section class="case-hero">
+  <div class="case-hero-grid"></div>
+  <div class="case-hero-content">
+    <div class="hero-badge">
+      <span class="live-dot"></span>
+      Case Study &middot; Client Project
+    </div>
+
+    <h1>
+      <span class="h1-line1">How I Built</span>
+      <span class="h1-line2 gold-text">DriveSQ.co.uk</span>
+    </h1>
+
+    <p class="hero-sub">
+      A behind-the-scenes look at how I designed, developed and SEO-optimised a real driving school website from the ground up — from the first discovery call to a live, ranking site.
+    </p>
+
+    <div class="hero-cta">
+      <a href="https://www.drivesq.co.uk" target="_blank" class="btn-primary-gold"><span>Visit the Live Site ↗</span></a>
+      <a href="index.html#booking" class="btn-outline-gold">Start Your Own Project</a>
+    </div>
+
+    <div class="meta-strip">
+      <div class="meta-item"><div class="meta-label">Client</div><div class="meta-value">DriveSQ Driving School</div></div>
+      <div class="meta-item"><div class="meta-label">Industry</div><div class="meta-value">Driving Instruction</div></div>
+      <div class="meta-item"><div class="meta-label">Location</div><div class="meta-value">Manchester, UK</div></div>
+      <div class="meta-item"><div class="meta-label">Role</div><div class="meta-value">Design &amp; Development</div></div>
+      <div class="meta-item"><div class="meta-label">Live Site</div><div class="meta-value"><a href="https://www.drivesq.co.uk" target="_blank">drivesq.co.uk ↗</a></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OVERVIEW ═══ -->
+<section class="section-bg2" id="overview">
+  <div class="row align-items-center g-5">
+    <div class="col-lg-6 reveal">
+      <div class="position-relative">
+        <div class="overview-figure">
+          <img src="https://i.postimg.cc/vHTbRtw3/cineevent-pic.jpg" alt="DriveSQ driving school website preview" onerror="this.parentNode.innerHTML='<div style=\'width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,#1a1205,#2d1f07);display:flex;align-items:center;justify-content:center;font-size:4rem;\'>🚗</div>'">
+          <div class="work-badge">Live Website</div>
+        </div>
+        <div class="deco-corner-1"></div>
+        <div class="deco-corner-2"></div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 reveal rd1">
+      <div class="s-eyebrow">The Brief</div>
+      <h2 class="s-title">A Driving Instructor Who<br><span class="gold-text">Deserved to Be Found</span></h2>
+      <p class="s-body">DriveSQ came to me as a Manchester-based driving instructor with no real online presence — no website, no way for learners to book online, and nothing showing up when local people searched Google for driving lessons in their area. Word of mouth was carrying the business, but it had a ceiling.</p>
+      <p class="s-body">The goal was simple to state and demanding to deliver: a fast, professional website that looked as trustworthy as an established school, made booking lessons effortless, and was genuinely optimised to rank for local search terms — not just a digital business card.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CHALLENGE / APPROACH / RESULT ═══ -->
+<section id="challenge">
+  <div class="s-eyebrow reveal">Challenge, Approach, Result</div>
+  <h2 class="s-title reveal">Three Problems<br><span class="gold-text">I Had to Solve</span></h2>
+  <div class="ornament reveal"><div class="ornament-line"></div><div class="ornament-diamond"></div><div class="ornament-line" style="background:linear-gradient(270deg,var(--gold),transparent)"></div></div>
+
+  <div class="row g-4">
+    <div class="col-lg-4 reveal">
+      <div class="card-serv">
+        <span class="step-tag">The Challenge</span>
+        <div class="serv-icon-wrap">🎯</div>
+        <h3>No Local Visibility</h3>
+        <p>The business was invisible on Google. Anyone searching "driving lessons Manchester" or "driving instructor near me" had no way of finding DriveSQ, no matter how good the lessons themselves were.</p>
+      </div>
+    </div>
+    <div class="col-lg-4 reveal rd1">
+      <div class="card-serv">
+        <span class="step-tag">My Approach</span>
+        <div class="serv-icon-wrap">🛠️</div>
+        <h3>Build &amp; Optimise Together</h3>
+        <p>Rather than bolting SEO on afterwards, I structured the site's pages, headings, copy and schema markup around real local search intent from day one — design and SEO built side by side.</p>
+      </div>
+    </div>
+    <div class="col-lg-4 reveal rd2">
+      <div class="card-serv">
+        <span class="step-tag">The Result</span>
+        <div class="serv-icon-wrap">📈</div>
+        <h3>A Site That Converts</h3>
+        <p>A fast, mobile-first website went live with online booking, clear lesson packages, and local keyword targeting — giving DriveSQ a genuine acquisition channel instead of relying on word of mouth alone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROCESS TIMELINE ═══ -->
+<section class="section-bg3" id="process">
+  <div class="s-eyebrow reveal">My Process</div>
+  <h2 class="s-title reveal">From First Call<br><span class="gold-text">to Going Live</span></h2>
+  <p class="s-body mb-5 reveal">This is the exact process I followed to take DriveSQ from an idea to a fully live, ranking website.</p>
+
+  <div class="timeline mt-5">
+    <div class="t-item reveal">
+      <div class="t-num">01</div>
+      <div class="t-content">
+        <div class="t-label">Discovery</div>
+        <h3>Understanding the Business</h3>
+        <p>A free consultation to understand the driving school's services, lesson packages, target learners, service area, and what "success" would actually look like — more enquiries, more bookings, or both.</p>
+      </div>
+    </div>
+    <div class="t-item reveal rd1">
+      <div class="t-num">02</div>
+      <div class="t-content">
+        <div class="t-label">Planning &amp; Sitemap</div>
+        <h3>Structuring for Users and Search Engines</h3>
+        <p>I mapped out the pages and information architecture — home, lesson packages, instructor profile, booking, and contact — so both visitors and Google could understand the site at a glance.</p>
+      </div>
+    </div>
+    <div class="t-item reveal rd2">
+      <div class="t-num">03</div>
+      <div class="t-content">
+        <div class="t-label">Design</div>
+        <h3>A Brand That Feels Trustworthy</h3>
+        <p>I designed a clean, confidence-inspiring layout in the driving school's colours, with clear calls to action, prominent contact details, and imagery that reflects a professional local instructor.</p>
+      </div>
+    </div>
+    <div class="t-item reveal rd3">
+      <div class="t-num">04</div>
+      <div class="t-content">
+        <div class="t-label">Build</div>
+        <h3>Coding It From Scratch</h3>
+        <p>Hand-coded with HTML5, CSS3 and JavaScript on a Bootstrap 5 foundation — no page-builder bloat — so the site loads fast, renders cleanly on every device, and stays easy to maintain.</p>
+      </div>
+    </div>
+    <div class="t-item reveal">
+      <div class="t-num">05</div>
+      <div class="t-content">
+        <div class="t-label">SEO &amp; Content</div>
+        <h3>Making the Site Findable</h3>
+        <p>Keyword research for local search terms, on-page SEO for every section, schema markup, meta tags, an XML sitemap, and Google Search Console &amp; Analytics setup for ongoing visibility.</p>
+      </div>
+    </div>
+    <div class="t-item reveal rd1">
+      <div class="t-num">06</div>
+      <div class="t-content">
+        <div class="t-label">Testing</div>
+        <h3>Stress-Testing Before Launch</h3>
+        <p>Cross-browser and cross-device testing, performance tuning for Core Web Vitals, and a full pass on every form and link to make sure nothing broke under real-world use.</p>
+      </div>
+    </div>
+    <div class="t-item reveal rd2">
+      <div class="t-num">07</div>
+      <div class="t-content">
+        <div class="t-label">Launch &amp; Support</div>
+        <h3>Going Live — and Staying Live</h3>
+        <p>Domain and hosting configured, the site pushed live at drivesq.co.uk, and an ongoing support window in place to handle any changes, questions, or content updates the client needed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TECH STACK ═══ -->
+<section id="stack">
+  <div class="s-eyebrow reveal">Under the Hood</div>
+  <h2 class="s-title reveal">Tools &amp;<br><span class="gold-text">Technology Used</span></h2>
+  <div class="ornament reveal"><div class="ornament-line"></div><div class="ornament-diamond"></div><div class="ornament-line" style="background:linear-gradient(270deg,var(--gold),transparent)"></div></div>
+
+  <div class="row g-3">
+    <div class="col-6 col-md-3 reveal"><div class="tech-chip"><i class="bi bi-filetype-html"></i><span>HTML5</span></div></div>
+    <div class="col-6 col-md-3 reveal rd1"><div class="tech-chip"><i class="bi bi-filetype-css"></i><span>CSS3</span></div></div>
+    <div class="col-6 col-md-3 reveal rd2"><div class="tech-chip"><i class="bi bi-filetype-js"></i><span>JavaScript</span></div></div>
+    <div class="col-6 col-md-3 reveal rd3"><div class="tech-chip"><i class="bi bi-bootstrap"></i><span>Bootstrap 5</span></div></div>
+    <div class="col-6 col-md-3 reveal"><div class="tech-chip"><i class="bi bi-search"></i><span>On-Page SEO</span></div></div>
+    <div class="col-6 col-md-3 reveal rd1"><div class="tech-chip"><i class="bi bi-graph-up-arrow"></i><span>Google Analytics</span></div></div>
+    <div class="col-6 col-md-3 reveal rd2"><div class="tech-chip"><i class="bi bi-google"></i><span>Search Console</span></div></div>
+    <div class="col-6 col-md-3 reveal rd3"><div class="tech-chip"><i class="bi bi-braces"></i><span>Schema Markup</span></div></div>
+    <div class="col-6 col-md-3 reveal"><div class="tech-chip"><i class="bi bi-calendar-check"></i><span>Online Booking</span></div></div>
+    <div class="col-6 col-md-3 reveal rd1"><div class="tech-chip"><i class="bi bi-envelope-paper"></i><span>Contact &amp; Forms</span></div></div>
+    <div class="col-6 col-md-3 reveal rd2"><div class="tech-chip"><i class="bi bi-phone"></i><span>Mobile-First Build</span></div></div>
+    <div class="col-6 col-md-3 reveal rd3"><div class="tech-chip"><i class="bi bi-speedometer2"></i><span>Speed Optimisation</span></div></div>
+  </div>
+</section>
+
+<!-- ═══ FEATURES ═══ -->
+<section class="section-bg2" id="features">
+  <div class="row align-items-center g-5">
+    <div class="col-lg-6 reveal">
+      <div class="s-eyebrow">Key Features</div>
+      <h2 class="s-title">What the Final<br><span class="gold-text">Website Delivers</span></h2>
+      <p class="s-body mb-4">Every feature was chosen to solve a real problem for the business — not added for the sake of it.</p>
+
+      <div class="feat-row">
+        <div class="feat-icon">📅</div>
+        <div><h4>Online Booking</h4><p>Learners can request lessons directly through the site, cutting down on back-and-forth phone calls.</p></div>
+      </div>
+      <div class="feat-row">
+        <div class="feat-icon">💷</div>
+        <div><h4>Clear Lesson Packages</h4><p>Pricing and package tiers are laid out transparently, so prospective learners know exactly what they're getting.</p></div>
+      </div>
+      <div class="feat-row">
+        <div class="feat-icon">👤</div>
+        <div><h4>Instructor Profile</h4><p>A dedicated profile builds trust before a learner ever picks up the phone — qualifications, experience, and personality.</p></div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 reveal rd1">
+      <div class="feat-row" style="margin-top:0;">
+        <div class="feat-icon">📍</div>
+        <div><h4>Local SEO Targeting</h4><p>Content and metadata built around Manchester-area search terms, so the site shows up where it matters — near the learners searching for lessons.</p></div>
+      </div>
+      <div class="feat-row">
+        <div class="feat-icon">📱</div>
+        <div><h4>Mobile-First Design</h4><p>Most learners search on their phones — the entire experience was designed mobile-first, then scaled up to desktop.</p></div>
+      </div>
+      <div class="feat-row">
+        <div class="feat-icon">⚡</div>
+        <div><h4>Fast, Lightweight Build</h4><p>No bloated page builders or unnecessary scripts — a lean codebase that loads quickly on any connection.</p></div>
+      </div>
+      <div class="feat-row">
+        <div class="feat-icon"><i class="bi bi-whatsapp" style="color:#25D366;"></i></div>
+        <div><h4>WhatsApp Integration</h4><p>A direct WhatsApp link gives learners the fastest possible route to asking a question or booking a lesson.</p></div>
+      </div>
+      <div class="feat-row">
+        <div class="feat-icon">🔐</div>
+        <div><h4>Student &amp; Instructor Portals</h4><p>Beyond the public site, I built dedicated login dashboards for learners and the instructor — <a href="#portals" style="color:var(--gold);">see how below ↓</a></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PORTALS ═══ -->
+<section id="portals">
+  <div class="s-eyebrow reveal">Beyond the Marketing Site</div>
+  <h2 class="s-title reveal">Student &amp; Instructor<br><span class="gold-text">Login Portals</span></h2>
+  <p class="s-body mb-5 reveal">Booking a lesson was only half the problem. Once a learner signed up, both the student and the instructor needed an easy way to manage lessons afterwards — so I designed and coded two dedicated portals from scratch, on top of the same vanilla HTML, CSS and JavaScript stack as the main site.</p>
+
+  <div class="row g-4 align-items-stretch">
+    <div class="col-lg-6 reveal">
+      <div class="portal-card">
+        <span class="portal-tag">Student Portal</span>
+        <div class="portal-icon-wrap">🎓</div>
+        <h3>For Learners</h3>
+        <ul class="portal-list">
+          <li>Secure login so each student sees only their own lessons and details</li>
+          <li>Upcoming lesson schedule with date, time, and pickup location</li>
+          <li>Progress tracker showing hours completed and skills covered</li>
+          <li>Lesson package &amp; payment history at a glance</li>
+          <li>Request a reschedule or a new lesson slot without a phone call</li>
+          <li>Direct messaging / WhatsApp link straight to the instructor</li>
+          <li>Fully responsive dashboard — built to be used from a phone between lessons</li>
+        </ul>
+        <div class="portal-built-with">
+          <span>HTML5</span><span>CSS3</span><span>Vanilla JS</span><span>Form Validation</span><span>LocalStorage</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 reveal rd1">
+      <div class="portal-card">
+        <span class="portal-tag">Instructor Portal</span>
+        <div class="portal-icon-wrap">🧑‍🏫</div>
+        <h3>For the Business Owner</h3>
+        <ul class="portal-list">
+          <li>Central dashboard listing every student, package, and lesson status</li>
+          <li>Calendar-style schedule view of the day's, week's, and month's lessons</li>
+          <li>One-click way to mark lessons complete and log hours per student</li>
+          <li>Availability manager to open or block out time slots for booking</li>
+          <li>Earnings and booking overview to track business performance</li>
+          <li>Notes per student — test dates, weak areas, next steps to cover</li>
+          <li>Same design language as the public site, so it feels like one product</li>
+        </ul>
+        <div class="portal-built-with">
+          <span>HTML5</span><span>CSS3</span><span>Vanilla JS</span><span>Dynamic DOM Rendering</span><span>Session Handling</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="s-body mt-5 reveal" style="max-width:720px;">Both portals were built without a front-end framework — plain HTML for structure, CSS for a consistent, branded dashboard UI, and JavaScript handling logins, form validation, dynamic rendering of schedules, and state persistence. Keeping the stack framework-free kept the portals fast, dependency-free, and simple for a non-technical business owner to have maintained long-term.</p>
+</section>
+
+<!-- ═══ SEO CHECKLIST ═══ -->
+<section class="section-bg2" id="seo">
+  <div class="s-eyebrow reveal">Search Engine Optimisation</div>
+  <h2 class="s-title reveal">The Full SEO<br><span class="gold-text">Checklist I Applied</span></h2>
+  <p class="s-body mb-5 reveal">SEO wasn't an afterthought bolted on at the end — it was built into every page from the first line of HTML. Here's everything that went into making DriveSQ findable on Google.</p>
+
+  <div class="row g-4 g-lg-5">
+    <div class="col-lg-6 reveal">
+      <h4 style="font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;">On-Page &amp; Technical</h4>
+      <ul class="check-list">
+        <li><i class="bi bi-check-circle-fill"></i>Keyword research for local driving-lesson search terms</li>
+        <li><i class="bi bi-check-circle-fill"></i>Optimised title tags &amp; meta descriptions on every page</li>
+        <li><i class="bi bi-check-circle-fill"></i>Semantic HTML5 with a clean heading hierarchy (H1–H3)</li>
+        <li><i class="bi bi-check-circle-fill"></i>Schema.org structured data (LocalBusiness markup)</li>
+        <li><i class="bi bi-check-circle-fill"></i>Open Graph &amp; Twitter Card tags for clean social sharing</li>
+        <li><i class="bi bi-check-circle-fill"></i>XML sitemap &amp; robots.txt submitted to search engines</li>
+        <li><i class="bi bi-check-circle-fill"></i>Canonical tags to avoid duplicate-content issues</li>
+        <li><i class="bi bi-check-circle-fill"></i>Descriptive alt text on every image for accessibility &amp; SEO</li>
+      </ul>
+    </div>
+    <div class="col-lg-6 reveal rd1">
+      <h4 style="font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;">Local, Performance &amp; Growth</h4>
+      <ul class="check-list">
+        <li><i class="bi bi-check-circle-fill"></i>Local SEO targeting for Manchester &amp; surrounding areas</li>
+        <li><i class="bi bi-check-circle-fill"></i>Google Business Profile alignment with on-site NAP details</li>
+        <li><i class="bi bi-check-circle-fill"></i>Mobile-first, responsive layout for mobile-first indexing</li>
+        <li><i class="bi bi-check-circle-fill"></i>Page speed &amp; Core Web Vitals optimisation</li>
+        <li><i class="bi bi-check-circle-fill"></i>Compressed, lazy-loaded images for faster load times</li>
+        <li><i class="bi bi-check-circle-fill"></i>Internal linking between lessons, pricing &amp; contact pages</li>
+        <li><i class="bi bi-check-circle-fill"></i>Google Analytics &amp; Search Console set up for tracking</li>
+        <li><i class="bi bi-check-circle-fill"></i>HTTPS-secured hosting with a clean, crawlable URL structure</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RESULTS ═══ -->
+<section class="section-bg3" id="results">
+  <div class="s-eyebrow reveal">The Outcome</div>
+  <h2 class="s-title reveal">What Launching<br><span class="gold-text">Actually Changed</span></h2>
+  <p class="s-body mb-5 reveal">DriveSQ went from having no online presence at all to a fully live, search-optimised website built specifically around how local learners actually search and book.</p>
+
+  <div class="results-bar mt-5 reveal">
+    <div class="text-center">
+      <span class="stat-number" data-target="5">0</span><span class="stat-suffix">+</span>
+      <div class="stat-label">Pages Delivered</div>
+    </div>
+    <div class="text-center">
+      <span class="stat-number" data-target="100">0</span><span class="stat-suffix">%</span>
+      <div class="stat-label">Mobile Responsive</div>
+    </div>
+    <div class="text-center">
+      <span class="stat-number" data-target="90">0</span><span class="stat-suffix">+</span>
+      <div class="stat-label">Target PageSpeed Score</div>
+    </div>
+    <div class="text-center">
+      <span class="stat-number" data-target="0">0</span><span class="stat-suffix">£/mo</span>
+      <div class="stat-label">Ongoing Platform Fees</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIAL ═══ -->
+<section id="testimonial">
+  <div class="s-eyebrow justify-content-center reveal" style="justify-content:center;">In the Client's Words</div>
+  <h2 class="s-title text-center reveal">From the<br><span class="gold-text">DriveSQ Team</span></h2>
+
+  <div class="testi-card mt-5 reveal">
+    <div class="stars">★★★★★</div>
+    <p class="testi-text">Mohammed built us the most professional driving school website we could have imagined. Enquiries went up significantly within weeks of going live. Absolutely top service!</p>
+    <div class="d-flex align-items-center gap-3">
+      <div class="avatar">JS</div>
+      <div>
+        <div style="font-weight:600;font-size:.95rem;">James S.</div>
+        <div style="color:var(--grey);font-size:.8rem;">Driving Instructor &middot; DriveSQ, Manchester</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section">
+  <div class="s-eyebrow justify-content-center reveal">Want Something Similar?</div>
+  <h2 class="s-title reveal">Let's Build Your<br><span class="gold-text">Website Next</span></h2>
+  <p class="s-body mx-auto text-center mb-5 reveal" style="max-width:520px;">This is the exact process, care and attention every SQ Website client gets — whether you're a driving instructor, a tradesperson, or a brand-new business.</p>
+  <div class="reveal d-flex gap-3 justify-content-center flex-wrap">
+    <a href="index.html#booking" class="btn-primary-gold"><span>Book Free Consultation</span></a>
+    <a href="index.html#portfolio" class="btn-outline-gold">See More Work</a>
+    <a href="https://wa.me/447919978462?text=Hi%20Mohammed%2C%20I%20saw%20the%20DriveSQ%20case%20study%20and%20I%27d%20like%20a%20quote." target="_blank" class="btn-outline-gold"><i class="bi bi-whatsapp me-2"></i>WhatsApp Us</a>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="row g-5 mb-2">
+    <div class="col-lg-4">
+      <div class="footer-logo mb-3">SQ</div>
+      <p style="color:var(--grey-light);font-size:.86rem;line-height:1.85;max-width:290px;">Professional web design and development for businesses across the UK. From £150 — no hidden fees, no monthly charges.</p>
+      <p style="color:var(--grey);font-size:.8rem;margin-top:14px;">Developer: <span style="color:var(--gold);">Mohammed Abbas</span></p>
+      <p style="color:var(--grey);font-size:.8rem;">Based in Manchester, UK</p>
+      <div class="d-flex gap-3 mt-4">
+        <a href="https://wa.me/447919978462" target="_blank" style="color:#25D366;font-size:1.4rem;"><i class="bi bi-whatsapp"></i></a>
+        <a href="https://www.drivesq.co.uk" target="_blank" style="color:var(--gold);font-size:1.4rem;"><i class="bi bi-globe2"></i></a>
+        <a href="https://mqabbas.github.io/CINEEVENTS-WEBSITE/" target="_blank" style="color:var(--gold);font-size:1.4rem;"><i class="bi bi-camera"></i></a>
+      </div>
+    </div>
+    <div class="col-lg-2 col-6">
+      <div class="f-col-head">Services</div>
+      <a href="index.html#services" class="f-link">Custom Web Design</a>
+      <a href="index.html#services" class="f-link">SEO Optimisation</a>
+      <a href="index.html#services" class="f-link">Driving Instructor Sites</a>
+      <a href="index.html#services" class="f-link">Business Websites</a>
+    </div>
+    <div class="col-lg-2 col-6">
+      <div class="f-col-head">Quick Links</div>
+      <a href="index.html#pricing" class="f-link">Pricing</a>
+      <a href="index.html#portfolio" class="f-link">Portfolio</a>
+      <a href="index.html#about" class="f-link">About Mohammed</a>
+      <a href="index.html#booking" class="f-link">Book Now</a>
+    </div>
+    <div class="col-lg-4">
+      <div class="f-col-head">Contact</div>
+      <a href="tel:07919978462" class="f-link"><i class="bi bi-telephone me-2"></i>07919 978 462</a>
+      <a href="https://wa.me/447919978462" target="_blank" class="f-link"><i class="bi bi-whatsapp me-2" style="color:#25D366;"></i>WhatsApp: 07919 978 462</a>
+      <a href="https://www.drivesq.co.uk" target="_blank" class="f-link"><i class="bi bi-globe me-2"></i>drivesq.co.uk</a>
+      <a href="index.html#booking" class="f-link"><i class="bi bi-calendar-check me-2"></i>Book Consultation</a>
+    </div>
+  </div>
+  <div class="footer-hr">
+    <p>© 2025 SQ Website. All rights reserved. Built by <a href="index.html#about">Mohammed Abbas</a>.</p>
+    <p>Web Design · SEO · Branding · Manchester, UK</p>
+  </div>
+</footer>
+
+<script>
+/* CURSOR */
+const curDot = document.getElementById('cur-dot');
+const curRing = document.getElementById('cur-ring');
+let mx=0,my=0,rx=window.innerWidth/2,ry=window.innerHeight/2;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  curDot.style.left = mx+'px'; curDot.style.top = my+'px';
+});
+(function animRing() {
+  rx += (mx-rx)*.12; ry += (my-ry)*.12;
+  curRing.style.left = rx+'px'; curRing.style.top = ry+'px';
+  requestAnimationFrame(animRing);
+})();
+document.querySelectorAll('a,button,.card-serv,.tech-chip,.testi-card,.t-item,.portal-card').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+});
+
+/* SCROLL: progress + nav */
+const prog = document.getElementById('scroll-progress');
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  prog.style.width = pct + '%';
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+}, {passive:true});
+
+/* HAMBURGER / MOBILE NAV */
+const hamburger = document.getElementById('hamburger');
+const navLinks  = document.getElementById('navLinks');
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('mobile-open');
+  hamburger.classList.toggle('open');
+});
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    navLinks.classList.remove('mobile-open');
+    hamburger.classList.remove('open');
+  });
+});
+
+/* REVEAL ON SCROLL */
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold:.08, rootMargin:'0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* STAT COUNTERS */
+function animateCounter(el, target) {
+  let cur=0; const step=Math.max(target/60,0.02);
+  const iv = setInterval(()=>{
+    cur+=step;
+    if(cur>=target){el.textContent=target;clearInterval(iv);return;}
+    el.textContent=Math.floor(cur);
+  },18);
+}
+const statsObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      document.querySelectorAll('.stat-number').forEach(el => {
+        animateCounter(el, parseInt(el.dataset.target));
+      });
+      statsObserver.disconnect();
+    }
+  });
+}, {threshold:.4});
+const resultsBar = document.querySelector('.results-bar');
+if(resultsBar) statsObserver.observe(resultsBar);
+</script>
+</body>
+</html>
