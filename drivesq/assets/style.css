@@ -522,6 +522,51 @@ footer{ background:var(--black); color:#b8b9bd; padding:80px 0 34px; }
 .network-stats .nstat span{ font-size:.78rem; color:#9a9ba0; text-transform:uppercase; letter-spacing:.08em; }
 
 /* ══════════════════════════════════════════════════════════════
+   APPS — Student App / Instructor App promo
+═══════════════════════════════════════════════════════════════ */
+.app-eyebrow-tag{
+  display:inline-flex; align-items:center; gap:8px; background:var(--red-subtle); border:1px solid var(--red-border);
+  color:var(--red-dark); font-size:.72rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+  padding:6px 16px; border-radius:100px; margin-bottom:18px;
+}
+.app-features{ list-style:none; padding:0; margin:26px 0 32px; display:flex; flex-direction:column; gap:13px; }
+.app-features li{ display:flex; align-items:flex-start; gap:11px; font-size:.94rem; color:#3c3d42; }
+.app-features li i{ color:var(--red); margin-top:3px; flex-shrink:0; }
+.app-badges{ display:flex; gap:14px; flex-wrap:wrap; }
+.app-badge{
+  display:inline-flex; align-items:center; gap:10px; background:var(--black); color:#fff; text-decoration:none;
+  padding:10px 20px; border-radius:12px; transition:transform .25s, box-shadow .25s; box-shadow:0 6px 18px rgba(0,0,0,.15);
+}
+.app-badge:hover{ transform:translateY(-3px); color:#fff; box-shadow:0 12px 28px rgba(0,0,0,.25); }
+.app-badge i{ font-size:1.7rem; }
+.app-badge .badge-text{ display:flex; flex-direction:column; line-height:1.15; }
+.app-badge .badge-text small{ font-size:.6rem; text-transform:uppercase; letter-spacing:.05em; color:#b8b9bd; }
+.app-badge .badge-text strong{ font-size:1rem; font-family:var(--font-head); font-weight:700; }
+
+.phone-mock{
+  width:230px; aspect-ratio:9/19; background:#0a0a0b; border-radius:38px; padding:10px;
+  box-shadow:0 30px 70px rgba(0,0,0,.25); border:2px solid #1c1c1c; position:relative; margin:0 auto;
+}
+.phone-mock .notch{
+  position:absolute; top:10px; left:50%; transform:translateX(-50%); width:74px; height:20px;
+  background:#0a0a0b; border-radius:0 0 16px 16px; z-index:2;
+}
+.phone-mock .screen{
+  width:100%; height:100%; border-radius:28px; overflow:hidden; position:relative;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+}
+.phone-mock.student .screen{ background:linear-gradient(165deg,var(--red-deep),var(--black) 70%); }
+.phone-mock.instructor .screen{ background:linear-gradient(165deg,var(--charcoal2),var(--black) 70%); }
+.phone-mock .screen i{ font-size:2.6rem; color:#fff; }
+.phone-mock .screen .p-label{ color:#fff; font-family:var(--font-head); font-weight:700; font-size:.85rem; text-align:center; padding:0 20px; }
+.phone-mock .screen .p-bar{ width:70%; height:8px; border-radius:6px; background:rgba(255,255,255,.14); overflow:hidden; }
+.phone-mock .screen .p-bar span{ display:block; height:100%; background:var(--red); border-radius:6px; }
+.phone-glow{ position:absolute; width:280px; height:280px; border-radius:50%; filter:blur(80px); z-index:-1; }
+.phone-glow.student{ background:rgba(228,0,43,.18); }
+.phone-glow.instructor{ background:rgba(228,0,43,.1); }
+.app-visual{ position:relative; display:flex; justify-content:center; }
+
+/* ══════════════════════════════════════════════════════════════
    REVEAL / SHARED KEYFRAMES — hidden only once .js confirms JS runs
 ═══════════════════════════════════════════════════════════════ */
 .reveal{ transition:opacity .9s cubic-bezier(.4,0,.2,1), transform .9s cubic-bezier(.4,0,.2,1); }
