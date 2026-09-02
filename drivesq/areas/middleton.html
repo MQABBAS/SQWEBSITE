@@ -6,22 +6,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Driving lessons in Middleton (M24) with DriveSQ — DVSA-approved instructors, 90%+ pass rate, close to the M60 for dual-carriageway practice.">
 <title>Driving Lessons in Middleton | DriveSQ — DVSA Approved, 90%+ Pass Rate</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23060c18'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle' fill='%23ffb800' font-family='Arial' font-weight='bold'%3EQ%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230A0A0B'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle' fill='%23E4002B' font-family='Arial' font-weight='bold'%3EQ%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="../assets/style.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "DrivingSchool",
-  "name": "DriveSQ Driving School — Middleton",
-  "url": "https://www.drivesq.co.uk/",
-  "telephone": "+447352932003",
-  "priceRange": "££",
-  "areaServed": "Middleton, Greater Manchester",
-  "address": { "@type": "PostalAddress", "addressLocality": "Middleton", "addressRegion": "Greater Manchester", "addressCountry": "GB" },
-  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "137" }
+  "@graph": [
+    {
+      "@type": "DrivingSchool",
+      "@id": "https://www.drivesq.co.uk/areas/middleton.html#business",
+      "name": "DriveSQ Driving School — Middleton",
+      "url": "https://www.drivesq.co.uk/areas/middleton.html",
+      "telephone": "+447352932003",
+      "priceRange": "££",
+      "areaServed": "Middleton, Greater Manchester",
+      "address": { "@type": "PostalAddress", "addressLocality": "Middleton", "addressRegion": "Greater Manchester", "addressCountry": "GB" },
+      "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "137" }
+    },
+    {
+      "@type": "WebPage",
+      "url": "https://www.drivesq.co.uk/areas/middleton.html",
+      "name": "Driving Lessons in Middleton | DriveSQ",
+      "about": { "@id": "https://www.drivesq.co.uk/areas/middleton.html#business" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Which test centre is closest to Middleton?", "acceptedAnswer": { "@type": "Answer", "text": "Most learners test at either Failsworth or Cheetham Hill — your instructor will recommend whichever suits your ability and current wait times." } },
+        { "@type": "Question", "name": "Do you cover Alkrington and Hopwood too?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — our Middleton coverage includes Alkrington, Hopwood, Boarshaw and the wider M24 postcode." } },
+        { "@type": "Question", "name": "Can lessons help me get comfortable joining the M60?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, we build up gradually to the M60 junctions near Middleton so joining faster roads feels natural once you're qualified." } }
+      ]
+    }
+  ]
 }
 </script>
 </head>
@@ -35,51 +55,56 @@
   <span>Mon–Sun, 7am–9pm</span>
 </div>
 
-<nav id="navbar">
-  <a href="../index.html" class="brand">
-    <span class="brand-mark">Q</span>
-    <span>Drive<span class="brand-sq">SQ</span></span>
-  </a>
-
-  <ul class="nav-links" id="navLinks">
-    <li><a href="../index.html#courses">Courses</a></li>
-    <li><a href="#offers">Offers</a></li>
-    <li><a href="../index.html#pricing">Pricing</a></li>
-    <li class="dropdown">
-      <a href="../index.html#areas">Areas We Cover <i class="bi bi-chevron-down" style="font-size:.65em;"></i></a>
-      <div class="dropdown-panel">
-        <a href="manchester.html">Manchester</a>
-        <a href="didsbury.html">Didsbury</a>
-        <a href="sale.html">Sale</a>
-        <a href="rochdale.html">Rochdale</a>
-        <a href="eccles.html">Eccles</a>
-        <a href="middleton.html">Middleton</a>
-        <a href="levenshulme.html">Levenshulme</a>
-        <a href="../index.html#areas" class="view-all">View all areas →</a>
-      </div>
-    </li>
-    <li><a href="../index.html#reviews">Reviews</a></li>
-    <li><a href="../index.html#faq">FAQs</a></li>
-    <li><a href="#book" class="btn-nav">Book a Lesson</a></li>
-  </ul>
-
-  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+<nav class="navbar navbar-expand-lg sticky-top" id="navbar">
+  <div class="container">
+    <a href="../index.html" class="navbar-brand">
+      <span class="brand-mark">Q</span>
+      <span>Drive<span class="text-red">SQ</span></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-label="Menu">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMain">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+        <li class="nav-item"><a class="nav-link" href="../index.html#courses">Courses</a></li>
+        <li class="nav-item"><a class="nav-link" href="#offers">Offers</a></li>
+        <li class="nav-item"><a class="nav-link" href="../index.html#pricing">Pricing</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="../index.html#areas" role="button" data-bs-toggle="dropdown" aria-expanded="false">Areas We Cover</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="manchester.html">Manchester</a></li>
+            <li><a class="dropdown-item" href="didsbury.html">Didsbury</a></li>
+            <li><a class="dropdown-item" href="sale.html">Sale</a></li>
+            <li><a class="dropdown-item" href="rochdale.html">Rochdale</a></li>
+            <li><a class="dropdown-item" href="eccles.html">Eccles</a></li>
+            <li><a class="dropdown-item" href="middleton.html">Middleton</a></li>
+            <li><a class="dropdown-item" href="levenshulme.html">Levenshulme</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item fw-bold text-red" href="../index.html#areas">View all areas →</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="../index.html#reviews">Reviews</a></li>
+        <li class="nav-item"><a class="nav-link" href="../index.html#faq">FAQs</a></li>
+        <li class="nav-item ms-lg-2 mt-3 mt-lg-0"><a href="#book" class="btn-red">Book a Lesson</a></li>
+      </ul>
+    </div>
+  </div>
 </nav>
 
 <a class="wa-float" href="https://wa.me/447352932003?text=Hi%20DriveSQ%2C%20I%27d%20like%20driving%20lessons%20in%20Middleton." target="_blank" rel="noopener" title="Chat on WhatsApp"><i class="bi bi-whatsapp"></i></a>
 
-<section class="hero" style="min-height:70vh;">
-  <div class="hero-road"></div>
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-  <div style="position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;width:100%;">
+<section class="hero" style="min-height:64vh;padding-top:130px;">
+  <div class="stripes"></div>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <div class="container position-relative" style="z-index:2;">
     <div class="crumb reveal"><a href="../index.html">Home</a><span class="sep">/</span><a href="../index.html#areas">Areas</a><span class="sep">/</span>Middleton</div>
     <div class="hero-badge reveal"><span class="live-dot"></span> 🛣️ M24</div>
-    <h1 class="reveal rd1"><span class="line">Driving Lessons in</span><span class="line amber-text">Middleton</span></h1>
+    <h1 class="reveal rd1">Driving Lessons in<br><span class="text-red">Middleton</span></h1>
     <p class="hero-sub reveal rd2">Middleton offers a manageable mix for learners — steady traffic along Manchester Old Road and Rochdale Road, roundabout practice around Alkrington, and quick access to the M60 at Junctions 20 and 21 for building dual-carriageway confidence without straying far from home.</p>
-    <div class="hero-cta reveal rd3">
-      <a href="#book" class="btn-amber"><i class="bi bi-calendar-check"></i> Book a Lesson in Middleton</a>
-      <a href="https://wa.me/447352932003" target="_blank" rel="noopener" class="btn-ghost"><i class="bi bi-whatsapp"></i> WhatsApp Us</a>
+    <div class="d-flex gap-3 flex-wrap reveal rd3">
+      <a href="#book" class="btn-red btn-lg-pill"><i class="bi bi-calendar-check"></i> Book a Lesson in Middleton</a>
+      <a href="https://wa.me/447352932003" target="_blank" rel="noopener" class="btn-outline-dark2 btn-lg-pill" style="color:#fff;border-color:rgba(255,255,255,.4);"><i class="bi bi-whatsapp"></i> WhatsApp Us</a>
     </div>
     <div class="hero-stats reveal rd4">
       <div class="hstat"><b><span data-count="90">0</span>%+</b><span>First-Time Pass Rate</span></div>
@@ -90,240 +115,288 @@
 </section>
 
 <section id="offers">
-  <div class="sec-head reveal">
-    <div class="eyebrow">Current Offer</div>
-    <h2 class="sec-title">A Genuine Discount<br><span class="amber-text">For Students</span></h2>
-    <p class="sec-body">No codes, no catches — just show a valid student ID at your first lesson.</p>
-  </div>
-  <div class="offer-card reveal">
-    <div class="offer-flag">Student Offer</div>
-    <div class="offer-icon">🎓</div>
-    <div class="offer-body">
-      <div class="offer-badge">For School, College &amp; University Students</div>
-      <h3>10 Hours of Lessons for £299</h3>
-      <p>Manual or automatic — same price, no premium either way. Available to any student in Middleton with valid student ID, shown at your first lesson.</p>
-      <ul class="offer-list">
-        <li><i class="bi bi-check-circle-fill"></i> 10 x 60-minute lessons with a DVSA-approved instructor</li>
-        <li><i class="bi bi-check-circle-fill"></i> Manual &amp; automatic available at the same price</li>
-        <li><i class="bi bi-check-circle-fill"></i> Valid student ID required at your first lesson</li>
-      </ul>
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Current Offer</div>
+      <h2 class="sec-title">A Genuine Discount<br><span class="text-red">For Students</span></h2>
+      <p class="sec-body">No codes, no catches — just show a valid student ID at your first lesson.</p>
     </div>
-    <div class="offer-cta">
-      <div class="offer-price"><span>£299</span><small>10-hour block</small></div>
-      <div class="offer-save">Save £51 vs standard pricing</div>
-      <a href="#book" class="btn-amber" style="width:100%;justify-content:center;">Claim Student Offer</a>
+    <div class="offer-card reveal">
+      <div class="offer-flag">Student Offer</div>
+      <div class="offer-icon">🎓</div>
+      <div class="offer-body">
+        <div class="offer-badge">For School, College &amp; University Students</div>
+        <h3>10 Hours of Lessons for £299</h3>
+        <p>Manual or automatic — same price, no premium either way. Available to any student in Middleton with valid student ID, shown at your first lesson.</p>
+        <ul class="offer-list">
+          <li><i class="bi bi-check-circle-fill"></i> 10 x 60-minute lessons with a DVSA-approved instructor</li>
+          <li><i class="bi bi-check-circle-fill"></i> Manual &amp; automatic available at the same price</li>
+          <li><i class="bi bi-check-circle-fill"></i> Valid student ID required at your first lesson</li>
+        </ul>
+      </div>
+      <div class="offer-cta">
+        <div class="offer-price"><span>£299</span><small>10-hour block</small></div>
+        <div class="offer-save">Save £51 vs standard pricing</div>
+        <a href="#book" class="btn-red" style="width:100%;justify-content:center;">Claim Student Offer</a>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="sec-alt">
-  <div class="sec-head reveal">
-    <div class="eyebrow">Why Learn With Us In Middleton</div>
-    <h2 class="sec-title">Local Instructors Who<br><span class="amber-text">Know These Roads</span></h2>
-  </div>
-  <div class="grid grid-3">
-    <div class="card reveal">
-      <div class="card-icon"><i class="bi bi-signpost-split-fill"></i></div>
-      <h3>Alkrington Roundabout Practice</h3>
-      <p>Repeated roundabout drills close to home build the observation habits examiners look for.</p>
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Why Learn With Us In Middleton</div>
+      <h2 class="sec-title">Local Instructors Who<br><span class="text-red">Know These Roads</span></h2>
     </div>
-    <div class="card reveal rd1">
-      <div class="card-icon"><i class="bi bi-speedometer2"></i></div>
-      <h3>M60 Junction Access</h3>
-      <p>Junctions 20 and 21 are ideal for progressing from town roads to faster, multi-lane driving.</p>
-    </div>
-    <div class="card reveal rd2">
-      <div class="card-icon"><i class="bi bi-cone-striped"></i></div>
-      <h3>Steady Traffic For Building Basics</h3>
-      <p>Manchester Old Road offers consistent, moderate traffic — perfect for early lessons.</p>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4 reveal">
+        <div class="card-x">
+          <div class="card-x-icon"><i class="bi bi-signpost-split-fill"></i></div>
+          <h3>Alkrington Roundabout Practice</h3>
+          <p>Repeated roundabout drills close to home build the observation habits examiners look for.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 reveal rd1">
+        <div class="card-x">
+          <div class="card-x-icon"><i class="bi bi-speedometer2"></i></div>
+          <h3>M60 Junction Access</h3>
+          <p>Junctions 20 and 21 are ideal for progressing from town roads to faster, multi-lane driving.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 reveal rd2">
+        <div class="card-x">
+          <div class="card-x-icon"><i class="bi bi-cone-striped"></i></div>
+          <h3>Steady Traffic For Building Basics</h3>
+          <p>Manchester Old Road offers consistent, moderate traffic — perfect for early lessons.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <section>
-  <div class="hero-grid" style="align-items:start;">
-    <div class="reveal left">
-      <div class="eyebrow">Local Route Knowledge</div>
-      <h2 class="sec-title">Test Centre &amp;<br><span class="amber-text">Practice Routes</span></h2>
-      <p class="sec-body" style="margin-bottom:30px;">Every DriveSQ instructor covering Middleton trains specifically on the roads and junctions used for the practical test in this area — not generic routes borrowed from somewhere else in Manchester.</p>
-      <a href="#book" class="btn-amber">Book Your First Lesson</a>
-    </div>
-    <div class="local-panel reveal right">
-      <h3><i class="bi bi-signpost-2-fill"></i> Middleton At a Glance</h3>
-      <div class="local-row"><i class="bi bi-geo-alt-fill"></i><div><b>Nearest Test Centres</b><span>Failsworth and Cheetham Hill test centres both serve Middleton learners</span></div></div>
-      <div class="local-row"><i class="bi bi-geo-alt-fill"></i><div><b>Key Practice Roads</b><span>Manchester Old Road, Rochdale Road, Alkrington roundabouts, M60 Junctions 20–21</span></div></div>
-      <div class="local-row"><i class="bi bi-geo-alt-fill"></i><div><b>Local Challenge</b><span>Multi-exit roundabouts around Alkrington and joining the M60 slip roads</span></div></div>
-      <div class="local-row"><i class="bi bi-geo-alt-fill"></i><div><b>Good For</b><span>Learners progressing steadily from quiet roads to faster dual-carriageway driving</span></div></div>
+  <div class="container">
+    <div class="row align-items-start g-5">
+      <div class="col-lg-6 reveal left">
+        <div class="eyebrow">Local Route Knowledge</div>
+        <h2 class="sec-title">Test Centre &amp;<br><span class="text-red">Practice Routes</span></h2>
+        <p class="sec-body mb-4">Every DriveSQ instructor covering Middleton trains specifically on the roads and junctions used for the practical test in this area — not generic routes borrowed from somewhere else in Manchester.</p>
+        <a href="#book" class="btn-red">Book Your First Lesson</a>
+      </div>
+      <div class="col-lg-6 reveal right">
+        <div class="local-panel">
+          <h3><i class="bi bi-signpost-2-fill text-red"></i> Middleton At a Glance</h3>
+          <div class="local-row"><i class="bi bi-geo-alt-fill"></i><div><b>Nearest Test Centres</b><span>Failsworth and Cheetham Hill test centres both serve Middleton learners</span></div></div>
+          <div class="local-row"><i class="bi bi-geo-alt-fill"></i><div><b>Key Practice Roads</b><span>Manchester Old Road, Rochdale Road, Alkrington roundabouts, M60 Junctions 20–21</span></div></div>
+          <div class="local-row"><i class="bi bi-geo-alt-fill"></i><div><b>Local Challenge</b><span>Multi-exit roundabouts around Alkrington and joining the M60 slip roads</span></div></div>
+          <div class="local-row"><i class="bi bi-geo-alt-fill"></i><div><b>Good For</b><span>Learners progressing steadily from quiet roads to faster dual-carriageway driving</span></div></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="sec-alt">
-  <div class="sec-head center reveal" style="margin-left:auto;margin-right:auto;">
-    <div class="eyebrow">Simple Pricing</div>
-    <h2 class="sec-title">Lessons in Middleton<br><span class="amber-text">From £35/hr</span></h2>
-    <p class="sec-body">Manual and automatic cost the same. <a href="../index.html#pricing" style="color:var(--amber-light);">See the full price list →</a> · In full-time education? <a href="#offers" style="color:var(--amber-light);">See our Student Offer →</a></p>
-  </div>
-  <div class="grid grid-3" style="max-width:1000px;margin:0 auto;">
-    <div class="price-card reveal">
-      <div class="price-name">Single Lesson</div>
-      <div class="price-amt">£35<span>/hr</span></div>
-      <div class="price-desc">Pay as you go</div>
-      <a href="#book" class="btn-ghost" style="width:100%;justify-content:center;">Book Now</a>
+<section class="sec-alt" id="pricing-local">
+  <div class="container">
+    <div class="sec-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <div class="eyebrow">Simple Pricing</div>
+      <h2 class="sec-title">Lessons in Middleton<br><span class="text-red">From £35/hr</span></h2>
+      <p class="sec-body">Manual and automatic cost the same. <a href="../index.html#pricing" class="text-red fw-bold text-decoration-none">See the full price list →</a> · In full-time education? <a href="#offers" class="text-red fw-bold text-decoration-none">See our Student Offer →</a></p>
     </div>
-    <div class="price-card feat reveal rd1">
-      <div class="price-badge">Most Popular</div>
-      <div class="price-name">10-Hour Block</div>
-      <div class="price-amt">£330<span>total</span></div>
-      <div class="price-desc">Save £20, includes a free mock test</div>
-      <a href="#book" class="btn-amber" style="width:100%;justify-content:center;">Book Now</a>
-    </div>
-    <div class="price-card reveal rd2">
-      <div class="price-name">Intensive Course</div>
-      <div class="price-amt">£999<span>from</span></div>
-      <div class="price-desc">Pass in as little as 2 weeks</div>
-      <a href="#book" class="btn-ghost" style="width:100%;justify-content:center;">Book Now</a>
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-4 reveal">
+        <div class="price-card">
+          <div class="price-name">Single Lesson</div>
+          <div class="price-amt">£35<span>/hr</span></div>
+          <div class="price-desc">Pay as you go</div>
+          <a href="#book" class="btn-outline-dark2 w-100 justify-content-center">Book Now</a>
+        </div>
+      </div>
+      <div class="col-md-4 reveal rd1">
+        <div class="price-card feat">
+          <div class="price-badge">Most Popular</div>
+          <div class="price-name">10-Hour Block</div>
+          <div class="price-amt">£330<span>total</span></div>
+          <div class="price-desc">Save £20, includes a free mock test</div>
+          <a href="#book" class="btn-red w-100 justify-content-center">Book Now</a>
+        </div>
+      </div>
+      <div class="col-md-4 reveal rd2">
+        <div class="price-card">
+          <div class="price-name">Intensive Course</div>
+          <div class="price-amt">£999<span>from</span></div>
+          <div class="price-desc">Pass in as little as 2 weeks</div>
+          <a href="#book" class="btn-outline-dark2 w-100 justify-content-center">Book Now</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <section id="reviews-local">
-  <div class="sec-head reveal">
-    <div class="eyebrow">Middleton Success Stories</div>
-    <h2 class="sec-title">Passed Right Here<br><span class="amber-text">In Middleton</span></h2>
-  </div>
-  <div class="grid grid-2">
-    <div class="testi reveal">
-      <div class="stars">★★★★★</div>
-      <p>"The free theory question bank alone was worth it. Passed theory and practical in the same month."</p>
-      <div class="who"><div class="av">PS</div><div><b>Priya S.</b><span>Middleton</span></div></div>
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Middleton Success Stories</div>
+      <h2 class="sec-title">Passed Right Here<br><span class="text-red">In Middleton</span></h2>
     </div>
-    <div class="testi reveal rd1">
-      <div class="stars">★★★★★</div>
-      <p>"Lots of roundabout practice around Alkrington — by test day I wasn't second-guessing a single one."</p>
-      <div class="who"><div class="av">RT</div><div><b>Ryan T.</b><span>Middleton</span></div></div>
+    <div class="row g-4">
+      <div class="col-md-6 reveal">
+        <div class="testi">
+          <div class="stars">★★★★★</div>
+          <p>"The free theory question bank alone was worth it. Passed theory and practical in the same month."</p>
+          <div class="who"><div class="av">PS</div><div><b>Priya S.</b><span>Middleton</span></div></div>
+        </div>
+      </div>
+      <div class="col-md-6 reveal rd1">
+        <div class="testi">
+          <div class="stars">★★★★★</div>
+          <p>"Lots of roundabout practice around Alkrington — by test day I wasn't second-guessing a single one."</p>
+          <div class="who"><div class="av">RT</div><div><b>Ryan T.</b><span>Middleton</span></div></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="sec-alt">
-  <div class="sec-head reveal">
-    <div class="eyebrow">Nearby Areas</div>
-    <h2 class="sec-title">Also Covering<br><span class="amber-text">Areas Close By</span></h2>
-  </div>
-  <div class="grid grid-4">
-    <a href="rochdale.html" class="area-card reveal"><div class="a-icon">⛰️</div><h4>Rochdale</h4><span>OL11 – OL16</span><div class="go">Explore area <i class="bi bi-arrow-right"></i></div></a>
-    <a href="manchester.html" class="area-card reveal rd1"><div class="a-icon">🏙️</div><h4>Manchester</h4><span>All M postcodes</span><div class="go">Explore area <i class="bi bi-arrow-right"></i></div></a>
-    <a href="levenshulme.html" class="area-card reveal rd2"><div class="a-icon">🚦</div><h4>Levenshulme</h4><span>M19</span><div class="go">Explore area <i class="bi bi-arrow-right"></i></div></a>
-    <a href="../index.html#areas" class="area-card reveal" style="border-style:dashed;justify-content:center;align-items:center;text-align:center;"><div class="a-icon">🗺️</div><h4>View All Areas</h4><span>See every location we cover</span><div class="go">Explore <i class="bi bi-arrow-right"></i></div></a>
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Nearby Areas</div>
+      <h2 class="sec-title">Also Covering<br><span class="text-red">Areas Close By</span></h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-6 col-lg-3 reveal">
+        <a href="rochdale.html" class="area-card"><div class="a-icon">⛰️</div><h4>Rochdale</h4><span>OL11 – OL16</span><div class="go">Explore area <i class="bi bi-arrow-right"></i></div></a>
+      </div>
+      <div class="col-6 col-lg-3 reveal rd1">
+        <a href="manchester.html" class="area-card"><div class="a-icon">🏙️</div><h4>Manchester</h4><span>All M postcodes</span><div class="go">Explore area <i class="bi bi-arrow-right"></i></div></a>
+      </div>
+      <div class="col-6 col-lg-3 reveal rd2">
+        <a href="levenshulme.html" class="area-card"><div class="a-icon">🚦</div><h4>Levenshulme</h4><span>M19</span><div class="go">Explore area <i class="bi bi-arrow-right"></i></div></a>
+      </div>
+      <div class="col-6 col-lg-3 reveal">
+        <a href="../index.html#areas" class="area-card" style="border-style:dashed;justify-content:center;align-items:center;text-align:center;"><div class="a-icon">🗺️</div><h4>View All Areas</h4><span>See every location we cover</span><div class="go">Explore <i class="bi bi-arrow-right"></i></div></a>
+      </div>
+    </div>
   </div>
 </section>
 
 <section id="faq">
-  <div class="sec-head reveal">
-    <div class="eyebrow">Middleton FAQs</div>
-    <h2 class="sec-title">Common Questions From<br><span class="amber-text">Middleton Learners</span></h2>
-  </div>
-  <div style="max-width:820px;">
-    <div class="faq-item reveal">
-      <button class="faq-btn">Which test centre is closest to Middleton? <span class="faq-icon"><i class="bi bi-plus"></i></span></button>
-      <div class="faq-ans"><p>Most learners test at either Failsworth or Cheetham Hill — your instructor will recommend whichever suits your ability and current wait times.</p></div>
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Middleton FAQs</div>
+      <h2 class="sec-title">Common Questions From<br><span class="text-red">Middleton Learners</span></h2>
     </div>
-    <div class="faq-item reveal">
-      <button class="faq-btn">Do you cover Alkrington and Hopwood too? <span class="faq-icon"><i class="bi bi-plus"></i></span></button>
-      <div class="faq-ans"><p>Yes — our Middleton coverage includes Alkrington, Hopwood, Boarshaw and the wider M24 postcode.</p></div>
-    </div>
-    <div class="faq-item reveal">
-      <button class="faq-btn">Can lessons help me get comfortable joining the M60? <span class="faq-icon"><i class="bi bi-plus"></i></span></button>
-      <div class="faq-ans"><p>Yes, we build up gradually to the M60 junctions near Middleton so joining faster roads feels natural once you're qualified.</p></div>
+    <div class="accordion reveal" id="faqAccordionMiddleton" style="max-width:820px;">
+      <div class="accordion-item">
+        <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#areaFaqMiddleton0">Which test centre is closest to Middleton?</button></h3>
+        <div id="areaFaqMiddleton0" class="accordion-collapse collapse show" data-bs-parent="#faqAccordionMiddleton"><div class="accordion-body">Most learners test at either Failsworth or Cheetham Hill — your instructor will recommend whichever suits your ability and current wait times.</div></div>
+      </div>
+      <div class="accordion-item">
+        <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#areaFaqMiddleton1">Do you cover Alkrington and Hopwood too?</button></h3>
+        <div id="areaFaqMiddleton1" class="accordion-collapse collapse" data-bs-parent="#faqAccordionMiddleton"><div class="accordion-body">Yes — our Middleton coverage includes Alkrington, Hopwood, Boarshaw and the wider M24 postcode.</div></div>
+      </div>
+      <div class="accordion-item">
+        <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#areaFaqMiddleton2">Can lessons help me get comfortable joining the M60?</button></h3>
+        <div id="areaFaqMiddleton2" class="accordion-collapse collapse" data-bs-parent="#faqAccordionMiddleton"><div class="accordion-body">Yes, we build up gradually to the M60 junctions near Middleton so joining faster roads feels natural once you're qualified.</div></div>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="cta-band">
-  <h2>Start Learning in Middleton Today</h2>
-  <p>Message us now and we'll match you with a local DVSA-approved instructor within 48 hours.</p>
-  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-    <a href="#book" class="btn-dark"><i class="bi bi-calendar-check"></i> Book Your First Lesson</a>
-    <a href="https://wa.me/447352932003" target="_blank" rel="noopener" class="btn-dark" style="background:#128C4A;"><i class="bi bi-whatsapp"></i> WhatsApp Us Now</a>
+  <div class="container">
+    <h2>Start Learning in Middleton Today</h2>
+    <p>Message us now and we'll match you with a local DVSA-approved instructor within 48 hours.</p>
+    <div class="d-flex gap-3 justify-content-center flex-wrap">
+      <a href="#book" class="btn-white-pill"><i class="bi bi-calendar-check"></i> Book Your First Lesson</a>
+      <a href="https://wa.me/447352932003" target="_blank" rel="noopener" class="btn-white-pill"><i class="bi bi-whatsapp" style="color:#25D366;"></i> WhatsApp Us Now</a>
+    </div>
   </div>
 </section>
 
 <section id="book">
-  <div class="hero-grid" style="align-items:start;">
-    <div class="reveal left">
-      <div class="eyebrow">Book in Middleton</div>
-      <h2 class="sec-title">Let's Get You<br><span class="amber-text">On The Road</span></h2>
-      <p class="sec-body" style="margin-bottom:36px;">Fill in your details and we'll reply within a few hours with instructor availability in Middleton.</p>
-      <form onsubmit="return false;" style="display:flex;flex-direction:column;gap:18px;">
-        <div style="display:flex;gap:18px;flex-wrap:wrap;">
-          <div style="flex:1;min-width:200px;">
-            <label style="display:block;font-size:.78rem;color:var(--grey);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Full Name</label>
-            <input type="text" placeholder="Your name" required style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:14px 16px;color:var(--white);font-family:'Inter',sans-serif;">
+  <div class="container">
+    <div class="row align-items-start g-5">
+      <div class="col-lg-7 reveal left">
+        <div class="eyebrow">Book in Middleton</div>
+        <h2 class="sec-title">Let's Get You<br><span class="text-red">On The Road</span></h2>
+        <p class="sec-body mb-4">Fill in your details and we'll reply within a few hours with instructor availability in Middleton.</p>
+        <form onsubmit="return false;" class="row g-3">
+          <div class="col-sm-6">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-control" placeholder="Your name" required>
           </div>
-          <div style="flex:1;min-width:200px;">
-            <label style="display:block;font-size:.78rem;color:var(--grey);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Phone Number</label>
-            <input type="tel" placeholder="07..." required style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:14px 16px;color:var(--white);font-family:'Inter',sans-serif;">
+          <div class="col-sm-6">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" placeholder="07..." required>
           </div>
+          <input type="hidden" value="Middleton">
+          <div class="col-12">
+            <label class="form-label">Message (optional)</label>
+            <textarea rows="3" class="form-control" placeholder="e.g. complete beginner, need automatic, hoping to pass by June..."></textarea>
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn-red w-100 justify-content-center">Send Enquiry <i class="bi bi-arrow-right"></i></button>
+          </div>
+          <p class="text-center mb-0" style="font-size:.8rem;color:var(--grey);">Prefer WhatsApp? <a href="https://wa.me/447352932003" target="_blank" rel="noopener" class="text-red fw-bold text-decoration-none">Message us directly →</a></p>
+        </form>
+      </div>
+      <div class="col-lg-5 reveal right">
+        <div class="local-panel">
+          <h3><i class="bi bi-telephone-fill text-red"></i> Get In Touch</h3>
+          <div class="local-row"><i class="bi bi-whatsapp"></i><div><b>WhatsApp / Call</b><span><a href="tel:+447352932003" style="color:#b8b9bd;">07352 932 003</a></span></div></div>
+          <div class="local-row"><i class="bi bi-clock-fill"></i><div><b>Opening Hours</b><span>Mon–Sun, 7:00am – 9:00pm</span></div></div>
+          <div class="local-row"><i class="bi bi-geo-alt-fill"></i><div><b>Covers</b><span>Middleton (M24) &amp; surrounding areas</span></div></div>
+          <div class="local-row"><i class="bi bi-patch-check-fill"></i><div><b>Approved By</b><span>DVSA (Driver &amp; Vehicle Standards Agency)</span></div></div>
         </div>
-        <input type="hidden" value="Middleton">
-        <div>
-          <label style="display:block;font-size:.78rem;color:var(--grey);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Message (optional)</label>
-          <textarea rows="3" placeholder="e.g. complete beginner, need automatic, hoping to pass by June..." style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:14px 16px;color:var(--white);font-family:'Inter',sans-serif;resize:vertical;"></textarea>
-        </div>
-        <button type="submit" class="btn-amber" style="justify-content:center;">Send Enquiry <i class="bi bi-arrow-right"></i></button>
-        <p style="font-size:.8rem;color:var(--grey);text-align:center;">Prefer WhatsApp? <a href="https://wa.me/447352932003" target="_blank" rel="noopener" style="color:var(--amber-light);">Message us directly →</a></p>
-      </form>
-    </div>
-    <div class="local-panel reveal right">
-      <h3><i class="bi bi-telephone-fill"></i> Get In Touch</h3>
-      <div class="local-row"><i class="bi bi-whatsapp"></i><div><b>WhatsApp / Call</b><span><a href="tel:+447352932003" style="color:var(--grey-light);">07352 932 003</a></span></div></div>
-      <div class="local-row"><i class="bi bi-clock-fill"></i><div><b>Opening Hours</b><span>Mon–Sun, 7:00am – 9:00pm</span></div></div>
-      <div class="local-row"><i class="bi bi-geo-alt-fill"></i><div><b>Covers</b><span>Middleton (M24) &amp; surrounding areas</span></div></div>
-      <div class="local-row"><i class="bi bi-patch-check-fill"></i><div><b>Approved By</b><span>DVSA (Driver &amp; Vehicle Standards Agency)</span></div></div>
+      </div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="f-grid">
-    <div>
-      <a href="../index.html" class="brand" style="margin-bottom:18px;"><span class="brand-mark">Q</span><span>Drive<span class="brand-sq">SQ</span></span></a>
-      <p style="color:var(--grey-light);font-size:.9rem;line-height:1.8;max-width:320px;margin-bottom:18px;">Manchester's DVSA-approved driving school. Manual &amp; automatic lessons, intensive courses, and Pass Plus — across every area of Greater Manchester.</p>
-      <div class="f-social">
-        <a href="https://wa.me/447352932003" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
-        <a href="tel:+447352932003" aria-label="Call"><i class="bi bi-telephone-fill"></i></a>
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-        <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+  <div class="container">
+    <div class="row g-5 mb-5">
+      <div class="col-lg-4">
+        <a href="../index.html" class="navbar-brand d-inline-flex mb-3" style="color:#fff !important;"><span class="brand-mark">Q</span><span>Drive<span class="text-red">SQ</span></span></a>
+        <p style="color:#b8b9bd;font-size:.9rem;line-height:1.8;max-width:320px;">Manchester's DVSA-approved driving school. Manual &amp; automatic lessons, intensive courses, and Pass Plus — across every area of Greater Manchester.</p>
+        <div class="f-social">
+          <a href="https://wa.me/447352932003" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+          <a href="tel:+447352932003" aria-label="Call"><i class="bi bi-telephone-fill"></i></a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2">
+        <div class="f-head">Explore</div>
+        <a href="../index.html#courses" class="f-link">Courses</a>
+        <a href="#offers" class="f-link">Offers</a>
+        <a href="../index.html#pricing" class="f-link">Pricing</a>
+        <a href="../index.html#reviews" class="f-link">Reviews</a>
+        <a href="../index.html#faq" class="f-link">FAQs</a>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="f-head">Areas We Cover</div>
+        <a href="manchester.html" class="f-link">Manchester</a>
+        <a href="didsbury.html" class="f-link">Didsbury</a>
+        <a href="sale.html" class="f-link">Sale</a>
+        <a href="rochdale.html" class="f-link">Rochdale</a>
+        <a href="eccles.html" class="f-link">Eccles</a>
+        <a href="levenshulme.html" class="f-link">Levenshulme</a>
+      </div>
+      <div class="col-lg-3">
+        <div class="f-head">Get In Touch</div>
+        <a href="tel:+447352932003" class="f-link"><i class="bi bi-telephone-fill"></i> 07352 932 003</a>
+        <a href="https://wa.me/447352932003" target="_blank" rel="noopener" class="f-link"><i class="bi bi-whatsapp"></i> WhatsApp Us</a>
+        <span class="f-link"><i class="bi bi-geo-alt-fill"></i> Greater Manchester, UK</span>
       </div>
     </div>
-    <div>
-      <div class="f-head">Explore</div>
-      <a href="../index.html#courses" class="f-link">Courses</a>
-      <a href="../index.html#pricing" class="f-link">Pricing</a>
-      <a href="../index.html#reviews" class="f-link">Reviews</a>
-      <a href="../index.html#faq" class="f-link">FAQs</a>
-      <a href="#book" class="f-link">Book a Lesson</a>
+    <div class="f-bottom">
+      <p>© <span class="js-year">2026</span> DriveSQ Driving School. This page is a design template &amp; demo.</p>
+      <p>Designed &amp; built by <a href="../../index.html">SQ Website</a> — Manchester Web Design</p>
     </div>
-    <div>
-      <div class="f-head">Areas We Cover</div>
-      <a href="manchester.html" class="f-link">Manchester</a>
-      <a href="didsbury.html" class="f-link">Didsbury</a>
-      <a href="sale.html" class="f-link">Sale</a>
-      <a href="rochdale.html" class="f-link">Rochdale</a>
-      <a href="eccles.html" class="f-link">Eccles</a>
-      <a href="levenshulme.html" class="f-link">Levenshulme</a>
-    </div>
-    <div>
-      <div class="f-head">Get In Touch</div>
-      <a href="tel:+447352932003" class="f-link"><i class="bi bi-telephone-fill"></i> 07352 932 003</a>
-      <a href="https://wa.me/447352932003" target="_blank" rel="noopener" class="f-link"><i class="bi bi-whatsapp"></i> WhatsApp Us</a>
-      <span class="f-link" style="margin-bottom:0;"><i class="bi bi-geo-alt-fill"></i> Greater Manchester, UK</span>
-    </div>
-  </div>
-  <div class="f-bottom">
-    <p>© <span class="js-year">2026</span> DriveSQ Driving School. This page is a design template &amp; demo.</p>
-    <p>Designed &amp; built by <a href="../../index.html">SQ Website</a> — Manchester Web Design</p>
   </div>
 </footer>
 
@@ -332,6 +405,7 @@
   <a href="#book" class="book"><i class="bi bi-calendar-check"></i> Book Now</a>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/main.js"></script>
 </body>
 </html>
