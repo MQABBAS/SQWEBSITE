@@ -34,7 +34,7 @@
 }
 
 *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; font-size:17px; }
+html { scroll-behavior:smooth; font-size:16px; }
 
 body {
   background:#060604;
@@ -259,7 +259,7 @@ body.cursor-hover #cur-ring { width:50px; height:50px; border-color:var(--gold);
 /* hero h1 */
 .hero h1 {
   font-family:'Playfair Display',serif;
-  font-size:clamp(3.6rem,8vw,7.4rem);
+  font-size:clamp(3.4rem,7.5vw,6.8rem);
   font-weight:900; line-height:1.01;
   margin-bottom:24px;
   animation:fadeUp 1s cubic-bezier(.4,0,.2,1) .15s both;
@@ -389,20 +389,6 @@ body.cursor-hover #cur-ring { width:50px; height:50px; border-color:var(--gold);
 }
 
 /* ═══════════════════════════════════════════
-   TRUST TICKER
-═══════════════════════════════════════════ */
-.ticker-wrap {
-  background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light));
-  overflow:hidden; padding:16px 0; white-space:nowrap;
-}
-.ticker-strip { display:inline-flex; gap:52px; animation:tickerScroll 24s linear infinite; }
-.ticker-strip span {
-  color:var(--bg-solid); font-weight:700; font-size:.82rem; letter-spacing:.1em;
-  text-transform:uppercase; display:inline-flex; align-items:center; gap:10px;
-}
-@keyframes tickerScroll { from { transform:translateX(0); } to { transform:translateX(-50%); } }
-
-/* ═══════════════════════════════════════════
    GENERAL SECTION
 ═══════════════════════════════════════════ */
 section { padding:120px 6%; }
@@ -418,7 +404,7 @@ section { padding:120px 6%; }
 
 .s-title {
   font-family:'Playfair Display',serif;
-  font-size:clamp(2.3rem,4.8vw,3.9rem);
+  font-size:clamp(2.1rem,4.5vw,3.6rem);
   font-weight:700; line-height:1.08; margin-bottom:18px;
   letter-spacing:-.02em;
 }
@@ -903,22 +889,6 @@ body::after {
   </div>
 </section>
 
-<!-- ═══ TRUST TICKER ═══ -->
-<div class="ticker-wrap">
-  <div class="ticker-strip" aria-hidden="true">
-    <span><i class="bi bi-patch-check-fill"></i> 50+ WEBSITES DELIVERED</span>
-    <span><i class="bi bi-lightning-charge-fill"></i> 48-HOUR TURNAROUND</span>
-    <span><i class="bi bi-graph-up-arrow"></i> BUILT FOR SEO &amp; GROWTH</span>
-    <span><i class="bi bi-phone-fill"></i> MOBILE-FIRST, EVERY TIME</span>
-    <span><i class="bi bi-geo-alt-fill"></i> BASED IN MANCHESTER, UK</span>
-    <span><i class="bi bi-patch-check-fill"></i> 50+ WEBSITES DELIVERED</span>
-    <span><i class="bi bi-lightning-charge-fill"></i> 48-HOUR TURNAROUND</span>
-    <span><i class="bi bi-graph-up-arrow"></i> BUILT FOR SEO &amp; GROWTH</span>
-    <span><i class="bi bi-phone-fill"></i> MOBILE-FIRST, EVERY TIME</span>
-    <span><i class="bi bi-geo-alt-fill"></i> BASED IN MANCHESTER, UK</span>
-  </div>
-</div>
-
 <!-- ═══ SERVICES ═══ -->
 <section class="section-bg2" id="services">
   <div class="s-eyebrow reveal">What We Do</div>
@@ -1068,28 +1038,7 @@ body::after {
   <div class="ornament reveal"><div class="ornament-line"></div><div class="ornament-diamond"></div><div class="ornament-line" style="background:linear-gradient(270deg,var(--gold),transparent)"></div></div>
 
   <div class="row g-4">
-    <div class="col-lg-3 col-md-6 reveal">
-      <div class="work-card">
-        <div class="work-thumb">
-          <div style="width:100%;height:210px;background:linear-gradient(135deg,#0a0a0b,#17181c);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;">
-            <div style="font-size:3.2rem;">🗺️</div>
-            <div style="font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:#E4002B;">8 Pages · 7 Manchester Areas</div>
-          </div>
-          <div class="work-badge">New · Live Demo</div>
-        </div>
-        <div class="work-info">
-          <h3>DriveSQ Local — Multi-Area Template</h3>
-          <p>A full local-SEO driving school template — white/red/black, built on Bootstrap — with a home page plus a dedicated landing page for every area: Didsbury, Sale, Rochdale, Eccles, Middleton, Levenshulme and Manchester. Includes a live price calculator and an area-coverage checker.</p>
-          <span class="tag">Multi-Page</span><span class="tag">Local SEO</span><span class="tag">Bootstrap</span>
-          <div class="template-note">
-            <strong>✦ Flagship Template</strong> — Built by Mohammed Qaim Abbas. This is what a complete, multi-location website build looks like — bigger typography, heavier animation, and a dedicated page for every town you serve.
-          </div>
-          <a href="drivesq/index.html" class="btn-primary-gold d-inline-block mt-3" style="font-size:.78rem;padding:10px 22px;"><span>View Live Demo →</span></a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-md-6 reveal rd1">
+    <div class="col-lg-4 col-md-6 reveal">
       <div class="work-card">
         <div class="work-thumb">
           <img src="https://i.postimg.cc/sx8zRRKV/cropped-circle-image.png" alt="DriveSQ Driving School Logo" style="object-fit:contain;padding:26px;box-sizing:border-box;background:linear-gradient(135deg,#1a1205,#2d1f07);" onerror="this.parentNode.innerHTML='<div style=\'width:100%;height:210px;background:linear-gradient(135deg,#1a1205,#2d1f07);display:flex;align-items:center;justify-content:center;font-size:3.5rem;\'>🚗</div>'">
@@ -1103,12 +1052,12 @@ body::after {
             <strong>✦ Client Website</strong> — A real business site built by Mohammed Qaim Abbas for a Manchester driving school. Fully functional, SEO-ranked, and live.
           </div>
           <a href="https://www.drivesq.co.uk" target="_blank" class="btn-outline-gold d-inline-block mt-3" style="font-size:.78rem;padding:10px 22px;">Visit drivesq.co.uk →</a>
-          <a href="case-study-drivesq.html" class="btn-primary-gold d-inline-block mt-3 ms-2" style="font-size:.78rem;padding:10px 22px;"><span>Case Study →</span></a>
+          <a href="case-study-drivesq.html" class="btn-primary-gold d-inline-block mt-3 ms-2" style="font-size:.78rem;padding:10px 22px;"><span>Read Case Study →</span></a>
         </div>
       </div>
     </div>
 
-    <div class="col-lg-3 col-md-6 reveal rd2">
+    <div class="col-lg-4 col-md-6 reveal rd1">
       <div class="work-card">
         <div class="work-thumb">
           <img src="https://i.postimg.cc/SNdq31PK/pic4-cineevent.jpg" alt="CineEvents Photography Website">
@@ -1126,7 +1075,7 @@ body::after {
       </div>
     </div>
 
-    <div class="col-lg-3 col-md-6 reveal rd3">
+    <div class="col-lg-4 col-md-6 reveal rd2">
       <div class="work-card">
         <div class="work-thumb">
           <div style="width:100%;height:210px;background:linear-gradient(135deg,#050d1a,#071526,#0a1a30);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;">
