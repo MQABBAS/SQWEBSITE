@@ -24,7 +24,7 @@
   --maxw:        1280px;
   --font-head:   'Space Grotesk', sans-serif;
   --font-body:   'Inter', sans-serif;
-  --font-logo:   'Anton', sans-serif;
+  --font-logo:   'Archivo Black', sans-serif;
 }
 
 *,*::before,*::after{ box-sizing:border-box; }
@@ -69,11 +69,8 @@ a{ color:inherit; }
 .navbar{ padding:18px 0; transition:padding .3s, box-shadow .3s; background:var(--white); }
 .navbar.scrolled{ padding:10px 0; box-shadow:0 6px 30px rgba(0,0,0,.08); }
 .navbar-brand{ font-family:var(--font-logo); font-size:1.9rem; font-weight:400; letter-spacing:.01em; text-transform:none; display:inline-flex; align-items:center; gap:10px; color:var(--black) !important; }
-.brand-mark{
-  width:46px; height:46px; border-radius:50%; object-fit:contain; flex-shrink:0;
-  box-shadow:0 4px 14px rgba(0,0,0,.18);
-}
-footer .brand-mark{ box-shadow:0 4px 14px rgba(0,0,0,.4); }
+.brand-mark{ width:44px; height:44px; flex-shrink:0; filter:drop-shadow(0 3px 8px rgba(0,0,0,.25)); }
+footer .brand-mark{ filter:drop-shadow(0 3px 10px rgba(0,0,0,.5)); }
 .navbar .nav-link{ color:var(--black); font-weight:600; font-size:.92rem; padding:.6rem 1rem !important; position:relative; }
 .navbar .nav-link::after{
   content:''; position:absolute; left:1rem; right:1rem; bottom:2px; height:2px; background:var(--red);
