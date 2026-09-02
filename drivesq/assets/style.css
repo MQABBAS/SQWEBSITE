@@ -118,6 +118,7 @@ footer .brand-mark{ box-shadow:0 4px 14px rgba(0,0,0,.4); }
   mask-image:radial-gradient(ellipse 75% 65% at 75% 35%, #000 0%, transparent 72%);
 }
 @keyframes roadMove{ from{ background-position-x:0; } to{ background-position-x:-296px; } }
+.hero-parallax{ position:absolute; inset:0; transition:transform .25s ease-out; will-change:transform; pointer-events:none; }
 .hero .glow{ position:absolute; border-radius:50%; filter:blur(100px); pointer-events:none; }
 .hero .glow-1{ width:520px; height:520px; background:rgba(228,0,43,.22); top:-160px; right:-140px; animation:blobFloat 12s ease-in-out infinite; }
 .hero .glow-2{ width:360px; height:360px; background:rgba(228,0,43,.10); bottom:-120px; left:8%; animation:blobFloat 14s ease-in-out infinite reverse; }
@@ -475,6 +476,50 @@ footer{ background:var(--black); color:#b8b9bd; padding:80px 0 34px; }
 .mobile-cta-bar .call{ background:var(--offwhite); color:var(--black); }
 .mobile-cta-bar .book{ background:var(--red); color:var(--white); }
 @media(max-width:760px){ .mobile-cta-bar{ display:flex; } body{ padding-bottom:78px; } .fab-group{ bottom:96px; } }
+
+/* ══════════════════════════════════════════════════════════════
+   NETWORK MAP — full-bleed black "wallpaper" showcase section
+═══════════════════════════════════════════════════════════════ */
+.network-section{
+  background:var(--black); color:var(--white); position:relative; overflow:hidden; padding:130px 0;
+}
+.network-section .stripes{
+  position:absolute; inset:0; opacity:.4; pointer-events:none;
+  background-image:repeating-linear-gradient(115deg, transparent 0 70px, rgba(228,0,43,.14) 70px 78px);
+  animation:roadMove 9s linear infinite;
+  mask-image:radial-gradient(ellipse 80% 70% at 50% 50%, #000 0%, transparent 75%);
+}
+.network-section .glow{ position:absolute; border-radius:50%; filter:blur(120px); pointer-events:none; }
+.network-section .glow-1{ width:600px; height:600px; background:rgba(228,0,43,.16); top:-200px; left:-160px; animation:blobFloat 16s ease-in-out infinite; }
+.network-section .glow-2{ width:460px; height:460px; background:rgba(228,0,43,.10); bottom:-160px; right:-120px; animation:blobFloat 13s ease-in-out infinite reverse; }
+.network-wrap{ max-width:600px; margin:0 auto; position:relative; z-index:1; }
+.network-wrap svg{ width:100%; height:auto; display:block; overflow:visible; }
+.network-line{
+  stroke:rgba(228,0,43,.45); stroke-width:2; fill:none;
+  stroke-dasharray:340; stroke-dashoffset:340; transition:stroke-dashoffset 1.6s cubic-bezier(.4,0,.2,1);
+}
+.reveal.visible .network-line{ stroke-dashoffset:0; }
+.network-wrap [data-idx="1"] .network-line{ transition-delay:.05s; } .network-wrap [data-idx="1"] .pulse-dot{ animation-delay:.1s; }
+.network-wrap [data-idx="2"] .network-line{ transition-delay:.15s; } .network-wrap [data-idx="2"] .pulse-dot{ animation-delay:.5s; }
+.network-wrap [data-idx="3"] .network-line{ transition-delay:.25s; } .network-wrap [data-idx="3"] .pulse-dot{ animation-delay:.9s; }
+.network-wrap [data-idx="4"] .network-line{ transition-delay:.35s; } .network-wrap [data-idx="4"] .pulse-dot{ animation-delay:1.3s; }
+.network-wrap [data-idx="5"] .network-line{ transition-delay:.45s; } .network-wrap [data-idx="5"] .pulse-dot{ animation-delay:1.7s; }
+.network-wrap [data-idx="6"] .network-line{ transition-delay:.55s; } .network-wrap [data-idx="6"] .pulse-dot{ animation-delay:2.1s; }
+.network-wrap [data-idx="7"] .network-line{ transition-delay:.65s; } .network-wrap [data-idx="7"] .pulse-dot{ animation-delay:2.5s; }
+.pulse-dot{ fill:var(--red-light); filter:drop-shadow(0 0 5px var(--red-light)); animation:dotTravel 3.4s linear infinite; opacity:0; }
+@keyframes dotTravel{ 0%{ opacity:0; } 3%{ opacity:1; } 92%{ opacity:1; } 100%{ opacity:0; } }
+.network-hub circle.hub-ring{ fill:none; stroke:rgba(228,0,43,.5); stroke-width:1.5; animation:hubPing 2.6s ease-out infinite; transform-origin:300px 300px; }
+@keyframes hubPing{ 0%{ r:50; opacity:.9; } 100%{ r:100; opacity:0; } }
+.network-hub circle.hub-core{ fill:var(--red); filter:drop-shadow(0 0 18px var(--red-glow)); }
+.network-hub text{ fill:var(--white); font-family:var(--font-head); font-weight:700; font-size:22px; text-anchor:middle; }
+.network-node{ cursor:pointer; }
+.network-node circle.node-core{ fill:var(--charcoal2); stroke:var(--red); stroke-width:2; transform-box:fill-box; transform-origin:center; transition:fill .3s, stroke .3s, transform .3s; }
+.network-node:hover circle.node-core{ fill:var(--red); transform:scale(1.12); }
+.network-node text{ fill:#e8e9ec; font-family:var(--font-body); font-weight:600; font-size:15px; text-anchor:middle; pointer-events:none; transition:fill .3s; }
+.network-node:hover text{ fill:var(--white); }
+.network-stats{ display:flex; justify-content:center; gap:48px; flex-wrap:wrap; margin-top:56px; position:relative; z-index:1; }
+.network-stats .nstat b{ font-family:var(--font-head); font-size:2.6rem; font-weight:700; color:var(--red-light); display:block; line-height:1; }
+.network-stats .nstat span{ font-size:.78rem; color:#9a9ba0; text-transform:uppercase; letter-spacing:.08em; }
 
 /* ══════════════════════════════════════════════════════════════
    REVEAL / SHARED KEYFRAMES — hidden only once .js confirms JS runs

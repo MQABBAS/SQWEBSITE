@@ -232,4 +232,30 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   }
+
+  /* ---- hero mouse parallax (desktop only; the glow blobs drift toward the cursor) ---- */
+  var heroParallax = document.getElementById('heroParallax');
+  if (heroParallax && hasFinePointer) {
+    var heroSection = heroParallax.closest('.hero');
+    heroSection.addEventListener('mousemove', function (e) {
+      var r = heroSection.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width - 0.5;
+      var py = (e.clientY - r.top) / r.height - 0.5;
+      heroParallax.style.transform = 'translate(' + (px * 30) + 'px,' + (py * 30) + 'px)';
+    });
+    heroSection.addEventListener('mouseleave', function () { heroParallax.style.transform = ''; });
+  }
+
+  /* ---- magnetic pull on primary buttons ---- */
+  if (hasFinePointer) {
+    document.querySelectorAll('.btn-red, .btn-white-pill').forEach(function (btn) {
+      btn.addEventListener('mousemove', function (e) {
+        var r = btn.getBoundingClientRect();
+        var mx = (e.clientX - r.left - r.width / 2) * 0.25;
+        var my = (e.clientY - r.top - r.height / 2) * 0.35;
+        btn.style.transform = 'translate(' + mx + 'px,' + (my - 2) + 'px)';
+      });
+      btn.addEventListener('mouseleave', function () { btn.style.transform = ''; });
+    });
+  }
 });
