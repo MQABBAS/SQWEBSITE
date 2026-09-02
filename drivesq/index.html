@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>document.documentElement.className+=' js';</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="DriveSQ — Manchester's highest-rated driving school. DVSA-approved instructors, 90%+ first-time pass rate, manual & automatic lessons across Didsbury, Sale, Rochdale, Eccles, Middleton, Levenshulme and all Greater Manchester areas.">
+<title>DriveSQ | Manchester Driving School — DVSA Approved, 90%+ Pass Rate</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230A0A0B'/%3E%3Ccircle cx='50' cy='50' r='36' fill='none' stroke='%23fff' stroke-width='6'/%3E%3Cline x1='50' y1='24' x2='50' y2='38' stroke='%23fff' stroke-width='6' stroke-linecap='round'/%3E%3Cline x1='68' y1='63' x2='58' y2='56' stroke='%23fff' stroke-width='6' stroke-linecap='round'/%3E%3Cline x1='32' y1='63' x2='42' y2='56' stroke='%23fff' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='50' cy='50' r='12' fill='%23fff'/%3E%3Ccircle cx='50' cy='50' r='5' fill='%23E4002B'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "DrivingSchool",
+      "@id": "https://www.drivesq.co.uk/#business",
+      "name": "DriveSQ Driving School",
+      "url": "https://www.drivesq.co.uk/",
+      "telephone": "+447352932003",
+      "priceRange": "££",
+      "areaServed": ["Manchester","Didsbury","Sale","Rochdale","Eccles","Middleton","Levenshulme"],
+      "address": { "@type": "PostalAddress", "addressLocality": "Manchester", "addressRegion": "Greater Manchester", "addressCountry": "GB" },
+      "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "137" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.drivesq.co.uk/#webpage",
+      "url": "https://www.drivesq.co.uk/",
+      "name": "DriveSQ | Manchester Driving School — DVSA Approved, 90%+ Pass Rate",
+      "about": { "@id": "https://www.drivesq.co.uk/#business" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "How quickly can I start lessons?", "acceptedAnswer": { "@type": "Answer", "text": "Most learners are matched with an instructor and on the road within 48 hours of getting in touch — sooner if you're flexible on days and times." } },
+        { "@type": "Question", "name": "Do you cover my area if it's not listed?", "acceptedAnswer": { "@type": "Answer", "text": "Very likely, yes. We cover the whole of Greater Manchester — M, SK, BL, OL and WN postcodes — even if your exact suburb isn't listed. Message us on WhatsApp to check." } },
+        { "@type": "Question", "name": "Is automatic really the same price as manual?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — completely. We don't believe learners should pay more just because automatic cars are easier to find. Every price applies to both." } },
+        { "@type": "Question", "name": "What happens if I need to cancel a lesson?", "acceptedAnswer": { "@type": "Answer", "text": "We ask for at least 48 hours' notice so your slot can be offered to another learner. Cancellations within 48 hours may be charged." } },
+        { "@type": "Question", "name": "Can you help book my theory and practical test?", "acceptedAnswer": { "@type": "Answer", "text": "Absolutely — your instructor will advise exactly when you're test-ready and can help you pick the best local test centre and time slot." } }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+
+<div class="info-bar">
+  <span><span class="dot"></span> <strong>DVSA Approved</strong> &middot; 90%+ First-Time Pass Rate</span>
+  <a href="tel:+447352932003"><i class="bi bi-telephone-fill"></i> 07352 932 003</a>
+  <span>Mon–Sun, 7am–9pm</span>
+</div>
+
+<nav class="navbar navbar-expand-lg sticky-top" id="navbar">
+  <div class="container">
+    <a href="index.html" class="navbar-brand">
+      <svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="#fff" stroke="#0A0A0B" stroke-width="4"/><circle cx="50" cy="50" r="34" fill="none" stroke="#0A0A0B" stroke-width="6"/><line x1="50" y1="38" x2="50" y2="16" stroke="#0A0A0B" stroke-width="6" stroke-linecap="round"/><line x1="60.4" y1="56" x2="79.4" y2="67" stroke="#0A0A0B" stroke-width="6" stroke-linecap="round"/><line x1="39.6" y1="56" x2="20.6" y2="67" stroke="#0A0A0B" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="50" r="12" fill="#0A0A0B"/><circle cx="50" cy="50" r="5" fill="#E4002B"/></svg>
+      <span>Drive<span class="text-red">SQ</span></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-label="Menu">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMain">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+        <li class="nav-item"><a class="nav-link" href="#courses">Courses</a></li>
+        <li class="nav-item"><a class="nav-link" href="#offers">Offers</a></li>
+        <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#areas" role="button" data-bs-toggle="dropdown" aria-expanded="false">Areas We Cover</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="areas/manchester.html">Manchester</a></li>
+            <li><a class="dropdown-item" href="areas/didsbury.html">Didsbury</a></li>
+            <li><a class="dropdown-item" href="areas/sale.html">Sale</a></li>
+            <li><a class="dropdown-item" href="areas/rochdale.html">Rochdale</a></li>
+            <li><a class="dropdown-item" href="areas/eccles.html">Eccles</a></li>
+            <li><a class="dropdown-item" href="areas/middleton.html">Middleton</a></li>
+            <li><a class="dropdown-item" href="areas/levenshulme.html">Levenshulme</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item fw-bold text-red" href="#areas">View all areas →</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#student-app" role="button" data-bs-toggle="dropdown" aria-expanded="false">Portals</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#student-app"><i class="bi bi-phone-fill me-1"></i> Student App</a></li>
+            <li><a class="dropdown-item" href="#instructor-app"><i class="bi bi-person-workspace me-1"></i> Instructor App</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="#reviews">Reviews</a></li>
+        <li class="nav-item"><a class="nav-link" href="#faq">FAQs</a></li>
+        <li class="nav-item ms-lg-2 mt-3 mt-lg-0"><a href="#book" class="btn-red">Book a Lesson</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="fab-group" id="fabGroup">
+  <a class="fab-main" href="https://wa.me/447352932003?text=Hi%20DriveSQ%2C%20I%27d%20like%20to%20book%20a%20driving%20lesson." target="_blank" rel="noopener" title="Chat on WhatsApp"><i class="bi bi-whatsapp"></i></a>
+  <button class="fab-toggle" id="fabToggle" aria-label="More contact options" type="button"><i class="bi bi-plus-lg"></i></button>
+  <div class="fab-item"><span class="fab-label">Call Us</span><a class="fab-btn call" href="tel:+447352932003" aria-label="Call"><i class="bi bi-telephone-fill"></i></a></div>
+  <div class="fab-item"><span class="fab-label">Book a Lesson</span><a class="fab-btn book" href="#book" aria-label="Book"><i class="bi bi-calendar-check"></i></a></div>
+  <div class="fab-item"><span class="fab-label">Instagram</span><a class="fab-btn social" href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a></div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="stripes"></div>
+  <div class="hero-parallax" id="heroParallax">
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+  </div>
+  <div class="container position-relative" style="z-index:2;">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-7">
+        <div class="hero-badge reveal"><span class="live-dot"></span> Manchester's #1 Rated Driving School</div>
+        <h1 class="reveal rd1">Learn to Drive.<br><span class="text-red">Pass First Time.</span></h1>
+        <p class="hero-typer reveal rd1"><span class="typer-prefix">Perfect for </span><span class="typer-word" data-words='["Nervous Beginners","Fast-Track Learners","Automatic-Only Drivers","Returning Drivers","ADHD &amp; Anxious Learners"]'></span></p>
+        <p class="hero-sub reveal rd2">DVSA-approved instructors, structured lesson plans, and a 90%+ first-time pass rate. Manual &amp; automatic lessons across Didsbury, Sale, Rochdale, Eccles, Middleton, Levenshulme and every corner of Greater Manchester.</p>
+        <div class="d-flex gap-3 flex-wrap reveal rd3">
+          <a href="#book" class="btn-red btn-lg-pill"><i class="bi bi-calendar-check"></i> Book Your First Lesson</a>
+          <a href="https://wa.me/447352932003" target="_blank" rel="noopener" class="btn-outline-dark2 btn-lg-pill" style="color:#fff;border-color:rgba(255,255,255,.4);"><i class="bi bi-whatsapp"></i> WhatsApp Us</a>
+        </div>
+        <div class="hero-stats reveal rd4">
+          <div class="hstat"><b><span data-count="90">0</span>%+</b><span>First-Time Pass Rate</span></div>
+          <div class="hstat"><b><span data-count="2500">0</span>+</b><span>Learners Taught</span></div>
+          <div class="hstat"><b><span data-count="4.9">0</span>/5</b><span>Average Rating</span></div>
+          <div class="hstat"><b><span data-count="7">0</span></b><span>Areas Covered</span></div>
+        </div>
+      </div>
+      <div class="col-lg-5 text-center reveal right">
+        <div class="lplate"><div class="lplate-ring"></div><span>L</span></div>
+        <p class="mt-4 mb-0" style="color:#9a9ba0;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;">Manual &amp; Automatic — Same Price</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker" aria-hidden="true">
+    <span><i class="bi bi-mortarboard-fill"></i> STUDENT OFFER — 10 HOURS FOR £299</span>
+    <span><i class="bi bi-patch-check-fill"></i> DVSA APPROVED INSTRUCTORS</span>
+    <span><i class="bi bi-graph-up-arrow"></i> 90%+ FIRST-TIME PASS RATE</span>
+    <span><i class="bi bi-gear-fill"></i> MANUAL &amp; AUTOMATIC — SAME PRICE</span>
+    <span><i class="bi bi-shield-check"></i> FULLY INSURED DUAL-CONTROL CARS</span>
+    <span><i class="bi bi-geo-alt-fill"></i> ALL GREATER MANCHESTER AREAS</span>
+    <span><i class="bi bi-mortarboard-fill"></i> STUDENT OFFER — 10 HOURS FOR £299</span>
+    <span><i class="bi bi-patch-check-fill"></i> DVSA APPROVED INSTRUCTORS</span>
+    <span><i class="bi bi-graph-up-arrow"></i> 90%+ FIRST-TIME PASS RATE</span>
+    <span><i class="bi bi-gear-fill"></i> MANUAL &amp; AUTOMATIC — SAME PRICE</span>
+    <span><i class="bi bi-shield-check"></i> FULLY INSURED DUAL-CONTROL CARS</span>
+    <span><i class="bi bi-geo-alt-fill"></i> ALL GREATER MANCHESTER AREAS</span>
+  </div>
+</div>
+
+<!-- OFFERS -->
+<section id="offers">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Current Offer</div>
+      <h2 class="sec-title">A Genuine Discount<br><span class="text-red">For Students</span></h2>
+      <p class="sec-body">No codes, no catches — just show a valid student ID at your first lesson.</p>
+    </div>
+    <div class="offer-card reveal">
+      <div class="offer-flag">Student Offer</div>
+      <div class="offer-icon">🎓</div>
+      <div class="offer-body">
+        <div class="offer-badge">For School, College &amp; University Students</div>
+        <h3>10 Hours of Lessons for £299</h3>
+        <p>Manual or automatic — same price, no premium either way. Available to any student with valid student ID, shown at your first lesson.</p>
+        <ul class="offer-list">
+          <li><i class="bi bi-check-circle-fill"></i> 10 x 60-minute lessons with a DVSA-approved instructor</li>
+          <li><i class="bi bi-check-circle-fill"></i> Manual &amp; automatic available at the same price</li>
+          <li><i class="bi bi-check-circle-fill"></i> Valid student ID required at your first lesson</li>
+        </ul>
+      </div>
+      <div class="offer-cta">
+        <div class="offer-price"><span>£299</span><small>10-hour block</small></div>
+        <div class="offer-save">Save £51 vs standard pricing</div>
+        <a href="#book" class="btn-red" style="width:100%;justify-content:center;">Claim Student Offer</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section class="sec-alt" id="courses">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow">What We Offer</div>
+      <h2 class="sec-title">Courses Built Around<br><span class="text-red">How You Learn</span></h2>
+      <p class="sec-body">Whether you're starting from zero or fast-tracking your test, we've got a structured course to match your pace, budget, and confidence level.</p>
+    </div>
+    <p class="reveal" style="color:var(--grey-light);font-size:.82rem;margin-bottom:24px;"><i class="bi bi-arrow-repeat"></i> Tap or hover a card to see what's included</p>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4 reveal flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front">
+            <div class="card-x-icon"><i class="bi bi-steering-wheel"></i></div>
+            <h3>Beginner Lessons</h3>
+            <p>Ground-up driving lessons for complete beginners — clutch control, junctions, roundabouts and everything else, at your own pace.</p>
+            <span class="price-tag">From £35/hr</span>
+            <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> What's included</span>
+          </div>
+          <div class="flip-card-face flip-card-back">
+            <h4>What's Included</h4>
+            <ul>
+              <li><i class="bi bi-check-circle-fill"></i> Full DVSA syllabus, taught step by step</li>
+              <li><i class="bi bi-check-circle-fill"></i> Clutch control, junctions &amp; roundabouts</li>
+              <li><i class="bi bi-check-circle-fill"></i> Door-to-door pickup, any day of the week</li>
+              <li><i class="bi bi-check-circle-fill"></i> Free theory question bank access</li>
+            </ul>
+            <div class="flip-hint"><i class="bi bi-arrow-repeat"></i> Back to overview</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 reveal rd1 flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front">
+            <div class="card-x-icon"><i class="bi bi-lightning-charge-fill"></i></div>
+            <h3>Intensive Courses</h3>
+            <p>Pass in weeks, not months. Fast-track crash courses with daily lessons, mock tests, and a test date booked in for you.</p>
+            <span class="price-tag">From £999</span>
+            <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> What's included</span>
+          </div>
+          <div class="flip-card-face flip-card-back">
+            <h4>What's Included</h4>
+            <ul>
+              <li><i class="bi bi-check-circle-fill"></i> 30+ hours over 1–2 weeks, daily lessons</li>
+              <li><i class="bi bi-check-circle-fill"></i> Practical test booked &amp; guaranteed for you</li>
+              <li><i class="bi bi-check-circle-fill"></i> 2 full mock tests on real routes</li>
+              <li><i class="bi bi-check-circle-fill"></i> Theory test coaching included</li>
+            </ul>
+            <div class="flip-hint"><i class="bi bi-arrow-repeat"></i> Back to overview</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 reveal rd2 flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front">
+            <div class="card-x-icon"><i class="bi bi-ev-station-fill"></i></div>
+            <h3>Automatic Lessons</h3>
+            <p>No clutch, no stalling. Automatic lessons at exactly the same price as manual — a faster route to your licence for many learners.</p>
+            <span class="price-tag">From £35/hr</span>
+            <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> What's included</span>
+          </div>
+          <div class="flip-card-face flip-card-back">
+            <h4>What's Included</h4>
+            <ul>
+              <li><i class="bi bi-check-circle-fill"></i> Zero premium over manual lessons</li>
+              <li><i class="bi bi-check-circle-fill"></i> Modern, dual-controlled automatic cars</li>
+              <li><i class="bi bi-check-circle-fill"></i> Ideal for a faster route to your licence</li>
+              <li><i class="bi bi-check-circle-fill"></i> Same instructors, same pass-rate focus</li>
+            </ul>
+            <div class="flip-hint"><i class="bi bi-arrow-repeat"></i> Back to overview</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 reveal flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front">
+            <div class="card-x-icon"><i class="bi bi-award-fill"></i></div>
+            <h3>Pass Plus</h3>
+            <p>Passed already? Sharpen motorway, night, and all-weather driving skills — and cut your insurance costs at the same time.</p>
+            <span class="price-tag">From £120</span>
+            <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> What's included</span>
+          </div>
+          <div class="flip-card-face flip-card-back">
+            <h4>What's Included</h4>
+            <ul>
+              <li><i class="bi bi-check-circle-fill"></i> 6 hours of structured post-test driving</li>
+              <li><i class="bi bi-check-circle-fill"></i> Motorway, night &amp; bad-weather practice</li>
+              <li><i class="bi bi-check-circle-fill"></i> Official DVSA Pass Plus certificate</li>
+              <li><i class="bi bi-check-circle-fill"></i> Can lower your insurance premium</li>
+            </ul>
+            <div class="flip-hint"><i class="bi bi-arrow-repeat"></i> Back to overview</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 reveal rd1 flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front">
+            <div class="card-x-icon"><i class="bi bi-heart-pulse-fill"></i></div>
+            <h3>Supportive Lessons</h3>
+            <p>Patient, judgement-free lessons for learners with ADHD, autism or driving anxiety — and female instructors available on request.</p>
+            <span class="price-tag">From £35/hr</span>
+            <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> What's included</span>
+          </div>
+          <div class="flip-card-face flip-card-back">
+            <h4>What's Included</h4>
+            <ul>
+              <li><i class="bi bi-check-circle-fill"></i> Instructors experienced with ADHD &amp; autism</li>
+              <li><i class="bi bi-check-circle-fill"></i> Extra time, no rushing, no judgement</li>
+              <li><i class="bi bi-check-circle-fill"></i> Female instructor available on request</li>
+              <li><i class="bi bi-check-circle-fill"></i> Same price as every other lesson type</li>
+            </ul>
+            <div class="flip-hint"><i class="bi bi-arrow-repeat"></i> Back to overview</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 reveal rd2 flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front">
+            <div class="card-x-icon"><i class="bi bi-clipboard2-check-fill"></i></div>
+            <h3>Mock Tests &amp; Theory Support</h3>
+            <p>Full mock driving tests on real routes, plus free access to our 700+ question theory bank and 14 practice mock exams.</p>
+            <span class="price-tag">Included free</span>
+            <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> What's included</span>
+          </div>
+          <div class="flip-card-face flip-card-back">
+            <h4>What's Included</h4>
+            <ul>
+              <li><i class="bi bi-check-circle-fill"></i> 700+ theory questions, free for every learner</li>
+              <li><i class="bi bi-check-circle-fill"></i> 14 full practice mock exams</li>
+              <li><i class="bi bi-check-circle-fill"></i> Mock practical tests on real DVSA routes</li>
+              <li><i class="bi bi-check-circle-fill"></i> Honest, detailed feedback after every mock</li>
+            </ul>
+            <div class="flip-hint"><i class="bi bi-arrow-repeat"></i> Back to overview</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICE CALCULATOR -->
+<section>
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-5 reveal left">
+        <div class="eyebrow">Work Out Your Cost</div>
+        <h2 class="sec-title">See Your Price<br><span class="text-red">Before You Book</span></h2>
+        <p class="sec-body">Drag the slider to your number of hours and watch the price update instantly — no other Manchester driving school shows you this upfront.</p>
+      </div>
+      <div class="col-lg-7 reveal right">
+        <div class="calc-card">
+          <div class="calc-row">
+            <div class="calc-toggle mb-4">
+              <button type="button" class="active" data-mode="standard">Standard</button>
+              <button type="button" data-mode="student">Student (ID required)</button>
+            </div>
+            <div class="calc-hours">Hours: <span id="calcHoursLabel">10 hours</span></div>
+            <input type="range" min="1" max="40" value="10" class="calc-range" id="calcHours">
+            <div class="calc-result">
+              <div>
+                <div class="calc-total" id="calcTotal">£330</div>
+                <div class="calc-perhour" id="calcPerHour">£33 / hour at 10 hours</div>
+              </div>
+              <div class="offer-save" id="calcSave" style="color:#4ade80;">Save £20 vs single-lesson pricing</div>
+            </div>
+            <a href="#book" class="btn-red w-100 justify-content-center mt-4"><i class="bi bi-calendar-check"></i> Book This Package</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY WE'RE DIFFERENT -->
+<section class="sec-dark">
+  <div class="container">
+    <div class="sec-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <div class="eyebrow">Based On Real Research</div>
+      <h2 class="sec-title">Why DriveSQ Beats<br><span class="text-red">The Average Manchester School</span></h2>
+      <p class="sec-body">We looked at what other local driving schools actually offer — here's where we do things differently.</p>
+    </div>
+    <div class="compare-wrap reveal">
+      <div class="compare-row head">
+        <div class="cc">What Matters</div>
+        <div class="cc">DriveSQ</div>
+        <div class="cc">Typical School</div>
+      </div>
+      <div class="compare-row"><div class="cc">Manual &amp; automatic same price</div><div class="cc"><i class="bi bi-check-circle-fill"></i></div><div class="cc"><i class="bi bi-x-circle"></i></div></div>
+      <div class="compare-row"><div class="cc">Only fully-qualified instructors, no trainees</div><div class="cc"><i class="bi bi-check-circle-fill"></i></div><div class="cc"><i class="bi bi-x-circle"></i></div></div>
+      <div class="compare-row"><div class="cc">Supportive lessons for ADHD, autism &amp; anxiety</div><div class="cc"><i class="bi bi-check-circle-fill"></i></div><div class="cc"><i class="bi bi-x-circle"></i></div></div>
+      <div class="compare-row"><div class="cc">Female instructor available on request</div><div class="cc"><i class="bi bi-check-circle-fill"></i></div><div class="cc"><i class="bi bi-x-circle"></i></div></div>
+      <div class="compare-row"><div class="cc">Dedicated local test-route training per area</div><div class="cc"><i class="bi bi-check-circle-fill"></i></div><div class="cc"><i class="bi bi-x-circle"></i></div></div>
+      <div class="compare-row"><div class="cc">Live price calculator, no hidden fees</div><div class="cc"><i class="bi bi-check-circle-fill"></i></div><div class="cc"><i class="bi bi-x-circle"></i></div></div>
+      <div class="compare-row"><div class="cc">Dedicated student discount</div><div class="cc"><i class="bi bi-check-circle-fill"></i></div><div class="cc"><i class="bi bi-x-circle"></i></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PATH TO LICENCE -->
+<section>
+  <div class="container">
+    <div class="sec-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <div class="eyebrow">Know Before You Start</div>
+      <h2 class="sec-title">Your Path To a<br><span class="text-red">Full UK Licence</span></h2>
+      <p class="sec-body">The official journey from provisional to full licence — and exactly where DriveSQ fits in.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-6 col-lg-4 step reveal">
+        <div class="step-num">1</div>
+        <h4>Get Your Provisional Licence</h4>
+        <p>Apply online at GOV.UK from age 15 years 9 months. You can start learning and take to the road from age 17.</p>
+      </div>
+      <div class="col-6 col-lg-4 step reveal rd1">
+        <div class="step-num">2</div>
+        <h4>Start Your Lessons</h4>
+        <p>Begin building real skills with a DVSA-approved DriveSQ instructor, on the actual roads you'll be tested on.</p>
+      </div>
+      <div class="col-6 col-lg-4 step reveal rd2">
+        <div class="step-num">3</div>
+        <h4>Pass Your Theory Test</h4>
+        <p>Multiple-choice questions plus a hazard perception test. Use our free 700+ question bank to prepare.</p>
+      </div>
+      <div class="col-6 col-lg-4 step reveal">
+        <div class="step-num">4</div>
+        <h4>Book &amp; Pass Your Practical</h4>
+        <p>We'll advise the best local test centre and timing for your ability, and run a full mock test beforehand.</p>
+      </div>
+      <div class="col-6 col-lg-4 step reveal rd1">
+        <div class="step-num">5</div>
+        <h4>Consider Pass Plus</h4>
+        <p>Sharpen motorway, night and bad-weather driving skills — and potentially lower your insurance costs.</p>
+      </div>
+      <div class="col-6 col-lg-4 step reveal rd2">
+        <div class="step-num">6</div>
+        <h4>Renew Every 10 Years</h4>
+        <p>Your full licence needs renewing well before it expires — the DVLA will remind you when it's due.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="sec-alt">
+  <div class="container">
+    <div class="sec-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <div class="eyebrow">How It Works</div>
+      <h2 class="sec-title">From First Lesson<br><span class="text-red">To Passing Your Test</span></h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-6 col-lg-3 step reveal">
+        <div class="step-num">1</div>
+        <h4>Free Intro Chat</h4>
+        <p>Message us on WhatsApp or fill in the form — we'll match you with the right instructor for your area and schedule.</p>
+      </div>
+      <div class="col-6 col-lg-3 step reveal rd1">
+        <div class="step-num">2</div>
+        <h4>Skills Assessment</h4>
+        <p>Your instructor assesses your current level and builds a lesson plan tailored to your goals and test date.</p>
+      </div>
+      <div class="col-6 col-lg-3 step reveal rd2">
+        <div class="step-num">3</div>
+        <h4>Structured Lessons</h4>
+        <p>Weekly progress tracking, real DVSA test routes, and honest feedback so every hour moves you forward.</p>
+      </div>
+      <div class="col-6 col-lg-3 step reveal rd3">
+        <div class="step-num">4</div>
+        <h4>Pass &amp; Drive Free</h4>
+        <p>Mock test when you're ready, test day support, and a Pass Plus discount waiting for you afterwards.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <div class="sec-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <div class="eyebrow">Transparent Pricing</div>
+      <h2 class="sec-title">Simple Prices.<br><span class="text-red">No Hidden Extras.</span></h2>
+      <p class="sec-body">Manual and automatic lessons are priced the same. Block-book to save, or pay as you go — it's entirely up to you.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3 reveal">
+        <div class="price-card">
+          <div class="price-name">Single Lesson</div>
+          <div class="price-amt">£35<span>/hr</span></div>
+          <div class="price-desc">Pay as you go, no commitment</div>
+          <ul class="price-feats">
+            <li><i class="bi bi-check-circle-fill"></i> 60-minute lesson</li>
+            <li><i class="bi bi-check-circle-fill"></i> Manual or automatic</li>
+            <li><i class="bi bi-check-circle-fill"></i> Door-to-door pickup</li>
+            <li><i class="bi bi-check-circle-fill"></i> Free theory access</li>
+          </ul>
+          <a href="#book" class="btn-outline-dark2 w-100 justify-content-center">Book Now</a>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 reveal rd1">
+        <div class="price-card feat">
+          <div class="price-badge">Most Popular</div>
+          <div class="price-name">10-Hour Block</div>
+          <div class="price-amt">£330<span>total</span></div>
+          <div class="price-desc">Save £20 vs pay-as-you-go</div>
+          <ul class="price-feats">
+            <li><i class="bi bi-check-circle-fill"></i> 10 x 60-min lessons</li>
+            <li><i class="bi bi-check-circle-fill"></i> Progress tracker included</li>
+            <li><i class="bi bi-check-circle-fill"></i> Priority evening slots</li>
+            <li><i class="bi bi-check-circle-fill"></i> 1 free mock test</li>
+          </ul>
+          <a href="#book" class="btn-red w-100 justify-content-center">Book Now</a>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 reveal rd2">
+        <div class="price-card feat">
+          <div class="price-badge">Fast Track</div>
+          <div class="price-name">Intensive Course</div>
+          <div class="price-amt">£999<span>from</span></div>
+          <div class="price-desc">Pass in as little as 2 weeks</div>
+          <ul class="price-feats">
+            <li><i class="bi bi-check-circle-fill"></i> 30+ hours, daily lessons</li>
+            <li><i class="bi bi-check-circle-fill"></i> Test booked &amp; guaranteed slot</li>
+            <li><i class="bi bi-check-circle-fill"></i> 2 full mock tests</li>
+            <li><i class="bi bi-check-circle-fill"></i> Theory test coaching</li>
+          </ul>
+          <a href="#book" class="btn-red w-100 justify-content-center">Book Now</a>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 reveal rd3">
+        <div class="price-card">
+          <div class="price-name">Pass Plus</div>
+          <div class="price-amt">£120<span>total</span></div>
+          <div class="price-desc">For newly-qualified drivers</div>
+          <ul class="price-feats">
+            <li><i class="bi bi-check-circle-fill"></i> 6 hours structured driving</li>
+            <li><i class="bi bi-check-circle-fill"></i> Motorway &amp; night driving</li>
+            <li><i class="bi bi-check-circle-fill"></i> Official DVSA certificate</li>
+            <li><i class="bi bi-check-circle-fill"></i> Potential insurance discount</li>
+          </ul>
+          <a href="#book" class="btn-outline-dark2 w-100 justify-content-center">Book Now</a>
+        </div>
+      </div>
+    </div>
+    <p class="text-center reveal" style="color:var(--grey);font-size:.86rem;margin-top:36px;">Prices are indicative and may vary slightly by area and instructor availability. <a href="#book" class="text-red fw-bold text-decoration-none">Get an exact quote for your postcode →</a> · In full-time education? <a href="#offers" class="text-red fw-bold text-decoration-none">See our Student Offer →</a></p>
+  </div>
+</section>
+
+<!-- AREAS + CHECKER -->
+<section class="sec-alt" id="areas">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Areas We Cover</div>
+      <h2 class="sec-title">Local Instructors,<br><span class="text-red">Right Across Manchester</span></h2>
+      <p class="sec-body">We match you with an instructor who already knows your local roads, roundabouts and test routes inside out.</p>
+    </div>
+
+    <form class="checker-box reveal mb-2" id="areaChecker">
+      <input type="text" placeholder="Type your area or postcode, e.g. &quot;Didsbury&quot; or &quot;M20&quot;" aria-label="Check your area">
+      <button type="submit" class="btn-red"><i class="bi bi-search"></i> Check Coverage</button>
+    </form>
+    <div class="checker-result" id="checkerResult"></div>
+
+    <div class="row g-4 mt-2">
+      <div class="col-6 col-lg-3 reveal"><a href="areas/manchester.html" class="area-card"><div class="a-icon">🏙️</div><h4>Manchester</h4><span>City centre &amp; all M postcodes</span><div class="go">Explore area <i class="bi bi-arrow-right"></i></div></a></div>
+      <div class="col-6 col-lg-3 reveal rd1"><a href="areas/didsbury.html" class="area-card"><div class="a-icon">🌳</div><h4>Didsbury</h4><span>M20 · West Didsbury &amp; East Didsbury</span><div class="go">Explore area <i class="bi bi-arrow-right"></i></div></a></div>
+      <div class="col-6 col-lg-3 reveal rd2"><a href="areas/sale.html" class="area-card"><div class="a-icon">🌉</div><h4>Sale</h4><span>M33 · Trafford</span><div class="go">Explore area <i class="bi bi-arrow-right"></i></div></a></div>
+      <div class="col-6 col-lg-3 reveal rd3"><a href="areas/rochdale.html" class="area-card"><div class="a-icon">⛰️</div><h4>Rochdale</h4><span>OL11–OL16</span><div class="go">Explore area <i class="bi bi-arrow-right"></i></div></a></div>
+      <div class="col-6 col-lg-3 reveal"><a href="areas/eccles.html" class="area-card"><div class="a-icon">🏭</div><h4>Eccles</h4><span>M30 · Salford</span><div class="go">Explore area <i class="bi bi-arrow-right"></i></div></a></div>
+      <div class="col-6 col-lg-3 reveal rd1"><a href="areas/middleton.html" class="area-card"><div class="a-icon">🛣️</div><h4>Middleton</h4><span>M24</span><div class="go">Explore area <i class="bi bi-arrow-right"></i></div></a></div>
+      <div class="col-6 col-lg-3 reveal rd2"><a href="areas/levenshulme.html" class="area-card"><div class="a-icon">🚦</div><h4>Levenshulme</h4><span>M19</span><div class="go">Explore area <i class="bi bi-arrow-right"></i></div></a></div>
+      <div class="col-6 col-lg-3 reveal rd3">
+        <a href="https://wa.me/447352932003?text=Hi%20DriveSQ%2C%20do%20you%20cover%20my%20area%3F" target="_blank" rel="noopener" class="area-card" style="border-style:dashed;justify-content:center;align-items:center;text-align:center;">
+          <div class="a-icon">➕</div><h4>Don't See Your Area?</h4><span>We likely cover it — just ask</span><div class="go">WhatsApp us <i class="bi bi-arrow-right"></i></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NETWORK MAP -->
+<section class="network-section">
+  <div class="stripes"></div>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <div class="container">
+    <div class="sec-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <div class="eyebrow">One Connected Network</div>
+      <h2 class="sec-title">One Instructor Network.<br><span class="text-red">Seven Areas. Zero Compromise.</span></h2>
+      <p class="sec-body">Every area below is a real, live instructor network — not a page we bolted on for search engines. Tap a point to explore it.</p>
+    </div>
+
+    <div class="network-wrap reveal">
+      <svg viewBox="0 0 600 600" role="img" aria-label="Map of DriveSQ coverage across Manchester, Didsbury, Sale, Rochdale, Eccles, Middleton and Levenshulme">
+        <g data-idx="1"><line class="network-line" x1="300" y1="300" x2="300" y2="90"/><circle class="pulse-dot" r="4"><animateMotion dur="3.4s" repeatCount="indefinite" path="M300,300 L300,90"/></circle></g>
+        <g data-idx="2"><line class="network-line" x1="300" y1="300" x2="464.2" y2="169.1"/><circle class="pulse-dot" r="4"><animateMotion dur="3.4s" repeatCount="indefinite" path="M300,300 L464.2,169.1"/></circle></g>
+        <g data-idx="3"><line class="network-line" x1="300" y1="300" x2="504.7" y2="346.7"/><circle class="pulse-dot" r="4"><animateMotion dur="3.4s" repeatCount="indefinite" path="M300,300 L504.7,346.7"/></circle></g>
+        <g data-idx="4"><line class="network-line" x1="300" y1="300" x2="391.1" y2="489.2"/><circle class="pulse-dot" r="4"><animateMotion dur="3.4s" repeatCount="indefinite" path="M300,300 L391.1,489.2"/></circle></g>
+        <g data-idx="5"><line class="network-line" x1="300" y1="300" x2="208.9" y2="489.2"/><circle class="pulse-dot" r="4"><animateMotion dur="3.4s" repeatCount="indefinite" path="M300,300 L208.9,489.2"/></circle></g>
+        <g data-idx="6"><line class="network-line" x1="300" y1="300" x2="95.3" y2="346.7"/><circle class="pulse-dot" r="4"><animateMotion dur="3.4s" repeatCount="indefinite" path="M300,300 L95.3,346.7"/></circle></g>
+        <g data-idx="7"><line class="network-line" x1="300" y1="300" x2="135.8" y2="169.1"/><circle class="pulse-dot" r="4"><animateMotion dur="3.4s" repeatCount="indefinite" path="M300,300 L135.8,169.1"/></circle></g>
+
+        <g class="network-hub">
+          <circle class="hub-ring" cx="300" cy="300" r="50"/>
+          <circle class="hub-core" cx="300" cy="300" r="42"/>
+          <text x="300" y="293" class="hub-drive">Drive</text>
+          <text x="300" y="313" class="hub-sq">SQ</text>
+        </g>
+
+        <a href="areas/manchester.html" class="network-node"><circle class="node-core" cx="300" cy="90" r="9"/><text x="300" y="68">Manchester</text></a>
+        <a href="areas/didsbury.html" class="network-node"><circle class="node-core" cx="464.2" cy="169.1" r="9"/><text x="464.2" y="147.1">Didsbury</text></a>
+        <a href="areas/sale.html" class="network-node"><circle class="node-core" cx="504.7" cy="346.7" r="9"/><text x="504.7" y="372.7">Sale</text></a>
+        <a href="areas/rochdale.html" class="network-node"><circle class="node-core" cx="391.1" cy="489.2" r="9"/><text x="391.1" y="515.2">Rochdale</text></a>
+        <a href="areas/eccles.html" class="network-node"><circle class="node-core" cx="208.9" cy="489.2" r="9"/><text x="208.9" y="515.2">Eccles</text></a>
+        <a href="areas/middleton.html" class="network-node"><circle class="node-core" cx="95.3" cy="346.7" r="9"/><text x="95.3" y="372.7">Middleton</text></a>
+        <a href="areas/levenshulme.html" class="network-node"><circle class="node-core" cx="135.8" cy="169.1" r="9"/><text x="135.8" y="147.1">Levenshulme</text></a>
+      </svg>
+    </div>
+
+    <div class="network-stats reveal">
+      <div class="nstat"><b><span data-count="90">0</span>%+</b><span>Pass Rate</span></div>
+      <div class="nstat"><b><span data-count="12">0</span></b><span>DVSA Instructors</span></div>
+      <div class="nstat"><b><span data-count="7">0</span></b><span>Connected Areas</span></div>
+      <div class="nstat"><b><span data-count="2500">0</span>+</b><span>Learners Taught</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- APPS: STUDENT + INSTRUCTOR -->
+<section id="student-app">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 reveal left order-lg-1 order-2">
+        <div class="app-eyebrow-tag"><i class="bi bi-rocket-takeoff-fill"></i> Launching Soon — Join the Waitlist</div>
+        <h2 class="sec-title">Your Lessons.<br><span class="text-red">In Your Pocket.</span></h2>
+        <p class="hero-typer" style="color:var(--grey);"><span class="typer-prefix" style="color:var(--grey);">Perfect for </span><span class="typer-word" style="color:var(--red);border-color:var(--red);" data-words='["Booking Instantly","Tracking Progress","Practising Theory Offline","Messaging Your Instructor"]'></span></p>
+        <p class="sec-body">The DriveSQ Student App puts your whole learning journey in one place — no more chasing your instructor for a slot or losing track of what you've covered.</p>
+        <ul class="app-features">
+          <li><i class="bi bi-check-circle-fill"></i> Book &amp; reschedule lessons in seconds</li>
+          <li><i class="bi bi-check-circle-fill"></i> Track your progress after every lesson</li>
+          <li><i class="bi bi-check-circle-fill"></i> 700+ theory questions &amp; 14 mock exams, offline</li>
+          <li><i class="bi bi-check-circle-fill"></i> Message your instructor directly, in-app</li>
+          <li><i class="bi bi-check-circle-fill"></i> See your live test-readiness score</li>
+        </ul>
+        <div class="app-badges">
+          <a class="app-badge" href="https://wa.me/447352932003?text=Hi%20DriveSQ%2C%20I%27d%20like%20early%20access%20to%20the%20Student%20App." target="_blank" rel="noopener"><i class="bi bi-apple"></i><span class="badge-text"><small>Download on the</small><strong>App Store</strong></span></a>
+          <a class="app-badge" href="https://wa.me/447352932003?text=Hi%20DriveSQ%2C%20I%27d%20like%20early%20access%20to%20the%20Student%20App." target="_blank" rel="noopener"><i class="bi bi-google-play"></i><span class="badge-text"><small>Get it on</small><strong>Google Play</strong></span></a>
+        </div>
+      </div>
+      <div class="col-lg-6 reveal right order-lg-2 order-1">
+        <div class="app-visual">
+          <div class="phone-glow student"></div>
+          <div class="phone-mock student">
+            <div class="notch"></div>
+            <div class="screen">
+              <i class="bi bi-steering-wheel"></i>
+              <div class="p-label">Next Lesson<br>Tomorrow, 4:00pm</div>
+              <div class="p-bar"><span style="width:68%;"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec-alt" id="instructor-app">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 reveal left">
+        <div class="app-visual">
+          <div class="phone-glow instructor"></div>
+          <div class="phone-mock instructor">
+            <div class="notch"></div>
+            <div class="screen">
+              <i class="bi bi-calendar2-week-fill"></i>
+              <div class="p-label">7 Lessons Booked<br>This Week</div>
+              <div class="p-bar"><span style="width:85%;"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 reveal right">
+        <div class="app-eyebrow-tag"><i class="bi bi-rocket-takeoff-fill"></i> For DVSA Instructors</div>
+        <h2 class="sec-title">Run Your Diary<br><span class="text-red">Like A Pro.</span></h2>
+        <p class="hero-typer" style="color:var(--grey);"><span class="typer-prefix" style="color:var(--grey);">Built for </span><span class="typer-word" style="color:var(--red);border-color:var(--red);" data-words='["Busy Instructors","Growing Your Business","Managing Your Diary","Getting Paid Faster"]'></span></p>
+        <p class="sec-body">The DriveSQ Instructor App handles the admin so you can focus on teaching — diary, payments and new learners, all in one place.</p>
+        <ul class="app-features">
+          <li><i class="bi bi-check-circle-fill"></i> Manage your weekly diary in one tap</li>
+          <li><i class="bi bi-check-circle-fill"></i> Get matched with learners in your area</li>
+          <li><i class="bi bi-check-circle-fill"></i> Track earnings &amp; get paid faster</li>
+          <li><i class="bi bi-check-circle-fill"></i> Built-in lesson plans &amp; progress notes</li>
+          <li><i class="bi bi-check-circle-fill"></i> Grow your own client base with DriveSQ leads</li>
+        </ul>
+        <div class="app-badges">
+          <a class="app-badge" href="https://wa.me/447352932003?text=Hi%20DriveSQ%2C%20I%27m%20a%20driving%20instructor%20interested%20in%20joining%20the%20network." target="_blank" rel="noopener"><i class="bi bi-apple"></i><span class="badge-text"><small>Download on the</small><strong>App Store</strong></span></a>
+          <a class="app-badge" href="https://wa.me/447352932003?text=Hi%20DriveSQ%2C%20I%27m%20a%20driving%20instructor%20interested%20in%20joining%20the%20network." target="_blank" rel="noopener"><i class="bi bi-google-play"></i><span class="badge-text"><small>Get it on</small><strong>Google Play</strong></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT / WHY US -->
+<section id="about">
+  <div class="container">
+    <div class="row align-items-start g-5">
+      <div class="col-lg-6 reveal left">
+        <div class="eyebrow">Why Learners Choose Us</div>
+        <h2 class="sec-title">A Driving School Built<br><span class="text-red">Around Passing, Safely</span></h2>
+        <p class="sec-body mb-4">DriveSQ was founded to fix what's broken about learning to drive in Manchester — cancelled lessons, impatient instructors, and confusing pricing. Every DriveSQ instructor holds a full DVSA green badge, drives a modern dual-controlled car, and follows the same structured, judgement-free method.</p>
+        <div class="row g-4">
+          <div class="col-sm-6 d-flex gap-3"><div class="card-x-icon" style="width:50px;height:50px;font-size:1.2rem;flex-shrink:0;">🏆</div><div><h4 class="fw-bold mb-1" style="font-size:1rem;">90%+ Pass Rate</h4><p class="mb-0" style="color:var(--grey);font-size:.88rem;line-height:1.7;">Well above the national average, thanks to structured, test-focused lesson plans.</p></div></div>
+          <div class="col-sm-6 d-flex gap-3"><div class="card-x-icon" style="width:50px;height:50px;font-size:1.2rem;flex-shrink:0;">🚗</div><div><h4 class="fw-bold mb-1" style="font-size:1rem;">No Trainee Instructors</h4><p class="mb-0" style="color:var(--grey);font-size:.88rem;line-height:1.7;">Every instructor is fully qualified — you're never someone's practice run.</p></div></div>
+          <div class="col-sm-6 d-flex gap-3"><div class="card-x-icon" style="width:50px;height:50px;font-size:1.2rem;flex-shrink:0;">💷</div><div><h4 class="fw-bold mb-1" style="font-size:1rem;">One Fair Price</h4><p class="mb-0" style="color:var(--grey);font-size:.88rem;line-height:1.7;">Manual and automatic cost the same — no confusing surcharges.</p></div></div>
+          <div class="col-sm-6 d-flex gap-3"><div class="card-x-icon" style="width:50px;height:50px;font-size:1.2rem;flex-shrink:0;">📍</div><div><h4 class="fw-bold mb-1" style="font-size:1rem;">Local Route Knowledge</h4><p class="mb-0" style="color:var(--grey);font-size:.88rem;line-height:1.7;">Instructors who train specifically on your nearest test centre's real routes.</p></div></div>
+        </div>
+      </div>
+      <div class="col-lg-6 reveal right">
+        <div class="local-panel">
+          <h3><i class="bi bi-graph-up-arrow text-red"></i> Trusted Across Manchester</h3>
+          <div class="local-row"><i class="bi bi-check-circle-fill"></i><div><b><span data-count="2500">0</span>+ learners taught</b><span>Since launch</span></div></div>
+          <div class="local-row"><i class="bi bi-check-circle-fill"></i><div><b><span data-count="12">0</span> DVSA-approved instructors</b><span>All fully qualified, green badge</span></div></div>
+          <div class="local-row"><i class="bi bi-check-circle-fill"></i><div><b><span data-count="7">0</span> Greater Manchester areas</b><span>Covered with local instructors</span></div></div>
+          <div class="local-row"><i class="bi bi-check-circle-fill"></i><div><b><span data-count="4.9">0</span>/5 average rating</b><span>From real learner reviews</span></div></div>
+          <a href="#book" class="btn-red w-100 justify-content-center mt-4">Start Learning Today</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="sec-alt" id="reviews">
+  <div class="container">
+    <div class="sec-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <div class="eyebrow">What Learners Say</div>
+      <h2 class="sec-title">Real Passes.<br><span class="text-red">Real Learners.</span></h2>
+    </div>
+    <div id="testiCarousel" class="carousel slide reveal" data-bs-ride="carousel" data-bs-interval="5500" style="padding-bottom:70px;">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="row g-4">
+            <div class="col-md-4"><div class="testi"><div class="stars">★★★★★</div><p>"Passed first time at West Didsbury! My instructor knew exactly which roads examiners use and drilled them with me every lesson."</p><div class="who"><div class="av">SM</div><div><b>Sarah M.</b><span>Didsbury</span></div></div></div></div>
+            <div class="col-md-4"><div class="testi"><div class="stars">★★★★★</div><p>"Booked the intensive course and passed within three weeks. Genuinely didn't think it was possible — brilliant instructor, zero stress."</p><div class="who"><div class="av">JO</div><div><b>James O.</b><span>Sale</span></div></div></div></div>
+            <div class="col-md-4"><div class="testi"><div class="stars">★★★★★</div><p>"I'd failed twice with another school. DriveSQ rebuilt my confidence completely and I passed with only 2 minors."</p><div class="who"><div class="av">AK</div><div><b>Aisha K.</b><span>Rochdale</span></div></div></div></div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="row g-4">
+            <div class="col-md-4"><div class="testi"><div class="stars">★★★★★</div><p>"Automatic lessons at the same price as manual made the decision easy. Patient instructor, always on time."</p><div class="who"><div class="av">TR</div><div><b>Tom R.</b><span>Eccles</span></div></div></div></div>
+            <div class="col-md-4"><div class="testi"><div class="stars">★★★★★</div><p>"The free theory question bank alone was worth it. Passed theory and practical in the same month."</p><div class="who"><div class="av">PS</div><div><b>Priya S.</b><span>Middleton</span></div></div></div></div>
+            <div class="col-md-4"><div class="testi"><div class="stars">★★★★★</div><p>"Friendly, punctual, and genuinely invested in me passing. Couldn't recommend DriveSQ enough to anyone in Levenshulme."</p><div class="who"><div class="av">CB</div><div><b>Connor B.</b><span>Levenshulme</span></div></div></div></div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#testiCarousel" data-bs-slide="prev"><i class="bi bi-arrow-left text-white"></i></button>
+      <button class="carousel-control-next" type="button" data-bs-target="#testiCarousel" data-bs-slide="next"><i class="bi bi-arrow-right text-white"></i></button>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Questions, Answered</div>
+      <h2 class="sec-title">Frequently Asked<br><span class="text-red">Questions</span></h2>
+    </div>
+    <div class="accordion reveal" id="faqAccordion" style="max-width:820px;">
+      <div class="accordion-item">
+        <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">How quickly can I start lessons?</button></h3>
+        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion"><div class="accordion-body">Most learners are matched with an instructor and on the road within 48 hours of getting in touch — sooner if you're flexible on days and times.</div></div>
+      </div>
+      <div class="accordion-item">
+        <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">Do you cover my area if it's not listed?</button></h3>
+        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Very likely, yes. We cover the whole of Greater Manchester — M, SK, BL, OL and WN postcodes — even if your exact suburb isn't listed above. Try the area checker above or message us on WhatsApp.</div></div>
+      </div>
+      <div class="accordion-item">
+        <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">Is automatic really the same price as manual?</button></h3>
+        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Yes — completely. We don't believe learners should pay more just because automatic cars are easier to find. Every price on this page applies to both.</div></div>
+      </div>
+      <div class="accordion-item">
+        <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">What happens if I need to cancel a lesson?</button></h3>
+        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">We ask for at least 48 hours' notice so your slot can be offered to another learner. Cancellations within 48 hours may be charged — full details are confirmed when you book.</div></div>
+      </div>
+      <div class="accordion-item">
+        <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">Can you help book my theory and practical test?</button></h3>
+        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Absolutely — your instructor will advise exactly when you're test-ready and can help you pick the best local test centre and time slot for the strongest pass chances.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+  <div class="container">
+    <h2>Ready to Get Started?</h2>
+    <p>Message us today and we'll match you with a DVSA-approved instructor in your area within 48 hours.</p>
+    <div class="d-flex gap-3 justify-content-center flex-wrap">
+      <a href="#book" class="btn-white-pill"><i class="bi bi-calendar-check"></i> Book Your First Lesson</a>
+      <a href="https://wa.me/447352932003" target="_blank" rel="noopener" class="btn-white-pill"><i class="bi bi-whatsapp" style="color:#25D366;"></i> WhatsApp Us Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING / CONTACT -->
+<section id="book">
+  <div class="container">
+    <div class="row align-items-start g-5">
+      <div class="col-lg-7 reveal left">
+        <div class="eyebrow">Book Your First Lesson</div>
+        <h2 class="sec-title">Let's Get You<br><span class="text-red">On The Road</span></h2>
+        <p class="sec-body mb-4">Tell us a little about yourself and we'll reply within a few hours with your instructor's availability.</p>
+        <form onsubmit="return false;" class="row g-3">
+          <div class="col-sm-6">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-control" placeholder="Your name" required>
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" placeholder="07..." required>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Your Area</label>
+            <select class="form-select" required>
+              <option value="">Select your area</option>
+              <option>Manchester</option><option>Didsbury</option><option>Sale</option>
+              <option>Rochdale</option><option>Eccles</option><option>Middleton</option>
+              <option>Levenshulme</option><option>Other Greater Manchester area</option>
+            </select>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Message (optional)</label>
+            <textarea rows="3" class="form-control" placeholder="e.g. complete beginner, need automatic, hoping to pass by June..."></textarea>
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn-red w-100 justify-content-center">Send Enquiry <i class="bi bi-arrow-right"></i></button>
+          </div>
+          <p class="text-center mb-0" style="font-size:.8rem;color:var(--grey);">Prefer WhatsApp? <a href="https://wa.me/447352932003" target="_blank" rel="noopener" class="text-red fw-bold text-decoration-none">Message us directly →</a></p>
+        </form>
+      </div>
+      <div class="col-lg-5 reveal right">
+        <div class="local-panel mb-4">
+          <h3><i class="bi bi-telephone-fill text-red"></i> Get In Touch</h3>
+          <div class="local-row"><i class="bi bi-whatsapp"></i><div><b>WhatsApp / Call</b><span><a href="tel:+447352932003" style="color:#b8b9bd;">07352 932 003</a></span></div></div>
+          <div class="local-row"><i class="bi bi-clock-fill"></i><div><b>Opening Hours</b><span>Mon–Sun, 7:00am – 9:00pm</span></div></div>
+          <div class="local-row"><i class="bi bi-geo-alt-fill"></i><div><b>Coverage</b><span>All Greater Manchester — M, SK, BL, OL &amp; WN postcodes</span></div></div>
+          <div class="local-row"><i class="bi bi-patch-check-fill"></i><div><b>Approved By</b><span>DVSA (Driver &amp; Vehicle Standards Agency)</span></div></div>
+        </div>
+        <div class="p-4 rounded-4 border text-center">
+          <div class="fw-bold mb-1">This Is a Template Demo</div>
+          <div class="mb-3" style="color:var(--grey);font-size:.8rem;">Built by SQ Website</div>
+          <p style="color:var(--grey);font-size:.88rem;line-height:1.8;">This multi-page driving school template — including a dedicated landing page for every area — was designed and built by <strong class="text-red">Mohammed Qaim Abbas</strong> at SQ Website. Want a site like this for your own business?</p>
+          <a href="../index.html#booking" class="btn-outline-dark2 w-100 justify-content-center mt-2">Get Your Own Website →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="row g-5 mb-5">
+      <div class="col-lg-4">
+        <a href="index.html" class="navbar-brand d-inline-flex mb-3" style="color:#fff !important;"><svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="#fff" stroke="#0A0A0B" stroke-width="4"/><circle cx="50" cy="50" r="34" fill="none" stroke="#0A0A0B" stroke-width="6"/><line x1="50" y1="38" x2="50" y2="16" stroke="#0A0A0B" stroke-width="6" stroke-linecap="round"/><line x1="60.4" y1="56" x2="79.4" y2="67" stroke="#0A0A0B" stroke-width="6" stroke-linecap="round"/><line x1="39.6" y1="56" x2="20.6" y2="67" stroke="#0A0A0B" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="50" r="12" fill="#0A0A0B"/><circle cx="50" cy="50" r="5" fill="#E4002B"/></svg><span>Drive<span class="text-red">SQ</span></span></a>
+        <p style="color:#b8b9bd;font-size:.9rem;line-height:1.8;max-width:320px;">Manchester's DVSA-approved driving school. Manual &amp; automatic lessons, intensive courses, and Pass Plus — across every area of Greater Manchester.</p>
+        <div class="f-social">
+          <a href="https://wa.me/447352932003" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+          <a href="tel:+447352932003" aria-label="Call"><i class="bi bi-telephone-fill"></i></a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2">
+        <div class="f-head">Explore</div>
+        <a href="#courses" class="f-link">Courses</a>
+        <a href="#offers" class="f-link">Offers</a>
+        <a href="#student-app" class="f-link">Student App</a>
+        <a href="#instructor-app" class="f-link">Instructor App</a>
+        <a href="#pricing" class="f-link">Pricing</a>
+        <a href="#reviews" class="f-link">Reviews</a>
+        <a href="#faq" class="f-link">FAQs</a>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="f-head">Areas We Cover</div>
+        <a href="areas/manchester.html" class="f-link">Manchester</a>
+        <a href="areas/didsbury.html" class="f-link">Didsbury</a>
+        <a href="areas/sale.html" class="f-link">Sale</a>
+        <a href="areas/rochdale.html" class="f-link">Rochdale</a>
+        <a href="areas/eccles.html" class="f-link">Eccles</a>
+        <a href="areas/middleton.html" class="f-link">Middleton</a>
+        <a href="areas/levenshulme.html" class="f-link">Levenshulme</a>
+      </div>
+      <div class="col-lg-3">
+        <div class="f-head">Get In Touch</div>
+        <a href="tel:+447352932003" class="f-link"><i class="bi bi-telephone-fill"></i> 07352 932 003</a>
+        <a href="https://wa.me/447352932003" target="_blank" rel="noopener" class="f-link"><i class="bi bi-whatsapp"></i> WhatsApp Us</a>
+        <span class="f-link"><i class="bi bi-geo-alt-fill"></i> Greater Manchester, UK</span>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <p>© <span class="js-year">2026</span> DriveSQ Driving School. This page is a design template &amp; demo.</p>
+      <p>Designed &amp; built by <a href="../index.html">SQ Website</a> — Manchester Web Design</p>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-cta-bar">
+  <a href="tel:+447352932003" class="call"><i class="bi bi-telephone-fill"></i> Call</a>
+  <a href="#book" class="book"><i class="bi bi-calendar-check"></i> Book Now</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/main.js"></script>
+</body>
+</html>
