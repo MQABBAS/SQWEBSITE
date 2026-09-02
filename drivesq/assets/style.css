@@ -24,6 +24,7 @@
   --maxw:        1280px;
   --font-head:   'Space Grotesk', sans-serif;
   --font-body:   'Inter', sans-serif;
+  --font-logo:   'Anton', sans-serif;
 }
 
 *,*::before,*::after{ box-sizing:border-box; }
@@ -67,7 +68,7 @@ a{ color:inherit; }
 ═══════════════════════════════════════════════════════════════ */
 .navbar{ padding:18px 0; transition:padding .3s, box-shadow .3s; background:var(--white); }
 .navbar.scrolled{ padding:10px 0; box-shadow:0 6px 30px rgba(0,0,0,.08); }
-.navbar-brand{ font-family:var(--font-head); font-size:1.8rem; font-weight:700; display:inline-flex; align-items:center; gap:10px; color:var(--black) !important; }
+.navbar-brand{ font-family:var(--font-logo); font-size:1.9rem; font-weight:400; letter-spacing:.01em; text-transform:none; display:inline-flex; align-items:center; gap:10px; color:var(--black) !important; }
 .brand-mark{
   width:46px; height:46px; border-radius:50%; object-fit:contain; flex-shrink:0;
   box-shadow:0 4px 14px rgba(0,0,0,.18);
@@ -510,8 +511,10 @@ footer{ background:var(--black); color:#b8b9bd; padding:80px 0 34px; }
 @keyframes dotTravel{ 0%{ opacity:0; } 3%{ opacity:1; } 92%{ opacity:1; } 100%{ opacity:0; } }
 .network-hub circle.hub-ring{ fill:none; stroke:rgba(228,0,43,.5); stroke-width:1.5; animation:hubPing 2.6s ease-out infinite; transform-origin:300px 300px; }
 @keyframes hubPing{ 0%{ r:50; opacity:.9; } 100%{ r:100; opacity:0; } }
-.network-hub circle.hub-core{ fill:var(--red); filter:drop-shadow(0 0 18px var(--red-glow)); }
-.network-hub text{ fill:var(--white); font-family:var(--font-head); font-weight:700; font-size:22px; text-anchor:middle; }
+.network-hub circle.hub-core{ fill:var(--black); stroke:var(--red); stroke-width:2.5; filter:drop-shadow(0 0 18px var(--red-glow)); }
+.network-hub text{ font-family:var(--font-logo); font-weight:400; text-anchor:middle; }
+.network-hub .hub-drive{ fill:var(--white); font-size:16px; }
+.network-hub .hub-sq{ fill:var(--red-light); font-size:19px; }
 .network-node{ cursor:pointer; }
 .network-node circle.node-core{ fill:var(--charcoal2); stroke:var(--red); stroke-width:2; transform-box:fill-box; transform-origin:center; transition:fill .3s, stroke .3s, transform .3s; }
 .network-node:hover circle.node-core{ fill:var(--red); transform:scale(1.12); }
