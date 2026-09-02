@@ -191,4 +191,45 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ---- footer year ---- */
   document.querySelectorAll('.js-year').forEach(function (el) { el.textContent = new Date().getFullYear(); });
+
+  /* ---- hero typewriter (cycles through a word list held in data-words) ---- */
+  document.querySelectorAll('.typer-word').forEach(function (el) {
+    var words;
+    try { words = JSON.parse(el.getAttribute('data-words') || '[]'); } catch (e) { words = []; }
+    if (!words.length) return;
+    var wi = 0, ci = 0, deleting = false;
+    function tick() {
+      var word = words[wi];
+      ci += deleting ? -1 : 1;
+      el.textContent = word.slice(0, ci);
+      var delay = deleting ? 40 : 80;
+      if (!deleting && ci === word.length) { delay = 1400; deleting = true; }
+      else if (deleting && ci === 0) { deleting = false; wi = (wi + 1) % words.length; delay = 300; }
+      setTimeout(tick, delay);
+    }
+    tick();
+  });
+
+  /* ---- flip cards: tap-to-flip on touch devices (hover handles desktop) ---- */
+  var isTouch = window.matchMedia && window.matchMedia('(hover: none)').matches;
+  if (isTouch) {
+    document.querySelectorAll('.flip-card').forEach(function (card) {
+      card.addEventListener('click', function () { card.classList.toggle('flipped'); });
+    });
+  }
+
+  /* ---- floating action button group ---- */
+  var fabGroup = document.getElementById('fabGroup');
+  var fabToggle = document.getElementById('fabToggle');
+  if (fabGroup && fabToggle) {
+    fabToggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      fabGroup.classList.toggle('open');
+    });
+    document.addEventListener('click', function (e) {
+      if (fabGroup.classList.contains('open') && !fabGroup.contains(e.target)) {
+        fabGroup.classList.remove('open');
+      }
+    });
+  }
 });

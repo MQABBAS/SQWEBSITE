@@ -94,7 +94,13 @@
   </div>
 </nav>
 
-<a class="wa-float" href="https://wa.me/447352932003?text=Hi%20DriveSQ%2C%20I%27d%20like%20to%20book%20a%20driving%20lesson." target="_blank" rel="noopener" title="Chat on WhatsApp"><i class="bi bi-whatsapp"></i></a>
+<div class="fab-group" id="fabGroup">
+  <a class="fab-main" href="https://wa.me/447352932003?text=Hi%20DriveSQ%2C%20I%27d%20like%20to%20book%20a%20driving%20lesson." target="_blank" rel="noopener" title="Chat on WhatsApp"><i class="bi bi-whatsapp"></i></a>
+  <button class="fab-toggle" id="fabToggle" aria-label="More contact options" type="button"><i class="bi bi-plus-lg"></i></button>
+  <div class="fab-item"><span class="fab-label">Call Us</span><a class="fab-btn call" href="tel:+447352932003" aria-label="Call"><i class="bi bi-telephone-fill"></i></a></div>
+  <div class="fab-item"><span class="fab-label">Book a Lesson</span><a class="fab-btn book" href="#book" aria-label="Book"><i class="bi bi-calendar-check"></i></a></div>
+  <div class="fab-item"><span class="fab-label">Instagram</span><a class="fab-btn social" href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a></div>
+</div>
 
 <!-- HERO -->
 <section class="hero" id="home">
@@ -106,6 +112,7 @@
       <div class="col-lg-7">
         <div class="hero-badge reveal"><span class="live-dot"></span> Manchester's #1 Rated Driving School</div>
         <h1 class="reveal rd1">Learn to Drive.<br><span class="text-red">Pass First Time.</span></h1>
+        <p class="hero-typer reveal rd1"><span class="typer-prefix">Perfect for </span><span class="typer-word" data-words='["Nervous Beginners","Fast-Track Learners","Automatic-Only Drivers","Returning Drivers","ADHD &amp; Anxious Learners"]'></span></p>
         <p class="hero-sub reveal rd2">DVSA-approved instructors, structured lesson plans, and a 90%+ first-time pass rate. Manual &amp; automatic lessons across Didsbury, Sale, Rochdale, Eccles, Middleton, Levenshulme and every corner of Greater Manchester.</p>
         <div class="d-flex gap-3 flex-wrap reveal rd3">
           <a href="#book" class="btn-red btn-lg-pill"><i class="bi bi-calendar-check"></i> Book Your First Lesson</a>
@@ -182,53 +189,132 @@
       <h2 class="sec-title">Courses Built Around<br><span class="text-red">How You Learn</span></h2>
       <p class="sec-body">Whether you're starting from zero or fast-tracking your test, we've got a structured course to match your pace, budget, and confidence level.</p>
     </div>
+    <p class="reveal" style="color:var(--grey-light);font-size:.82rem;margin-bottom:24px;"><i class="bi bi-arrow-repeat"></i> Tap or hover a card to see what's included</p>
     <div class="row g-4">
-      <div class="col-md-6 col-lg-4 reveal">
-        <div class="card-x">
-          <div class="card-x-icon"><i class="bi bi-steering-wheel"></i></div>
-          <h3>Beginner Lessons</h3>
-          <p>Ground-up driving lessons for complete beginners — clutch control, junctions, roundabouts and everything else, at your own pace.</p>
-          <span class="price-tag">From £35/hr</span>
+      <div class="col-md-6 col-lg-4 reveal flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front">
+            <div class="card-x-icon"><i class="bi bi-steering-wheel"></i></div>
+            <h3>Beginner Lessons</h3>
+            <p>Ground-up driving lessons for complete beginners — clutch control, junctions, roundabouts and everything else, at your own pace.</p>
+            <span class="price-tag">From £35/hr</span>
+            <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> What's included</span>
+          </div>
+          <div class="flip-card-face flip-card-back">
+            <h4>What's Included</h4>
+            <ul>
+              <li><i class="bi bi-check-circle-fill"></i> Full DVSA syllabus, taught step by step</li>
+              <li><i class="bi bi-check-circle-fill"></i> Clutch control, junctions &amp; roundabouts</li>
+              <li><i class="bi bi-check-circle-fill"></i> Door-to-door pickup, any day of the week</li>
+              <li><i class="bi bi-check-circle-fill"></i> Free theory question bank access</li>
+            </ul>
+            <div class="flip-hint"><i class="bi bi-arrow-repeat"></i> Back to overview</div>
+          </div>
         </div>
       </div>
-      <div class="col-md-6 col-lg-4 reveal rd1">
-        <div class="card-x">
-          <div class="card-x-icon"><i class="bi bi-lightning-charge-fill"></i></div>
-          <h3>Intensive Courses</h3>
-          <p>Pass in weeks, not months. Fast-track crash courses with daily lessons, mock tests, and a test date booked in for you.</p>
-          <span class="price-tag">From £999</span>
+      <div class="col-md-6 col-lg-4 reveal rd1 flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front">
+            <div class="card-x-icon"><i class="bi bi-lightning-charge-fill"></i></div>
+            <h3>Intensive Courses</h3>
+            <p>Pass in weeks, not months. Fast-track crash courses with daily lessons, mock tests, and a test date booked in for you.</p>
+            <span class="price-tag">From £999</span>
+            <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> What's included</span>
+          </div>
+          <div class="flip-card-face flip-card-back">
+            <h4>What's Included</h4>
+            <ul>
+              <li><i class="bi bi-check-circle-fill"></i> 30+ hours over 1–2 weeks, daily lessons</li>
+              <li><i class="bi bi-check-circle-fill"></i> Practical test booked &amp; guaranteed for you</li>
+              <li><i class="bi bi-check-circle-fill"></i> 2 full mock tests on real routes</li>
+              <li><i class="bi bi-check-circle-fill"></i> Theory test coaching included</li>
+            </ul>
+            <div class="flip-hint"><i class="bi bi-arrow-repeat"></i> Back to overview</div>
+          </div>
         </div>
       </div>
-      <div class="col-md-6 col-lg-4 reveal rd2">
-        <div class="card-x">
-          <div class="card-x-icon"><i class="bi bi-ev-station-fill"></i></div>
-          <h3>Automatic Lessons</h3>
-          <p>No clutch, no stalling. Automatic lessons at exactly the same price as manual — a faster route to your licence for many learners.</p>
-          <span class="price-tag">From £35/hr</span>
+      <div class="col-md-6 col-lg-4 reveal rd2 flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front">
+            <div class="card-x-icon"><i class="bi bi-ev-station-fill"></i></div>
+            <h3>Automatic Lessons</h3>
+            <p>No clutch, no stalling. Automatic lessons at exactly the same price as manual — a faster route to your licence for many learners.</p>
+            <span class="price-tag">From £35/hr</span>
+            <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> What's included</span>
+          </div>
+          <div class="flip-card-face flip-card-back">
+            <h4>What's Included</h4>
+            <ul>
+              <li><i class="bi bi-check-circle-fill"></i> Zero premium over manual lessons</li>
+              <li><i class="bi bi-check-circle-fill"></i> Modern, dual-controlled automatic cars</li>
+              <li><i class="bi bi-check-circle-fill"></i> Ideal for a faster route to your licence</li>
+              <li><i class="bi bi-check-circle-fill"></i> Same instructors, same pass-rate focus</li>
+            </ul>
+            <div class="flip-hint"><i class="bi bi-arrow-repeat"></i> Back to overview</div>
+          </div>
         </div>
       </div>
-      <div class="col-md-6 col-lg-4 reveal">
-        <div class="card-x">
-          <div class="card-x-icon"><i class="bi bi-award-fill"></i></div>
-          <h3>Pass Plus</h3>
-          <p>Passed already? Sharpen motorway, night, and all-weather driving skills — and cut your insurance costs at the same time.</p>
-          <span class="price-tag">From £120</span>
+      <div class="col-md-6 col-lg-4 reveal flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front">
+            <div class="card-x-icon"><i class="bi bi-award-fill"></i></div>
+            <h3>Pass Plus</h3>
+            <p>Passed already? Sharpen motorway, night, and all-weather driving skills — and cut your insurance costs at the same time.</p>
+            <span class="price-tag">From £120</span>
+            <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> What's included</span>
+          </div>
+          <div class="flip-card-face flip-card-back">
+            <h4>What's Included</h4>
+            <ul>
+              <li><i class="bi bi-check-circle-fill"></i> 6 hours of structured post-test driving</li>
+              <li><i class="bi bi-check-circle-fill"></i> Motorway, night &amp; bad-weather practice</li>
+              <li><i class="bi bi-check-circle-fill"></i> Official DVSA Pass Plus certificate</li>
+              <li><i class="bi bi-check-circle-fill"></i> Can lower your insurance premium</li>
+            </ul>
+            <div class="flip-hint"><i class="bi bi-arrow-repeat"></i> Back to overview</div>
+          </div>
         </div>
       </div>
-      <div class="col-md-6 col-lg-4 reveal rd1">
-        <div class="card-x">
-          <div class="card-x-icon"><i class="bi bi-heart-pulse-fill"></i></div>
-          <h3>Supportive Lessons</h3>
-          <p>Patient, judgement-free lessons for learners with ADHD, autism or driving anxiety — and female instructors available on request.</p>
-          <span class="price-tag">From £35/hr</span>
+      <div class="col-md-6 col-lg-4 reveal rd1 flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front">
+            <div class="card-x-icon"><i class="bi bi-heart-pulse-fill"></i></div>
+            <h3>Supportive Lessons</h3>
+            <p>Patient, judgement-free lessons for learners with ADHD, autism or driving anxiety — and female instructors available on request.</p>
+            <span class="price-tag">From £35/hr</span>
+            <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> What's included</span>
+          </div>
+          <div class="flip-card-face flip-card-back">
+            <h4>What's Included</h4>
+            <ul>
+              <li><i class="bi bi-check-circle-fill"></i> Instructors experienced with ADHD &amp; autism</li>
+              <li><i class="bi bi-check-circle-fill"></i> Extra time, no rushing, no judgement</li>
+              <li><i class="bi bi-check-circle-fill"></i> Female instructor available on request</li>
+              <li><i class="bi bi-check-circle-fill"></i> Same price as every other lesson type</li>
+            </ul>
+            <div class="flip-hint"><i class="bi bi-arrow-repeat"></i> Back to overview</div>
+          </div>
         </div>
       </div>
-      <div class="col-md-6 col-lg-4 reveal rd2">
-        <div class="card-x">
-          <div class="card-x-icon"><i class="bi bi-clipboard2-check-fill"></i></div>
-          <h3>Mock Tests &amp; Theory Support</h3>
-          <p>Full mock driving tests on real routes, plus free access to our 700+ question theory bank and 14 practice mock exams.</p>
-          <span class="price-tag">Included free</span>
+      <div class="col-md-6 col-lg-4 reveal rd2 flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front">
+            <div class="card-x-icon"><i class="bi bi-clipboard2-check-fill"></i></div>
+            <h3>Mock Tests &amp; Theory Support</h3>
+            <p>Full mock driving tests on real routes, plus free access to our 700+ question theory bank and 14 practice mock exams.</p>
+            <span class="price-tag">Included free</span>
+            <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> What's included</span>
+          </div>
+          <div class="flip-card-face flip-card-back">
+            <h4>What's Included</h4>
+            <ul>
+              <li><i class="bi bi-check-circle-fill"></i> 700+ theory questions, free for every learner</li>
+              <li><i class="bi bi-check-circle-fill"></i> 14 full practice mock exams</li>
+              <li><i class="bi bi-check-circle-fill"></i> Mock practical tests on real DVSA routes</li>
+              <li><i class="bi bi-check-circle-fill"></i> Honest, detailed feedback after every mock</li>
+            </ul>
+            <div class="flip-hint"><i class="bi bi-arrow-repeat"></i> Back to overview</div>
+          </div>
         </div>
       </div>
     </div>

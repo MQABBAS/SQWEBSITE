@@ -131,7 +131,11 @@ a{ color:inherit; }
 .live-dot{ width:8px; height:8px; background:#33d17a; border-radius:50%; box-shadow:0 0 10px #33d17a; animation:livePulse 1.8s ease-in-out infinite; }
 @keyframes livePulse{ 0%,100%{ transform:scale(1); opacity:1; } 50%{ transform:scale(1.7); opacity:.5; } }
 
-.hero h1{ font-size:clamp(2.9rem,6vw,5.2rem); font-weight:700; line-height:1.03; margin-bottom:24px; }
+.hero h1{ font-size:clamp(2.9rem,6vw,5.2rem); font-weight:700; line-height:1.03; margin-bottom:18px; }
+.hero-typer{ font-size:1.15rem; color:#c7c8cd; margin-bottom:22px; font-family:var(--font-head); }
+.hero-typer .typer-prefix{ color:#9a9ba0; font-family:var(--font-body); }
+.hero-typer .typer-word{ color:var(--red-light); font-weight:600; border-right:2px solid var(--red-light); padding-right:3px; animation:cursorBlink .8s step-end infinite; }
+@keyframes cursorBlink{ 0%,100%{ border-color:var(--red-light); } 50%{ border-color:transparent; } }
 .hero-sub{ font-size:1.18rem; color:#c7c8cd; max-width:540px; margin-bottom:36px; line-height:1.7; }
 .hero-stats{ display:flex; gap:38px; flex-wrap:wrap; margin-top:10px; }
 .hstat b{ font-family:var(--font-head); font-size:2.2rem; display:block; color:var(--white); line-height:1; }
@@ -204,6 +208,31 @@ section{ padding:110px 0; position:relative; }
 .card-x h3{ font-size:1.2rem; font-weight:700; margin-bottom:10px; }
 .card-x p{ color:var(--grey); font-size:.93rem; line-height:1.8; margin-bottom:0; }
 .card-x .price-tag{ display:inline-block; margin-top:16px; font-weight:800; color:var(--red); font-family:var(--font-head); font-size:1.08rem; }
+
+/* ══════════════════════════════════════════════════════════════
+   FLIP CARDS (courses) — hover on desktop, tap on touch (.flipped)
+═══════════════════════════════════════════════════════════════ */
+.flip-card{ perspective:1600px; height:100%; min-height:290px; }
+.flip-card-inner{
+  position:relative; width:100%; height:100%; min-height:290px;
+  transition:transform .6s cubic-bezier(.4,0,.2,1); transform-style:preserve-3d; cursor:pointer;
+}
+.flip-card:hover .flip-card-inner, .flip-card.flipped .flip-card-inner{ transform:rotateY(180deg); }
+.flip-card-face{
+  position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+  border-radius:var(--radius-lg); padding:34px 28px; display:flex; flex-direction:column;
+}
+.flip-card-front{ background:var(--white); border:1px solid var(--border); box-shadow:0 2px 10px rgba(0,0,0,.03); }
+.flip-card-back{
+  background:var(--black); color:var(--white); transform:rotateY(180deg);
+  justify-content:space-between;
+}
+.flip-card-back h4{ font-size:1.05rem; font-weight:700; margin-bottom:16px; color:var(--red-light); }
+.flip-card-back ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; flex:1; }
+.flip-card-back li{ display:flex; align-items:flex-start; gap:9px; font-size:.86rem; color:#dcdde1; }
+.flip-card-back li i{ color:var(--red-light); margin-top:3px; }
+.flip-card-back .flip-hint{ font-size:.72rem; color:#7d7e83; text-transform:uppercase; letter-spacing:.08em; margin-top:14px; display:flex; align-items:center; gap:6px; }
+.flip-card-front .flip-hint{ position:absolute; bottom:18px; right:22px; font-size:.68rem; color:var(--grey-light); text-transform:uppercase; letter-spacing:.06em; display:flex; align-items:center; gap:5px; }
 
 /* ══════════════════════════════════════════════════════════════
    PROCESS / STEPS
@@ -400,21 +429,52 @@ footer{ background:var(--black); color:#b8b9bd; padding:80px 0 34px; }
 .f-social a:hover{ background:var(--red); color:var(--white); border-color:var(--red); }
 
 /* ══════════════════════════════════════════════════════════════
-   FLOATS
+   FLOATS — WhatsApp stays a direct one-tap button; a small toggle
+   expands Call / Book / Instagram alongside it.
 ═══════════════════════════════════════════════════════════════ */
-.wa-float{
-  position:fixed; bottom:96px; right:28px; z-index:900; width:60px; height:60px;
-  background:#25D366; border-radius:50%; display:flex; align-items:center; justify-content:center;
+.fab-group{ position:fixed; bottom:96px; right:28px; z-index:900; display:flex; flex-direction:column-reverse; align-items:flex-end; gap:14px; }
+.fab-main{
+  width:60px; height:60px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center;
   font-size:1.6rem; color:#fff; text-decoration:none; box-shadow:0 10px 30px rgba(37,211,102,.45);
-  animation:waPulse 2.6s ease-in-out infinite; transition:transform .3s;
+  animation:waPulse 2.6s ease-in-out infinite; transition:transform .3s; flex-shrink:0;
 }
-.wa-float:hover{ transform:scale(1.1); color:#fff; }
+.fab-main:hover{ transform:scale(1.08); color:#fff; }
 @keyframes waPulse{ 0%,100%{ box-shadow:0 10px 30px rgba(37,211,102,.45); } 50%{ box-shadow:0 10px 54px rgba(37,211,102,.75); } }
+
+.fab-toggle{
+  width:42px; height:42px; border-radius:50%; background:var(--black); color:#fff; border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; font-size:1.05rem; box-shadow:0 8px 22px rgba(0,0,0,.3);
+  transition:transform .35s cubic-bezier(.4,0,.2,1); flex-shrink:0;
+}
+.fab-group.open .fab-toggle{ transform:rotate(135deg); }
+
+.fab-item{
+  display:flex; align-items:center; gap:10px; opacity:0; transform:translateY(12px) scale(.7);
+  pointer-events:none; transition:opacity .25s ease, transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.fab-group.open .fab-item{ opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
+.fab-group.open .fab-item:nth-child(2){ transition-delay:.03s; }
+.fab-group.open .fab-item:nth-child(3){ transition-delay:.08s; }
+.fab-group.open .fab-item:nth-child(4){ transition-delay:.13s; }
+.fab-item .fab-label{
+  background:var(--black); color:#fff; font-size:.78rem; font-weight:700; padding:8px 14px;
+  border-radius:100px; white-space:nowrap; box-shadow:0 6px 18px rgba(0,0,0,.22);
+}
+.fab-item .fab-btn{
+  width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  color:#fff; text-decoration:none; box-shadow:0 6px 18px rgba(0,0,0,.22); flex-shrink:0; font-size:1.05rem;
+  transition:transform .25s;
+}
+.fab-item .fab-btn:hover{ transform:scale(1.08); color:#fff; }
+.fab-btn.call{ background:var(--black); }
+.fab-btn.book{ background:var(--red); }
+.fab-btn.social{ background:linear-gradient(135deg,#f09433,#dc2743,#bc1888); }
+
 .mobile-cta-bar{ position:fixed; bottom:0; left:0; right:0; z-index:901; display:none; background:var(--white); border-top:1px solid var(--border); padding:12px 5%; gap:10px; box-shadow:0 -8px 30px rgba(0,0,0,.08); }
 .mobile-cta-bar a{ flex:1; text-align:center; padding:13px 10px; border-radius:100px; font-weight:700; font-size:.86rem; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px; }
 .mobile-cta-bar .call{ background:var(--offwhite); color:var(--black); }
 .mobile-cta-bar .book{ background:var(--red); color:var(--white); }
-@media(max-width:760px){ .mobile-cta-bar{ display:flex; } body{ padding-bottom:78px; } .wa-float{ bottom:96px; } }
+@media(max-width:760px){ .mobile-cta-bar{ display:flex; } body{ padding-bottom:78px; } .fab-group{ bottom:96px; } }
 
 /* ══════════════════════════════════════════════════════════════
    REVEAL / SHARED KEYFRAMES — hidden only once .js confirms JS runs
