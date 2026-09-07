@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Case Study: How Mohammed Qaim Abbas designed and built Lexent Law Chamber, a fully compliant, SEO-structured website for an IAA-regulated immigration and asylum advice practice.">
+<title>Case Study: Lexent Law Chamber — How I Built It | SQ Website</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,700&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS (shared with homepage)
+═══════════════════════════════════════════ */
+:root {
+  --gold:        #C9A84C;
+  --gold-light:  #F2DC94;
+  --gold-bright: #FFE680;
+  --gold-dark:   #8B6914;
+  --gold-deep:   #5C4309;
+  --gold-glow:   rgba(201,168,76,0.35);
+  --gold-subtle: rgba(201,168,76,0.07);
+  --gold-border: rgba(201,168,76,0.2);
+  --bg-solid:    #060604;
+  --bg2:         #0a0908;
+  --bg3:         #0e0d0b;
+  --white:       #F7F4EE;
+  --grey:        #726f67;
+  --grey-light:  #9b9890;
+  --radius:      2px;
+  --radius-lg:   6px;
+}
+
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:16px; }
+
+body {
+  background:#060604;
+  color:var(--white);
+  font-family:'Outfit',sans-serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ───── CUSTOM CURSOR ───── */
+#cur-dot {
+  width:8px; height:8px;
+  background:var(--gold);
+  border-radius:50%;
+  position:fixed; top:0; left:0;
+  pointer-events:none; z-index:99999;
+  transform:translate(-50%,-50%);
+  transition:transform .12s, background .2s;
+  mix-blend-mode:difference;
+}
+#cur-ring {
+  width:36px; height:36px;
+  border:1.5px solid rgba(201,168,76,.65);
+  border-radius:50%;
+  position:fixed; top:0; left:0;
+  pointer-events:none; z-index:99998;
+  transform:translate(-50%,-50%);
+  transition:width .25s, height .25s, opacity .25s, border-color .25s;
+}
+body.cursor-hover #cur-dot { transform:translate(-50%,-50%) scale(2.5); }
+body.cursor-hover #cur-ring { width:50px; height:50px; border-color:var(--gold); }
+
+/* ───── SCROLL PROGRESS ───── */
+#scroll-progress {
+  position:fixed; top:0; left:0; height:2px; z-index:9999;
+  background:linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold-bright));
+  width:0%; transition:width .08s linear;
+  box-shadow:0 0 12px var(--gold-glow);
+}
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+#navbar {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  padding:22px 6%;
+  display:flex; align-items:center; justify-content:space-between;
+  transition: padding .4s, background .4s, backdrop-filter .4s, border-color .4s;
+  border-bottom:1px solid transparent;
+}
+#navbar.scrolled {
+  padding:12px 6%;
+  background:rgba(6,6,4,.93);
+  backdrop-filter:blur(24px);
+  border-color:var(--gold-border);
+}
+
+.logo-sq {
+  font-family:'Playfair Display',serif;
+  font-size:2.8rem;
+  font-weight:700;
+  text-decoration:none;
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  line-height:1;
+  letter-spacing:-.02em;
+}
+.logo-sq .sq-letter {
+  background: linear-gradient(145deg, var(--gold-deep) 0%, var(--gold-dark) 18%, var(--gold) 38%, var(--gold-light) 55%, var(--gold-bright) 62%, var(--gold-light) 70%, var(--gold) 82%, var(--gold-dark) 100%);
+  background-size:300% 300%;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation:logoShimmer 3.5s ease-in-out infinite;
+  filter:drop-shadow(0 0 18px rgba(201,168,76,.5));
+  position:relative;
+}
+@keyframes logoShimmer { 0%,100% { background-position:0% 50%; } 50% { background-position:100% 50%; } }
+.logo-sq .sq-dot {
+  display:block; width:5px; height:5px; background:var(--gold); border-radius:50%;
+  margin-left:4px; margin-bottom:4px;
+  box-shadow:0 0 10px var(--gold), 0 0 24px rgba(201,168,76,.5);
+  animation:dotPulse 2s ease-in-out infinite; flex-shrink:0;
+}
+@keyframes dotPulse { 0%,100% { transform:scale(1); box-shadow:0 0 10px var(--gold); } 50% { transform:scale(1.6); box-shadow:0 0 20px var(--gold), 0 0 40px rgba(201,168,76,.4); } }
+
+.nav-links { display:flex; gap:2.2rem; list-style:none; align-items:center; }
+.nav-links a {
+  color:var(--grey-light); text-decoration:none; font-size:.78rem; font-weight:500;
+  letter-spacing:.14em; text-transform:uppercase; transition:color .3s; position:relative; padding-bottom:4px;
+}
+.nav-links a::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:1px; background:var(--gold);
+  transform:scaleX(0); transform-origin:left; transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+.nav-links a:hover { color:var(--gold); }
+.nav-links a:hover::after { transform:scaleX(1); }
+
+.btn-nav {
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light)) !important;
+  color:var(--bg-solid) !important; padding:9px 24px !important; border-radius:var(--radius) !important;
+  font-weight:700 !important; letter-spacing:.1em !important;
+  box-shadow:0 4px 20px rgba(201,168,76,.3); transition:transform .3s, box-shadow .3s !important;
+}
+.btn-nav::after { display:none !important; }
+.btn-nav:hover { transform:translateY(-2px) !important; box-shadow:0 10px 32px rgba(201,168,76,.5) !important; }
+
+.hamburger { display:none; flex-direction:column; gap:5px; border:none; background:none; cursor:pointer; }
+.hamburger span { display:block; width:24px; height:1.5px; background:var(--gold); transition:.3s; }
+@media(max-width:991px) { .hamburger { display:flex; } .nav-links { display:none; } }
+.nav-links.mobile-open {
+  display:flex; flex-direction:column; position:fixed; inset:0; top:0;
+  background:rgba(6,6,4,.98); backdrop-filter:blur(20px);
+  align-items:center; justify-content:center; gap:2.5rem; z-index:999;
+}
+
+/* ═══════════════════════════════════════════
+   PAGE HERO
+═══════════════════════════════════════════ */
+.case-hero {
+  min-height:78vh; display:flex; align-items:center; justify-content:center;
+  text-align:center; position:relative; padding:150px 6% 90px; overflow:hidden; background:#060604;
+}
+.case-hero::before {
+  content:''; position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 20%, rgba(201,168,76,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 95%, rgba(201,168,76,.05) 0%, transparent 55%);
+  pointer-events:none;
+}
+.case-hero-grid {
+  position:absolute; inset:0;
+  background-image:linear-gradient(rgba(201,168,76,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,.04) 1px, transparent 1px);
+  background-size:80px 80px; animation:gridBreath 8s ease-in-out infinite;
+}
+@keyframes gridBreath { 0%,100% { opacity:.3; } 50% { opacity:.8; } }
+.case-hero-content { position:relative; z-index:3; max-width:880px; margin:0 auto; }
+
+.hero-badge {
+  display:inline-flex; align-items:center; gap:9px; border:1px solid var(--gold-border);
+  padding:7px 22px; border-radius:100px; font-size:.7rem; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:32px; background:var(--gold-subtle); backdrop-filter:blur(10px);
+  animation:fadeDown .9s cubic-bezier(.4,0,.2,1) both;
+}
+.live-dot { width:7px; height:7px; background:var(--gold); border-radius:50%; box-shadow:0 0 10px var(--gold); animation:livePulse 1.8s ease-in-out infinite; }
+@keyframes livePulse { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(1.7); opacity:.4; } }
+
+.case-hero h1 {
+  font-family:'Playfair Display',serif; font-size:clamp(2.6rem,6.2vw,5.2rem);
+  font-weight:900; line-height:1.05; margin-bottom:22px;
+  animation:fadeUp 1s cubic-bezier(.4,0,.2,1) .15s both; letter-spacing:-.02em;
+}
+.h1-line1 { color:var(--white); display:block; }
+.h1-line2 { display:block; }
+
+.gold-text {
+  background:linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 30%, var(--gold-light) 55%, var(--gold-bright) 65%, var(--gold-light) 75%, var(--gold) 90%, var(--gold-dark) 100%);
+  background-size:250% 250%;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation:goldShimmer 4s ease-in-out infinite;
+  filter:drop-shadow(0 0 28px rgba(201,168,76,.4));
+}
+@keyframes goldShimmer { 0%,100% { background-position:0% 50%; } 50% { background-position:100% 50%; } }
+
+.hero-sub {
+  font-size:1.05rem; color:var(--grey-light); max-width:640px; margin:0 auto 44px;
+  line-height:1.9; font-weight:300; animation:fadeUp 1s .5s both;
+}
+.hero-cta { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; animation:fadeUp 1s .65s both; }
+
+.btn-primary-gold {
+  background:linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+  color:var(--bg-solid); padding:16px 42px; font-family:'Outfit',sans-serif; font-size:.8rem; font-weight:700;
+  letter-spacing:.16em; text-transform:uppercase; border:none; border-radius:var(--radius);
+  cursor:pointer; text-decoration:none; display:inline-block; position:relative; overflow:hidden;
+  transition:transform .3s, box-shadow .3s; box-shadow:0 6px 28px rgba(201,168,76,.35);
+}
+.btn-primary-gold::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg, var(--gold-light), var(--gold-bright)); opacity:0; transition:opacity .3s; }
+.btn-primary-gold:hover { transform:translateY(-3px); box-shadow:0 18px 50px rgba(201,168,76,.55); color:var(--bg-solid); }
+.btn-primary-gold:hover::before { opacity:1; }
+.btn-primary-gold span { position:relative; z-index:1; }
+
+.btn-outline-gold {
+  background:transparent; color:var(--gold); padding:16px 42px; font-family:'Outfit',sans-serif;
+  font-size:.8rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase;
+  border:1px solid var(--gold-border); border-radius:var(--radius); cursor:pointer; text-decoration:none;
+  display:inline-block; transition:all .3s; position:relative; overflow:hidden; backdrop-filter:blur(8px);
+}
+.btn-outline-gold::before { content:''; position:absolute; inset:0; background:var(--gold-subtle); opacity:0; transition:opacity .3s; }
+.btn-outline-gold:hover { color:var(--gold); border-color:rgba(201,168,76,.55); transform:translateY(-3px); box-shadow:0 10px 32px rgba(201,168,76,.2); }
+.btn-outline-gold:hover::before { opacity:1; }
+
+/* ─ META STRIP ─ */
+.meta-strip {
+  display:flex; flex-wrap:wrap; gap:0; justify-content:center;
+  margin-top:74px; padding-top:46px; border-top:1px solid var(--gold-border);
+  animation:fadeUp 1s .85s both;
+}
+.meta-item { padding:0 30px; text-align:center; border-right:1px solid rgba(255,255,255,.06); }
+.meta-item:last-child { border-right:none; }
+.meta-label { font-size:.64rem; letter-spacing:.18em; text-transform:uppercase; color:var(--grey); margin-bottom:8px; }
+.meta-value { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:600; color:var(--white); }
+.meta-value a { color:var(--gold); text-decoration:none; }
+.meta-value a:hover { text-decoration:underline; }
+@media(max-width:768px){ .meta-item { padding:10px 18px; border-right:none; border-bottom:1px solid rgba(255,255,255,.06); flex:1 1 45%; } }
+
+/* ═══════════════════════════════════════════
+   GENERAL SECTION
+═══════════════════════════════════════════ */
+section { padding:120px 6%; }
+.section-bg2 { background:var(--bg2); }
+.section-bg3 { background:var(--bg3); }
+
+.s-eyebrow {
+  display:flex; align-items:center; gap:14px; font-size:.68rem; letter-spacing:.28em;
+  text-transform:uppercase; color:var(--gold); margin-bottom:18px;
+}
+.s-eyebrow::before { content:''; width:32px; height:1px; background:linear-gradient(90deg,var(--gold),transparent); }
+
+.s-title {
+  font-family:'Playfair Display',serif; font-size:clamp(2.1rem,4.5vw,3.6rem);
+  font-weight:700; line-height:1.08; margin-bottom:18px; letter-spacing:-.02em;
+}
+.s-body { color:var(--grey-light); font-size:.97rem; line-height:1.95; max-width:640px; font-weight:300; }
+.s-body + .s-body { margin-top:18px; }
+
+.ornament { display:flex; align-items:center; gap:16px; margin-bottom:64px; justify-content:flex-start; }
+.ornament-line { height:1px; width:60px; background:linear-gradient(90deg,var(--gold),transparent); }
+.ornament-diamond { width:6px; height:6px; background:var(--gold); transform:rotate(45deg); box-shadow:0 0 12px rgba(201,168,76,.6); }
+
+/* ═══════════════════════════════════════════
+   OVERVIEW SPLIT
+═══════════════════════════════════════════ */
+.overview-figure {
+  border:1px solid var(--gold-border); border-radius:var(--radius-lg); overflow:hidden;
+  background:rgba(255,255,255,.022); position:relative;
+}
+.overview-figure-visual {
+  width:100%; aspect-ratio:4/3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+  background:linear-gradient(135deg,#0e1420,#182238); padding:40px; text-align:center;
+}
+.overview-figure .work-badge {
+  position:absolute; top:16px; left:16px; background:rgba(6,6,4,.85); border:1px solid var(--gold-border);
+  border-radius:100px; color:var(--gold); font-size:.64rem; letter-spacing:.14em; text-transform:uppercase;
+  padding:6px 16px; backdrop-filter:blur(10px);
+}
+.deco-corner-1 { position:absolute; bottom:-16px; left:-16px; width:80px; height:80px; border:2px solid rgba(201,168,76,.3); border-radius:2px; z-index:-1; }
+.deco-corner-2 { position:absolute; top:-14px; right:-14px; width:50px; height:50px; border:1px solid rgba(201,168,76,.2); border-radius:2px; z-index:-1; }
+
+/* ═══════════════════════════════════════════
+   CHALLENGE / SOLUTION / RESULT
+═══════════════════════════════════════════ */
+.card-serv {
+  background:rgba(255,255,255,.022); border:1px solid var(--gold-border); padding:40px 30px;
+  border-radius:var(--radius-lg); position:relative; overflow:hidden; height:100%;
+  transition:transform .45s cubic-bezier(.4,0,.2,1), box-shadow .45s, border-color .45s;
+}
+.card-serv::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform:scaleX(0); transform-origin:center; transition:transform .5s cubic-bezier(.4,0,.2,1);
+}
+.card-serv:hover { transform:translateY(-10px); border-color:rgba(201,168,76,.45); box-shadow:0 28px 70px rgba(0,0,0,.55), 0 0 50px rgba(201,168,76,.12); }
+.card-serv:hover::before { transform:scaleX(1); }
+.serv-icon-wrap {
+  width:56px; height:56px; background:linear-gradient(135deg,var(--gold-dark),var(--gold)); border-radius:var(--radius);
+  display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin-bottom:26px;
+  box-shadow:0 8px 24px rgba(201,168,76,.25);
+}
+.card-serv h3 { font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:600; margin-bottom:14px; }
+.card-serv p { color:var(--grey-light); font-size:.88rem; line-height:1.85; font-weight:300; }
+.card-serv .step-tag { font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:10px; display:block; }
+
+/* ═══════════════════════════════════════════
+   PROCESS TIMELINE
+═══════════════════════════════════════════ */
+.timeline { max-width:820px; margin:0 auto; position:relative; }
+.timeline::before {
+  content:''; position:absolute; left:37px; top:10px; bottom:10px; width:1px;
+  background:linear-gradient(180deg, var(--gold), rgba(201,168,76,.08));
+}
+.t-item { display:flex; gap:28px; margin-bottom:56px; position:relative; }
+.t-item:last-child { margin-bottom:0; }
+.t-num {
+  width:76px; height:76px; flex-shrink:0; border:1.5px solid var(--gold); border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif;
+  font-size:1.5rem; font-weight:700; color:var(--gold); background:var(--bg-solid); position:relative; z-index:1;
+  transition:background .35s, color .35s, box-shadow .35s;
+}
+.t-item:hover .t-num { background:linear-gradient(135deg,var(--gold-dark),var(--gold)); color:var(--bg-solid); box-shadow:0 0 40px rgba(201,168,76,.45); }
+.t-content { padding-top:10px; }
+.t-content .t-label { font-size:.66rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+.t-content h3 { font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:600; margin-bottom:10px; }
+.t-content p { color:var(--grey-light); font-size:.9rem; line-height:1.9; font-weight:300; max-width:560px; }
+@media(max-width:576px){ .timeline::before{ left:29px; } .t-num{ width:60px; height:60px; font-size:1.15rem; } .t-item{ gap:18px; } }
+
+/* ═══════════════════════════════════════════
+   TECH STACK
+═══════════════════════════════════════════ */
+.tech-chip {
+  display:flex; align-items:center; gap:12px; background:rgba(255,255,255,.022); border:1px solid var(--gold-border);
+  border-radius:var(--radius-lg); padding:18px 20px; transition:transform .3s, border-color .3s, box-shadow .3s; height:100%;
+}
+.tech-chip:hover { transform:translateY(-4px); border-color:rgba(201,168,76,.4); box-shadow:0 14px 34px rgba(0,0,0,.35); }
+.tech-chip i { font-size:1.3rem; color:var(--gold); flex-shrink:0; }
+.tech-chip span { font-size:.86rem; color:rgba(247,244,238,.85); font-weight:400; }
+
+/* ═══════════════════════════════════════════
+   FEATURES
+═══════════════════════════════════════════ */
+.feat-row { display:flex; gap:18px; align-items:flex-start; margin-bottom:28px; }
+.feat-icon {
+  width:46px; height:46px; flex-shrink:0; background:var(--gold-subtle); border:1px solid var(--gold-border);
+  border-radius:var(--radius); display:flex; align-items:center; justify-content:center; font-size:1.1rem;
+}
+.feat-row h4 { font-size:.95rem; font-weight:600; margin-bottom:5px; }
+.feat-row p { color:var(--grey-light); font-size:.85rem; line-height:1.7; font-weight:300; margin:0; }
+
+/* ═══════════════════════════════════════════
+   COMPLIANCE / TRUST CARDS
+═══════════════════════════════════════════ */
+.portal-card {
+  background:rgba(255,255,255,.022); border:1px solid var(--gold-border); border-radius:var(--radius-lg);
+  padding:42px 36px; height:100%; position:relative; overflow:hidden;
+  transition:transform .4s, box-shadow .4s, border-color .4s;
+}
+.portal-card:hover { transform:translateY(-8px); border-color:rgba(201,168,76,.4); box-shadow:0 24px 60px rgba(0,0,0,.45), 0 0 40px rgba(201,168,76,.1); }
+.portal-icon-wrap {
+  width:60px; height:60px; background:linear-gradient(135deg,var(--gold-dark),var(--gold)); border-radius:var(--radius);
+  display:flex; align-items:center; justify-content:center; font-size:1.6rem; margin-bottom:24px;
+  box-shadow:0 8px 24px rgba(201,168,76,.25);
+}
+.portal-card h3 { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; margin-bottom:6px; }
+.portal-tag { font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:22px; display:block; }
+.portal-list { list-style:none; margin-bottom:0; }
+.portal-list li {
+  display:flex; align-items:flex-start; gap:11px; padding:9px 0;
+  border-bottom:1px solid rgba(255,255,255,.04); font-size:.87rem; color:rgba(247,244,238,.82); line-height:1.65;
+}
+.portal-list li:last-child { border-bottom:none; }
+.portal-list li::before { content:'◆'; color:var(--gold); font-size:.5rem; flex-shrink:0; margin-top:5px; }
+
+/* ═══════════════════════════════════════════
+   SEO CHECKLIST
+═══════════════════════════════════════════ */
+.check-list { list-style:none; }
+.check-list li {
+  display:flex; align-items:flex-start; gap:12px; padding:11px 0;
+  border-bottom:1px solid rgba(255,255,255,.05); font-size:.88rem; color:rgba(247,244,238,.82); line-height:1.6;
+}
+.check-list li i { color:var(--gold); font-size:.95rem; margin-top:2px; flex-shrink:0; }
+
+/* ═══════════════════════════════════════════
+   RESULTS STATS
+═══════════════════════════════════════════ */
+.results-bar {
+  display:flex; gap:56px; justify-content:center; flex-wrap:wrap; padding:64px 6%;
+  border-top:1px solid var(--gold-border); border-bottom:1px solid var(--gold-border);
+}
+.stat-number {
+  font-family:'Playfair Display',serif; font-size:3rem; font-weight:700; line-height:1;
+  background:linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; display:block;
+}
+.stat-suffix {
+  font-family:'Playfair Display',serif; font-size:1.5rem;
+  background:linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.stat-label { font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--grey); margin-top:6px; font-weight:400; }
+
+/* ═══════════════════════════════════════════
+   CTA BANNER
+═══════════════════════════════════════════ */
+.cta-section { position:relative; overflow:hidden; text-align:center; padding:120px 6%; }
+.cta-section::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 70% 60% at 50% 50%, rgba(201,168,76,.08), transparent 65%); }
+.cta-section > * { position:relative; z-index:1; }
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer { background:#040402; border-top:1px solid var(--gold-border); padding:90px 6% 44px; }
+.footer-logo {
+  font-family:'Playfair Display',serif; font-size:2.6rem; font-weight:700;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light));
+  background-size:200%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation:goldShimmer 4s ease-in-out infinite; letter-spacing:-.01em; filter:drop-shadow(0 0 12px rgba(201,168,76,.3));
+}
+.f-col-head { font-size:.68rem; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
+.f-link { color:var(--grey-light); text-decoration:none; font-size:.86rem; display:block; margin-bottom:10px; transition:color .25s; }
+.f-link:hover { color:var(--gold); }
+.footer-hr { border-top:1px solid rgba(255,255,255,.06); padding-top:30px; margin-top:60px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+.footer-hr p { color:var(--grey); font-size:.8rem; }
+.footer-hr a { color:var(--gold); text-decoration:none; }
+
+/* ═══════════════════════════════════════════
+   WHATSAPP FLOAT
+═══════════════════════════════════════════ */
+.wa-float {
+  position:fixed; bottom:34px; right:34px; z-index:900; width:62px; height:62px; background:#25D366;
+  border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.7rem;
+  text-decoration:none; box-shadow:0 8px 32px rgba(37,211,102,.45); animation:waPulse 2.8s ease-in-out infinite; transition:transform .3s;
+}
+.wa-float:hover { transform:scale(1.1); }
+@keyframes waPulse { 0%,100% { box-shadow:0 8px 32px rgba(37,211,102,.45); } 50% { box-shadow:0 8px 60px rgba(37,211,102,.75); } }
+
+/* ═══════════════════════════════════════════
+   REVEAL / SHARED ANIMATIONS
+═══════════════════════════════════════════ */
+.reveal { opacity:0; transform:translateY(40px); transition:opacity .85s cubic-bezier(.4,0,.2,1), transform .85s cubic-bezier(.4,0,.2,1); }
+.reveal.visible { opacity:1; transform:translateY(0); }
+.rd1 { transition-delay:.12s; } .rd2 { transition-delay:.24s; } .rd3 { transition-delay:.36s; } .rd4 { transition-delay:.48s; }
+
+@keyframes fadeDown { from { opacity:0; transform:translateY(-18px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeUp   { from { opacity:0; transform:translateY(30px); }  to { opacity:1; transform:translateY(0); } }
+
+body::after {
+  content:''; position:fixed; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:9990; opacity:.35;
+}
+
+@media(max-width:768px) {
+  section { padding:80px 5%; }
+  footer { padding:60px 5% 32px; }
+  .results-bar { gap:26px; padding:48px 5%; }
+}
+</style>
+</head>
+<body>
+
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
+<div id="scroll-progress"></div>
+
+<!-- ═══ NAV ═══ -->
+<nav id="navbar">
+  <a href="index.html" class="logo-sq text-decoration-none">
+    <span class="sq-letter">SQ</span><span class="sq-dot"></span>
+  </a>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#pricing">Pricing</a></li>
+    <li><a href="index.html#portfolio">Portfolio</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#booking" class="btn-nav">Book Now</a></li>
+  </ul>
+
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<a class="wa-float" href="https://wa.me/447919978462?text=Hi%20Mohammed%2C%20I%20saw%20the%20Lexent%20Law%20Chamber%20case%20study%20and%20I%27m%20interested%20in%20a%20website." target="_blank" rel="noopener" title="Chat on WhatsApp">
+  <i class="bi bi-whatsapp" style="color:#fff;font-size:1.65rem;"></i>
+</a>
+
+<!-- ═══ HERO ═══ -->
+<section class="case-hero">
+  <div class="case-hero-grid"></div>
+  <div class="case-hero-content">
+    <div class="hero-badge">
+      <span class="live-dot"></span>
+      Case Study &middot; Client Project
+    </div>
+
+    <h1>
+      <span class="h1-line1">How I Built</span>
+      <span class="h1-line2 gold-text">Lexent Law Chamber</span>
+    </h1>
+
+    <p class="hero-sub">
+      A behind-the-scenes look at how I designed, developed and SEO-structured a fully compliant website for an IAA-regulated immigration and asylum advice practice — where trust, transparency and regulatory clarity matter just as much as design.
+    </p>
+
+    <div class="hero-cta">
+      <a href="https://www.lexentlawchamber.com/" target="_blank" rel="noopener" class="btn-primary-gold"><span>Visit the Live Site ↗</span></a>
+      <a href="index.html#booking" class="btn-outline-gold">Start Your Own Project</a>
+    </div>
+
+    <p style="margin-top:26px;color:var(--grey);font-size:.85rem;letter-spacing:.03em;">
+      <i class="bi bi-link-45deg" style="color:var(--gold);"></i> Live at
+      <a href="https://www.lexentlawchamber.com/" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;font-weight:500;">www.lexentlawchamber.com</a>
+    </p>
+
+    <div class="meta-strip">
+      <div class="meta-item"><div class="meta-label">Client</div><div class="meta-value">Lexent Law Chamber</div></div>
+      <div class="meta-item"><div class="meta-label">Industry</div><div class="meta-value">Immigration &amp; Asylum Law</div></div>
+      <div class="meta-item"><div class="meta-label">Coverage</div><div class="meta-value">England &amp; Wales</div></div>
+      <div class="meta-item"><div class="meta-label">Role</div><div class="meta-value">Design &amp; Development</div></div>
+      <div class="meta-item"><div class="meta-label">Live Site</div><div class="meta-value"><a href="https://www.lexentlawchamber.com/" target="_blank" rel="noopener">lexentlawchamber.com ↗</a></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OVERVIEW ═══ -->
+<section class="section-bg2" id="overview">
+  <div class="row align-items-center g-5">
+    <div class="col-lg-6 reveal">
+      <div class="position-relative">
+        <div class="overview-figure">
+          <div class="overview-figure-visual">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#cca35f" stroke-width="1.8" aria-hidden="true">
+              <line x1="12" y1="3" x2="12" y2="19"/><line x1="4" y1="7" x2="20" y2="7"/>
+              <circle cx="12" cy="3" r="1.4" fill="#cca35f" stroke="none"/>
+              <path d="M4 7 L1.5 13.5a3 3 0 0 0 5 0L4 7z"/><path d="M20 7 L17.5 13.5a3 3 0 0 0 5 0L20 7z"/>
+              <line x1="8" y1="20.5" x2="16" y2="20.5"/><line x1="12" y1="19" x2="12" y2="20.5"/>
+            </svg>
+            <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#fff;">Lexent Law Chamber</div>
+            <div style="color:var(--gold);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;">Immigration &amp; Asylum Advisers</div>
+          </div>
+          <div class="work-badge">Live Website</div>
+        </div>
+        <div class="deco-corner-1"></div>
+        <div class="deco-corner-2"></div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 reveal rd1">
+      <div class="s-eyebrow">The Brief</div>
+      <h2 class="s-title">A New Practice That Had to<br><span class="gold-text">Earn Trust Immediately</span></h2>
+      <p class="s-body">Lexent Law Chamber came to me as a newly established, IAA-regulated immigration and asylum advice practice serving clients across England &amp; Wales. This isn't a driving school or a local shop — it's a regulated legal service dealing with some of the highest-stakes situations a person can face: asylum claims, deportation, detention, family separation.</p>
+      <p class="s-body">The brief wasn't just "build a website." It was: build a site that a worried, possibly vulnerable person can land on and immediately trust — one that's transparent about regulation and fees, genuinely useful before they ever pick up the phone, and structured so Google can actually understand and surface it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CHALLENGE / APPROACH / RESULT ═══ -->
+<section id="challenge">
+  <div class="s-eyebrow reveal">Challenge, Approach, Result</div>
+  <h2 class="s-title reveal">Three Problems<br><span class="gold-text">I Had to Solve</span></h2>
+  <div class="ornament reveal"><div class="ornament-line"></div><div class="ornament-diamond"></div><div class="ornament-line" style="background:linear-gradient(270deg,var(--gold),transparent)"></div></div>
+
+  <div class="row g-4">
+    <div class="col-lg-4 reveal">
+      <div class="card-serv">
+        <span class="step-tag">The Challenge</span>
+        <div class="serv-icon-wrap">⚖️</div>
+        <h3>A Trust-Sensitive Market</h3>
+        <p>Immigration advice is a heavily scrutinised sector — the industry regulator has repeatedly flagged issues like hidden fees, unclear regulatory status and slow responses. A new practice needed to visibly stand apart from that reputation from the very first visit.</p>
+      </div>
+    </div>
+    <div class="col-lg-4 reveal rd1">
+      <div class="card-serv">
+        <span class="step-tag">My Approach</span>
+        <div class="serv-icon-wrap">🛡️</div>
+        <h3>Build Compliance Into the Structure</h3>
+        <p>Rather than treating legal pages as an afterthought, I built the full compliance architecture from day one — Privacy Policy, Terms, Cookie Policy, Complaints Procedure, and a visible regulatory badge — plus a page directly addressing sector-wide trust concerns.</p>
+      </div>
+    </div>
+    <div class="col-lg-4 reveal rd2">
+      <div class="card-serv">
+        <span class="step-tag">The Result</span>
+        <div class="serv-icon-wrap">✅</div>
+        <h3>A Site Built to Earn Trust</h3>
+        <p>An 11-page, schema-rich platform live at lexentlawchamber.com — giving the practice a professional, transparent, technically sound foundation to build client trust and organic visibility from launch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROCESS TIMELINE ═══ -->
+<section class="section-bg3" id="process">
+  <div class="s-eyebrow reveal">My Process</div>
+  <h2 class="s-title reveal">From First Call<br><span class="gold-text">to Going Live</span></h2>
+  <p class="s-body mb-5 reveal">This is the process I followed to take Lexent Law Chamber from a new, unregistered brand to a fully live, structured website.</p>
+
+  <div class="timeline mt-5">
+    <div class="t-item reveal">
+      <div class="t-num">01</div>
+      <div class="t-content">
+        <div class="t-label">Discovery</div>
+        <h3>Understanding a Regulated Practice</h3>
+        <p>Understanding exactly what a new IAA-regulated immigration and asylum advice practice could offer, its service area, the concerns of the people who'd land on the site, and the compliance obligations that come with giving regulated advice.</p>
+      </div>
+    </div>
+    <div class="t-item reveal rd1">
+      <div class="t-num">02</div>
+      <div class="t-content">
+        <div class="t-label">Sitemap &amp; Compliance Planning</div>
+        <h3>Mapping the Full Architecture</h3>
+        <p>Planned the full site structure: Home, About, Practice Areas, Guides, a Compare page, a Wales-specific page, Contact — plus the mandatory legal suite: Privacy Policy, Terms of Use, Cookie Policy, Complaints Procedure.</p>
+      </div>
+    </div>
+    <div class="t-item reveal rd2">
+      <div class="t-num">03</div>
+      <div class="t-content">
+        <div class="t-label">Design</div>
+        <h3>A Tone That Matches the Stakes</h3>
+        <p>Designed a calm, professional navy-and-gold aesthetic with a Playfair Display and Inter type pairing — a deliberately different register from a consumer brand, appropriate for a practice handling sensitive, high-stakes matters.</p>
+      </div>
+    </div>
+    <div class="t-item reveal rd3">
+      <div class="t-num">04</div>
+      <div class="t-content">
+        <div class="t-label">Build</div>
+        <h3>Hand-Coded, Accessible Interactions</h3>
+        <p>Hand-coded the front end in HTML5, CSS3 and JavaScript, including an animated typewriter headline that respects <code>prefers-reduced-motion</code> and dynamically locks its height so the page never shifts as phrases change length.</p>
+      </div>
+    </div>
+    <div class="t-item reveal">
+      <div class="t-num">05</div>
+      <div class="t-content">
+        <div class="t-label">Structured Data &amp; SEO</div>
+        <h3>Making Google Understand the Content</h3>
+        <p>Implemented dual JSON-LD structured data — <strong>LegalService</strong> schema describing services, area served and hours, and <strong>FAQPage</strong> schema so the site's FAQ answers are eligible to appear directly as rich snippets in Google search results — alongside canonical tags and Open Graph/Twitter Card metadata.</p>
+      </div>
+    </div>
+    <div class="t-item reveal rd1">
+      <div class="t-num">06</div>
+      <div class="t-content">
+        <div class="t-label">Compliance Content</div>
+        <h3>Meeting the Regulatory Bar</h3>
+        <p>Wrote and built the legal disclaimer, complaints procedure, and full policy suite required for a business giving regulated immigration advice, plus a clear, honest statement of the practice's regulatory status.</p>
+      </div>
+    </div>
+    <div class="t-item reveal rd2">
+      <div class="t-num">07</div>
+      <div class="t-content">
+        <div class="t-label">Launch &amp; Conversion Tracking</div>
+        <h3>Going Live — Measurably</h3>
+        <p>Pushed the site live at lexentlawchamber.com with Google Ads conversion tracking wired in from day one, WhatsApp and phone click-to-contact throughout, and a free-consultation booking flow as the primary conversion path.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TECH STACK ═══ -->
+<section id="stack">
+  <div class="s-eyebrow reveal">Under the Hood</div>
+  <h2 class="s-title reveal">Tools &amp;<br><span class="gold-text">Technology Used</span></h2>
+  <div class="ornament reveal"><div class="ornament-line"></div><div class="ornament-diamond"></div><div class="ornament-line" style="background:linear-gradient(270deg,var(--gold),transparent)"></div></div>
+
+  <div class="row g-3">
+    <div class="col-6 col-md-3 reveal"><div class="tech-chip"><i class="bi bi-filetype-html"></i><span>HTML5</span></div></div>
+    <div class="col-6 col-md-3 reveal rd1"><div class="tech-chip"><i class="bi bi-filetype-css"></i><span>CSS3</span></div></div>
+    <div class="col-6 col-md-3 reveal rd2"><div class="tech-chip"><i class="bi bi-filetype-js"></i><span>JavaScript</span></div></div>
+    <div class="col-6 col-md-3 reveal rd3"><div class="tech-chip"><i class="bi bi-fonts"></i><span>Inter &amp; Playfair Display</span></div></div>
+    <div class="col-6 col-md-3 reveal"><div class="tech-chip"><i class="bi bi-braces"></i><span>JSON-LD Structured Data</span></div></div>
+    <div class="col-6 col-md-3 reveal rd1"><div class="tech-chip"><i class="bi bi-graph-up-arrow"></i><span>Google Ads Conversion Tracking</span></div></div>
+    <div class="col-6 col-md-3 reveal rd2"><div class="tech-chip"><i class="bi bi-share"></i><span>Open Graph &amp; Twitter Cards</span></div></div>
+    <div class="col-6 col-md-3 reveal rd3"><div class="tech-chip"><i class="bi bi-link-45deg"></i><span>Canonical Tags</span></div></div>
+    <div class="col-6 col-md-3 reveal"><div class="tech-chip"><i class="bi bi-whatsapp" style="color:#25D366;"></i><span>WhatsApp Integration</span></div></div>
+    <div class="col-6 col-md-3 reveal rd1"><div class="tech-chip"><i class="bi bi-phone"></i><span>Mobile-First Build</span></div></div>
+    <div class="col-6 col-md-3 reveal rd2"><div class="tech-chip"><i class="bi bi-universal-access"></i><span>Reduced-Motion Accessibility</span></div></div>
+    <div class="col-6 col-md-3 reveal rd3"><div class="tech-chip"><i class="bi bi-diagram-3"></i><span>Multi-Page Architecture</span></div></div>
+  </div>
+</section>
+
+<!-- ═══ FEATURES ═══ -->
+<section class="section-bg2" id="features">
+  <div class="row align-items-center g-5">
+    <div class="col-lg-6 reveal">
+      <div class="s-eyebrow">Key Features</div>
+      <h2 class="s-title">What the Final<br><span class="gold-text">Website Delivers</span></h2>
+      <p class="s-body mb-4">Every feature was chosen to solve a real problem for a regulated legal practice — not added for the sake of it.</p>
+
+      <div class="feat-row">
+        <div class="feat-icon">⌨️</div>
+        <div><h4>Animated Typewriter Hero</h4><p>Cycles through five headline variations, pauses respectfully for users who prefer reduced motion, and never causes layout shift while it types.</p></div>
+      </div>
+      <div class="feat-row">
+        <div class="feat-icon">🧩</div>
+        <div><h4>Dual Structured Data</h4><p>LegalService + FAQPage JSON-LD so Google can understand exactly what the practice offers and surface FAQ answers directly in search results.</p></div>
+      </div>
+      <div class="feat-row">
+        <div class="feat-icon">📞</div>
+        <div><h4>Free Consultation Booking Flow</h4><p>A clear, low-pressure path to a free, no-obligation initial consultation, reinforced throughout the site.</p></div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 reveal rd1">
+      <div class="feat-row" style="margin-top:0;">
+        <div class="feat-icon">⚖️</div>
+        <div><h4>"How We Compare" Page</h4><p>Directly addresses sector-wide trust concerns — hidden fees, slow responses, unclear regulation — rather than avoiding them.</p></div>
+      </div>
+      <div class="feat-row">
+        <div class="feat-icon">📄</div>
+        <div><h4>Full Legal Compliance Suite</h4><p>Privacy Policy, Terms of Use, Cookie Policy and Complaints Procedure — required for a business offering regulated advice.</p></div>
+      </div>
+      <div class="feat-row">
+        <div class="feat-icon">📚</div>
+        <div><h4>Guides Content Hub</h4><p>A dedicated section of in-depth guides answering real client questions, built for long-term organic search visibility.</p></div>
+      </div>
+      <div class="feat-row">
+        <div class="feat-icon">📍</div>
+        <div><h4>Region-Specific Landing Page</h4><p>A dedicated Wales page capturing search intent from clients outside the primary service area — <a href="#compliance" style="color:var(--gold);">more on trust &amp; compliance below ↓</a></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TRUST & COMPLIANCE ═══ -->
+<section id="compliance">
+  <div class="s-eyebrow reveal">Built for a Regulated Industry</div>
+  <h2 class="s-title reveal">Trust &amp; Compliance,<br><span class="gold-text">Not an Afterthought</span></h2>
+  <p class="s-body mb-5 reveal">Immigration advice is a regulated activity, and the sector's own regulator has repeatedly flagged problems that erode client trust — unclear regulatory status, undisclosed fees, slow responses. I built the site so trust and compliance are structural, not a paragraph bolted onto the footer.</p>
+
+  <div class="row g-4 align-items-stretch">
+    <div class="col-lg-6 reveal">
+      <div class="portal-card">
+        <span class="portal-tag">Regulatory Transparency</span>
+        <div class="portal-icon-wrap">🔍</div>
+        <h3>Visible, Not Buried</h3>
+        <ul class="portal-list">
+          <li>IAA-regulated badge shown prominently in the hero, not hidden in small print</li>
+          <li>Clear statement of every area of expertise — asylum, appeals, family/partner visas, work visas, deportation &amp; detention, settlement &amp; citizenship</li>
+          <li>Transparent, upfront fee structure explained in the FAQ before any commitment</li>
+          <li>A plain-English legal disclaimer clarifying no adviser-client relationship is created simply by using the site</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-lg-6 reveal rd1">
+      <div class="portal-card">
+        <span class="portal-tag">Client-Facing Compliance Pages</span>
+        <div class="portal-icon-wrap">📋</div>
+        <h3>The Full Policy Suite</h3>
+        <ul class="portal-list">
+          <li>Privacy Policy</li>
+          <li>Terms of Use</li>
+          <li>Cookie Policy</li>
+          <li>Complaints Procedure</li>
+          <li>Each written, linked from every page footer, and easy to find — exactly what's expected of a regulated professional services site</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <p class="s-body mt-5 reveal" style="max-width:720px;">None of this is legally required for, say, a driving school or a photography site. But for a practice giving regulated immigration and asylum advice, skipping it isn't an option. Building it in from day one meant Lexent could launch fully compliant, not scrambling to add it later.</p>
+</section>
+
+<!-- ═══ SEO CHECKLIST ═══ -->
+<section class="section-bg2" id="seo">
+  <div class="s-eyebrow reveal">Search Engine Optimisation</div>
+  <h2 class="s-title reveal">How I Manage<br><span class="gold-text">This Business's SEO</span></h2>
+  <p class="s-body mb-5 reveal">SEO for a legal practice isn't just keywords — it's giving Google (and worried, time-pressured searchers) an unambiguous, well-structured signal of exactly what the practice does and who it serves. Here's what's built into Lexent Law Chamber.</p>
+
+  <div class="row g-4 g-lg-5">
+    <div class="col-lg-6 reveal">
+      <h4 style="font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;">On-Page &amp; Structured Data</h4>
+      <ul class="check-list">
+        <li><i class="bi bi-check-circle-fill"></i>Optimised title tags &amp; meta descriptions on every page</li>
+        <li><i class="bi bi-check-circle-fill"></i>Canonical tags to prevent duplicate-content issues</li>
+        <li><i class="bi bi-check-circle-fill"></i>Open Graph &amp; Twitter Card tags for clean social sharing</li>
+        <li><i class="bi bi-check-circle-fill"></i>LegalService JSON-LD schema (services, area served, hours, price range)</li>
+        <li><i class="bi bi-check-circle-fill"></i>FAQPage JSON-LD schema — eligible for FAQ rich snippets in Google search</li>
+        <li><i class="bi bi-check-circle-fill"></i>Semantic HTML5 with a clean heading hierarchy</li>
+      </ul>
+    </div>
+    <div class="col-lg-6 reveal rd1">
+      <h4 style="font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;">Content, Conversion &amp; Tracking</h4>
+      <ul class="check-list">
+        <li><i class="bi bi-check-circle-fill"></i>Individual practice-area pages targeting distinct service keywords</li>
+        <li><i class="bi bi-check-circle-fill"></i>Dedicated comparison page for trust- and decision-stage search intent</li>
+        <li><i class="bi bi-check-circle-fill"></i>Region-specific page (Wales) for geographic search coverage</li>
+        <li><i class="bi bi-check-circle-fill"></i>Guides hub for long-tail, informational search queries</li>
+        <li><i class="bi bi-check-circle-fill"></i>Google Ads conversion tracking (gtag.js) wired in for paid campaign ROI</li>
+        <li><i class="bi bi-check-circle-fill"></i>Clear WhatsApp / phone / consultation calls-to-action on every page</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RESULTS ═══ -->
+<section class="section-bg3" id="results">
+  <div class="s-eyebrow reveal">The Outcome</div>
+  <h2 class="s-title reveal">What This<br><span class="gold-text">Structure Delivers</span></h2>
+  <p class="s-body mb-5 reveal">Lexent Law Chamber launched as a fully structured, technically sound platform — not a single brochure page, but a real multi-page site built to be understood by both search engines and worried, time-pressured visitors.</p>
+
+  <div class="results-bar mt-5 reveal">
+    <div class="text-center">
+      <span class="stat-number" data-target="11">0</span><span class="stat-suffix">+</span>
+      <div class="stat-label">Pages Structured</div>
+    </div>
+    <div class="text-center">
+      <span class="stat-number" data-target="2">0</span>
+      <div class="stat-label">Schema Types (JSON-LD)</div>
+    </div>
+    <div class="text-center">
+      <span class="stat-number" data-target="6">0</span>
+      <div class="stat-label">FAQ Rich-Snippet Q&amp;As</div>
+    </div>
+    <div class="text-center">
+      <span class="stat-number" data-target="100">0</span><span class="stat-suffix">%</span>
+      <div class="stat-label">Mobile Responsive</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section">
+  <div class="s-eyebrow justify-content-center reveal">Want Something Similar?</div>
+  <h2 class="s-title reveal">Let's Build Your<br><span class="gold-text">Website Next</span></h2>
+  <p class="s-body mx-auto text-center mb-5 reveal" style="max-width:560px;">This is the same care and structural rigour every SQ Website client gets — whether you're a regulated professional practice, a local tradesperson, or a brand-new business. The Lexent Law Chamber site itself credits its creator directly in its footer: "Crafted by Mohammed Qaim Abbas — SQ Websites."</p>
+  <div class="reveal d-flex gap-3 justify-content-center flex-wrap">
+    <a href="index.html#booking" class="btn-primary-gold"><span>Book Free Consultation</span></a>
+    <a href="index.html#portfolio" class="btn-outline-gold">See More Work</a>
+    <a href="https://wa.me/447919978462?text=Hi%20Mohammed%2C%20I%20saw%20the%20Lexent%20Law%20Chamber%20case%20study%20and%20I%27d%20like%20a%20quote." target="_blank" rel="noopener" class="btn-outline-gold"><i class="bi bi-whatsapp me-2"></i>WhatsApp Us</a>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="row g-5 mb-2">
+    <div class="col-lg-4">
+      <div class="footer-logo mb-3">SQ</div>
+      <p style="color:var(--grey-light);font-size:.86rem;line-height:1.85;max-width:290px;">Professional web design and development for businesses across the UK. From £150 — no hidden fees, no monthly charges.</p>
+      <p style="color:var(--grey);font-size:.8rem;margin-top:14px;">Developer: <span style="color:var(--gold);">Mohammed Qaim Abbas</span></p>
+      <p style="color:var(--grey);font-size:.8rem;">Based in Manchester, UK</p>
+      <div class="d-flex gap-3 mt-4">
+        <a href="https://wa.me/447919978462" target="_blank" style="color:#25D366;font-size:1.4rem;"><i class="bi bi-whatsapp"></i></a>
+        <a href="https://www.lexentlawchamber.com/" target="_blank" rel="noopener" style="color:var(--gold);font-size:1.4rem;"><i class="bi bi-bank"></i></a>
+        <a href="https://www.drivesq.co.uk" target="_blank" rel="noopener" style="color:var(--gold);font-size:1.4rem;"><i class="bi bi-globe2"></i></a>
+        <a href="https://mqabbas.github.io/CINEEVENTS-WEBSITE/" target="_blank" style="color:var(--gold);font-size:1.4rem;"><i class="bi bi-camera"></i></a>
+      </div>
+    </div>
+    <div class="col-lg-2 col-6">
+      <div class="f-col-head">Services</div>
+      <a href="index.html#services" class="f-link">Custom Web Design</a>
+      <a href="index.html#services" class="f-link">SEO Optimisation</a>
+      <a href="index.html#services" class="f-link">Business Websites</a>
+      <a href="index.html#services" class="f-link">Logo &amp; Branding</a>
+    </div>
+    <div class="col-lg-2 col-6">
+      <div class="f-col-head">Quick Links</div>
+      <a href="index.html#pricing" class="f-link">Pricing</a>
+      <a href="index.html#portfolio" class="f-link">Portfolio</a>
+      <a href="index.html#about" class="f-link">About Mohammed</a>
+      <a href="index.html#booking" class="f-link">Book Now</a>
+    </div>
+    <div class="col-lg-4">
+      <div class="f-col-head">Contact</div>
+      <a href="tel:07919978462" class="f-link"><i class="bi bi-telephone me-2"></i>07919 978 462</a>
+      <a href="https://wa.me/447919978462" target="_blank" class="f-link"><i class="bi bi-whatsapp me-2" style="color:#25D366;"></i>WhatsApp: 07919 978 462</a>
+      <a href="https://www.lexentlawchamber.com/" target="_blank" rel="noopener" class="f-link"><i class="bi bi-globe me-2"></i>lexentlawchamber.com</a>
+      <a href="index.html#booking" class="f-link"><i class="bi bi-calendar-check me-2"></i>Book Consultation</a>
+    </div>
+  </div>
+  <div class="footer-hr">
+    <p>© 2025 SQ Website. All rights reserved. Built by <a href="index.html#about">Mohammed Qaim Abbas</a>.</p>
+    <p>Web Design · SEO · Branding · Manchester, UK</p>
+  </div>
+</footer>
+
+<script>
+/* CURSOR */
+const curDot = document.getElementById('cur-dot');
+const curRing = document.getElementById('cur-ring');
+let mx=0,my=0,rx=window.innerWidth/2,ry=window.innerHeight/2;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  curDot.style.left = mx+'px'; curDot.style.top = my+'px';
+});
+(function animRing() {
+  rx += (mx-rx)*.12; ry += (my-ry)*.12;
+  curRing.style.left = rx+'px'; curRing.style.top = ry+'px';
+  requestAnimationFrame(animRing);
+})();
+document.querySelectorAll('a,button,.card-serv,.tech-chip,.t-item,.portal-card').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+});
+
+/* SCROLL: progress + nav */
+const prog = document.getElementById('scroll-progress');
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  prog.style.width = pct + '%';
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+}, {passive:true});
+
+/* HAMBURGER / MOBILE NAV */
+const hamburger = document.getElementById('hamburger');
+const navLinks  = document.getElementById('navLinks');
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('mobile-open');
+  hamburger.classList.toggle('open');
+});
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    navLinks.classList.remove('mobile-open');
+    hamburger.classList.remove('open');
+  });
+});
+
+/* REVEAL ON SCROLL */
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold:.08, rootMargin:'0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* STAT COUNTERS */
+function animateCounter(el, target) {
+  let cur=0; const step=Math.max(target/60,0.02);
+  const iv = setInterval(()=>{
+    cur+=step;
+    if(cur>=target){el.textContent=target;clearInterval(iv);return;}
+    el.textContent=Math.floor(cur);
+  },18);
+}
+const statsObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      document.querySelectorAll('.stat-number').forEach(el => {
+        animateCounter(el, parseInt(el.dataset.target));
+      });
+      statsObserver.disconnect();
+    }
+  });
+}, {threshold:.4});
+const resultsBar = document.querySelector('.results-bar');
+if(resultsBar) statsObserver.observe(resultsBar);
+</script>
+</body>
+</html>
